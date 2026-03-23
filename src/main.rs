@@ -13,7 +13,7 @@ use eadkp::ImageFormat;
 extern crate eadkp;
 
 // Setup the NWA environment.
-eadk_setup!(name = "Eadkp template");
+eadk_setup!(name = "Minesweeper");
 
 #[unsafe(no_mangle)]
 pub fn main() -> isize {
