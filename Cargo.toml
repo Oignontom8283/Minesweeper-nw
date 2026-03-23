@@ -1,0 +1,36 @@
+[package]
+name = "{{project-name}}"
+version = "0.1.0"
+edition = "2024"
+
+[lib]
+path = "src/main.rs"
+bench = false
+test = false
+crate-type = ["rlib", "cdylib"]
+name = "{{project-name}}"
+
+[[example]]
+name = "device"
+path = "src/main.rs"
+test = false
+doctest = false
+bench = false
+
+[[example]]
+name = "simulator"
+path = "src/main.rs"
+test = false
+doctest = false
+bench = false
+crate-type = ["cdylib"]
+
+[dependencies]
+eadkp = { git = "https://github.com/Oignontom8283/eadkp", branch = "dev" }
+embedded-alloc = "0.7.0"
+postcard = "1"
+serde = { version = "1", default-features = false, features = ["derive"] }
+heapless = "0.7"
+
+[build-dependencies]
+eadkp = { git = "https://github.com/Oignontom8283/eadkp", branch = "dev", features = ["build-tools"] }
