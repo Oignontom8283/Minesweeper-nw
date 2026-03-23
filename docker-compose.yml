@@ -6,10 +6,10 @@ services:
       context: https://github.com/Oignontom8283/eadkp.git#dev
       dockerfile: dockerfile
     image: nraddi:latest
-    container_name: {{project-name}}
-    working_dir: /workspace/{{project-name}}
+    container_name: minesweeper_nw
+    working_dir: /workspace/minesweeper_nw
     volumes:
-      - ./:/workspace/{{project-name}}
+      - ./:/workspace/minesweeper_nw
       # Support X11
       - /tmp/.X11-unix:/tmp/.X11-unix
       # Support Wayland (fallback to wayland-0 if WAYLAND_DISPLAY is unset)
