@@ -1,0 +1,38 @@
+
+Moyenne/grande boite : 18+2=20 pixels (20x20)
++1 pixel de bordure entre les boites = 21 pixels (21x21)
+
+Petite boite : 14+2=16 pixels (16x16)
++1 pixel de bordure entre les boites = 17 pixels (17x17)
+
+---
+
+Petite caractère :
+    largeur: 7,
+    hauteur: 14,
+
+Grande caractère :
+    largeur: 10,
+    hauteur: 18,
+
+Écran :
+    largeur: 320
+    hauteur: 240
+
+---
+
+1 pixel de bordure entre les boites, donc 1 pixel de moins en largeur et en hauteur total
+
+Espace disponible pour les boites :
+    largeur: 320-1 = 319
+    hauteur: 240 - 18 (hauteur du header) - 1 (bordure) = 221
+
+Nombre de boites large :
+    en largeur : 319 / 21 = 15,1904761905
+    en hauteur : 221 / 21 = 10,5238095238
+
+Nombre de boites petite :
+    en largeur : 319 / 17 = 18,7647058824
+    en hauteur : 221 / 17 = 13,0000000000
+
+> Pour le nombre de boites non entier, on centre l'essenble des boites dans l'espace disponible, en laissant un espace égal de chaque côté.
