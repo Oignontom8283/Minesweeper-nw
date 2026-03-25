@@ -7,12 +7,12 @@ pub enum StateEnum {
 }
 
 pub struct SharedState {
-    state: StateEnum,
-    grid: Vec<u8>,
-    width: u8,
-    height: u8,
-    cursor_x: u8,
-    cursor_y: u8,
+    pub state: StateEnum,
+    pub grid: Vec<u8>,
+    pub width: u8,
+    pub height: u8,
+    pub cursor_x: u8,
+    pub cursor_y: u8,
 }
 
 pub enum RenderCommand {
@@ -24,5 +24,5 @@ pub enum RenderCommand {
 pub trait StateRuntime {
     fn enter(shared: &mut SharedState);
     fn update(shared: &mut SharedState) -> Vec<RenderCommand>;
-    fn exit(shared: &mut SharedState, to_render: Vec<RenderCommand>);
+    fn render(shared: &mut SharedState, to_render: Vec<RenderCommand>);
 }
