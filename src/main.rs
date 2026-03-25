@@ -10,6 +10,13 @@ and displaying "Hello, world!" on the screen.
 #[macro_use]
 extern crate eadkp;
 
+mod common;
+mod logic;
+
+use alloc::vec;
+use common::*;
+use logic::*;
+
 // Setup the NWA environment.
 eadk_setup!(name = "Minesweeper");
 
@@ -19,24 +26,18 @@ pub fn main() -> isize {
     // Initialize the heap allocator
     _eadk_init_heap();
 
-    let dirt_texture = eadkp::ImageLoader::from_flash(include_image!("dirt.png")).expect("Failed to load dirt texture");
+    // Initialize the shared state
 
-    // Drawing closure. Called before looping.
-    let first_drawing = || {
-        eadkp::display::push_rect_uniform(eadkp::SCREEN_RECT, eadkp::COLOR_WHITE); // Fill the entire screen with white
-
-        eadkp::display::push_image(&dirt_texture, eadkp::Point {x:5, y:5});
+    let mut shared = SharedState {
+        state: StateEnum::MainMenu,
+        grid: vec![0; 0], // Empty grid
+        width: 0,
+        height: 0,
+        cursor_x: 0,
+        cursor_y: 0,
     };
 
-    let drawing = || {
-        // Currently empty, but can be used for dynamic drawing in the main loop
-    };
-    
-
-    // Initial keyboard state
-    let mut prev = eadkp::input::KeyboardState::scan();
-
-    first_drawing(); // Initial drawing
+    let mut prev = eadkp::input::KeyboardState::scan(); // Initial keyboard state
 
     loop {
         let now = eadkp::input::KeyboardState::scan(); // Scan the current keyboard state
@@ -46,7 +47,20 @@ pub fn main() -> isize {
         // Clear the screen to white
         eadkp::display::wait_for_vblank(); // Wait for VBlank before updating the display
 
-        drawing(); // Call the drawing closures
+        match shared.state {
+            StateEnum::MainMenu => {
+                let cmds = MainMenu::update(&mut shared);
+                MainMenu::render(&mut shared, cmds);
+            },
+            StateEnum::Playing => {
+                let cmds = Playing::update(&mut shared);
+                Playing::render(&mut shared, cmds);
+            },
+            StateEnum::GameOver => {
+                let cmds = GameOver::update(&mut shared);
+                GameOver::render(&mut shared, cmds);
+            },
+        };
 
         // Update previous keyboard state
         prev = now;
