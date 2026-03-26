@@ -39,8 +39,6 @@ impl StateRuntime for Playing {
         if _shared.need_redraw {
             _shared.need_redraw = false;
 
-            let mut cells_to_render = Vec::new();
-
             // Rendre le fond d'écran
             cells_to_render.push(RenderCommand::Background { color: eadkp::COLOR_WHITE });
 
@@ -56,6 +54,54 @@ impl StateRuntime for Playing {
             return cells_to_render;
         }
 
+
+        // Générer les entrées clavier
+        let just = _keyboard.get_just_pressed(_old_keyboard);
+
+        // Déplacement du curseur :
+        let before_cursor_x = _shared.cursor_x;
+        let before_cursor_y = _shared.cursor_y;
+
+        let mut after_cursor_x = before_cursor_x;
+        let mut after_cursor_y = before_cursor_y;
+
+        if just.key_down(eadkp::input::Key::Up) {
+            if before_cursor_y > 0 {
+                after_cursor_y -= 1;
+            }
+        }
+        if just.key_down(eadkp::input::Key::Down) {
+            if before_cursor_y < _shared.height - 1 {
+                after_cursor_y += 1;
+            }
+        }
+        if just.key_down(eadkp::input::Key::Left) {
+            if before_cursor_x > 0 {
+                after_cursor_x -= 1;
+            }
+        }
+        if just.key_down(eadkp::input::Key::Right) {
+            if before_cursor_x < _shared.width - 1 {
+                after_cursor_x += 1;
+            }
+        }
+
+        // Si le curseur a bougé on redessine l'ancienne et la nouvelle position du curseur
+        if after_cursor_x != before_cursor_x || after_cursor_y != before_cursor_y {
+            
+            // Actualiser la position du curseur
+            _shared.cursor_x = after_cursor_x;
+            _shared.cursor_y = after_cursor_y;
+
+            // Redessiner l'ancienne position du curseur
+            cells_to_render.push(RenderCommand::Cell { x: before_cursor_x, y: before_cursor_y });
+
+            // Dessiner le curseur a ça nouvelle position
+            cells_to_render.push(RenderCommand::Cursor { x: after_cursor_x, y: after_cursor_y });
+        }
+
+
+        // Première interactioon : génération des mines
         if _shared.first_click {
             // Générer les mines en s'assurant que la première case cliquée n'est pas une mine
             grid::generate_mines(_shared, _shared.cursor_x, _shared.cursor_y); // Exemple avec 10 mines
@@ -65,9 +111,7 @@ impl StateRuntime for Playing {
             _shared.first_click = false;
         }
 
-        // 
-
-        Vec::new()
+        cells_to_render
     }
 
     fn render(_shared: &mut SharedState, _to_render: Vec<RenderCommand>) {
