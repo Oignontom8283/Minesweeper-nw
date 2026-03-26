@@ -44,6 +44,11 @@ impl StateRuntime for Playing {
             _shared.need_redraw = false;
 
             let mut cells_to_render = Vec::new();
+
+            // Rendre le fond d'écran
+            cells_to_render.push(RenderCommand::Background { color: eadkp::COLOR_WHITE });
+
+            // Rerendre tout les cellules
             for y in 0.._shared.height {
                 for x in 0.._shared.width {
                     cells_to_render.push(RenderCommand::Cell { x: x, y: y });
