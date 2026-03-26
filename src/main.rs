@@ -35,6 +35,7 @@ pub fn main() -> isize {
         height: 0,
         cursor_x: 0,
         cursor_y: 0,
+        need_redraw: true,
     };
 
     let mut prev = eadkp::input::KeyboardState::scan(); // Initial keyboard state
@@ -49,15 +50,15 @@ pub fn main() -> isize {
 
         match shared.state {
             StateEnum::MainMenu => {
-                let cmds = MainMenu::update(&mut shared);
+                let cmds = MainMenu::update(&mut shared, now);
                 MainMenu::render(&mut shared, cmds);
             },
             StateEnum::Playing => {
-                let cmds = Playing::update(&mut shared);
+                let cmds = Playing::update(&mut shared, now);
                 Playing::render(&mut shared, cmds);
             },
             StateEnum::GameOver => {
-                let cmds = GameOver::update(&mut shared);
+                let cmds = GameOver::update(&mut shared, now);
                 GameOver::render(&mut shared, cmds);
             },
         };
