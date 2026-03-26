@@ -36,6 +36,11 @@ pub fn main() -> isize {
         cursor_x: 0,
         cursor_y: 0,
         need_redraw: true,
+        first_click: false,
+        num_mines: 0,
+        large_cells: false,
+
+        asset_dirt: eadkp::ImageLoader::from_flash(eadkp::include_image!("dirt.png")).expect("Failed to load dirt image"),
     };
 
     let mut prev = eadkp::input::KeyboardState::scan(); // Initial keyboard state
