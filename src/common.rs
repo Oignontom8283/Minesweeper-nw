@@ -29,6 +29,9 @@ pub struct SharedState {
 
 pub enum RenderCommand {
 
+    // Common
+    Background { color: eadkp::Color },
+
     // jeu
     Cell { x: u8, y: u8 },
     Cursor { x: u8, y: u8 },

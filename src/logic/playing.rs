@@ -73,8 +73,8 @@ impl StateRuntime for Playing {
     fn render(_shared: &mut SharedState, _to_render: Vec<RenderCommand>) {
         for cmd in _to_render {
             match cmd {
-                RenderCommand::Instruction => {
-
+                RenderCommand::Background { color } => {
+                    eadkp::display::push_rect_uniform(eadkp::SCREEN_RECT, color);
                 },
                 RenderCommand::Cell { x, y } => {
 
