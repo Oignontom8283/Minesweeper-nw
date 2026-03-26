@@ -53,7 +53,7 @@ pub fn main() -> isize {
     loop {
         let now = eadkp::input::KeyboardState::scan(); // Scan the current keyboard state
         let just = now.get_just_pressed(prev); // Get keys that were just pressed
-        if just.key_down(eadkp::input::Key::Back) { break 0; }; // Exit if Back key is pressed
+        if just.key_down(eadkp::input::Key::Home) { break 0; }; // Exit if Home key is pressed
 
         // Clear the screen to white
         eadkp::display::wait_for_vblank(); // Wait for VBlank before updating the display
