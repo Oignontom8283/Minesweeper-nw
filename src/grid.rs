@@ -2,7 +2,6 @@
 use crate::common::*;
 use alloc::string::ToString;
 use alloc::vec::Vec;
-use alloc::vec;
 
 pub fn index_by_coords(x: u8, y: u8, width: u8) -> usize {
     (y as usize) * (width as usize) + (x as usize)

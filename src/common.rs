@@ -47,6 +47,7 @@ pub enum RenderCommand {
 }
 
 pub trait StateRuntime {
+    #[allow(dead_code)]
     fn enter(shared: &mut SharedState);
     fn update(shared: &mut SharedState, new_keyboard: eadkp::input::KeyboardState, old_keyboard: eadkp::input::KeyboardState) -> Vec<RenderCommand>;
     fn render(shared: &mut SharedState, to_render: Vec<RenderCommand>);
