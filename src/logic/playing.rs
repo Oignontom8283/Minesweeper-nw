@@ -32,7 +32,10 @@ impl StateRuntime for Playing {
     }
 
     fn update(_shared: &mut SharedState, _keyboard: eadkp::input::KeyboardState, _old_keyboard: eadkp::input::KeyboardState) -> Vec<RenderCommand> {
-        
+
+        let mut cells_to_render = Vec::new();
+
+        // Redessiner tout les éléments si besoin
         if _shared.need_redraw {
             _shared.need_redraw = false;
 
