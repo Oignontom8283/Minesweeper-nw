@@ -3,6 +3,11 @@ use crate::common::*;
 use alloc::vec::Vec;
 use alloc::vec;
 
+pub fn index_by_coords(x: u8, y: u8, width: u8) -> usize {
+    (y as usize) * (width as usize) + (x as usize)
+}
+
+
 pub fn set_mine(shared: &mut SharedState, x: u8, y: u8) {
     let index = index_by_coords(x, y, shared.width);
     shared.grid[index] |= 0b0000_0001; // Placer une mine (premier bit à 1)
@@ -43,6 +48,7 @@ pub fn get_adjacent_mines(shared: &mut SharedState, x: u8, y: u8) -> u8 {
     let index = index_by_coords(x, y, shared.width);
     (shared.grid[index] & 0b1111_0000) >> 3 // Récupérer le nombre de mines adjacentes
 }
+
 
 pub fn generate_mines(shared: &mut SharedState, first_x: u8, first_y: u8) {
     let mut coords: Vec<(u8, u8)> = Vec::new();
@@ -109,6 +115,4 @@ pub fn calculate_adjacent_mines(shared: &mut SharedState) {
     }
 }
 
-pub fn index_by_coords(x: u8, y: u8, width: u8) -> usize {
-    (y as usize) * (width as usize) + (x as usize)
-}
+
