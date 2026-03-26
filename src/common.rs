@@ -5,6 +5,8 @@ pub const CELL_LARGE: u16 = 20;
 
 pub const CELL_MARGIN: u16 = 1;
 
+pub const BACKGROUND_PLAYING: eadkp::Color = eadkp::COLOR_WHITE;
+
 pub enum StateEnum {
     MainMenu,
     Playing,
