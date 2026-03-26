@@ -17,7 +17,13 @@ impl StateRuntime for MainMenu {
         }
 
         if _new_keyboard.get_just_pressed(_old_keyboard).key_down(eadkp::input::Key::Ok) {
-            _shared.state = StateEnum::Playing;
+            if cfg!(target_os = "none") {
+                // Code pour nw
+            } else {
+                #[cfg(not(target_os = "none"))]
+                println!("Switching to Playing state");
+            }
+            init_playing(_shared, 10, 10, 3);
             return vec![]; // No need to render anything immediately, the Playing state will handle it
             
         }
