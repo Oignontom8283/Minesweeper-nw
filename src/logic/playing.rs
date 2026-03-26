@@ -76,26 +76,19 @@ impl StateRuntime for Playing {
                 },
                 RenderCommand::Cell { x, y } => {
 
-                    // let cell_size = if _shared.large_cells { CELL_LARGE } else { CELL_SMALL } + CELL_MARGIN;
-                    // let cell_image = if _shared.large_cells { &_shared.asset_dirt_large } else { &_shared.asset_dirt_small };
+                    let point = grid::cell_to_coords(_shared, x as u16, y as u16);
 
-                    // Taille de la cellule (avec la marge) et image correspondante
-                    let (cell_size, cell_image) = if _shared.large_cells {
-                        (CELL_LARGE + CELL_MARGIN, &_shared.asset_dirt_large)
-                    } else {
-                        (CELL_SMALL + CELL_MARGIN, &_shared.asset_dirt_small)
-                    };
+                    if grid::is_revealed(_shared, x, y) {
+                        let n = grid::get_adjacent_mines(_shared, x, y);
+                        grid::render_cell_number(_shared, point, n);
+                    }
+                    else if grid::is_flagged(_shared, x, y) {
+                        grid::render_cell_flag(_shared, point);
+                    }
+                    else {
+                        grid::render_cell_dirt(_shared, point);
+                    }
 
-                    let p_x = x as u16 * cell_size;
-                    let p_y = y as u16 * cell_size;
-                    
-                    let screen_pos = eadkp::Point {
-                        x: p_x,
-                        y: p_y,
-                    };
-
-                    // Rendre le background de la cellule
-                    eadkp::display::push_image(cell_image, screen_pos);
                 }
                 _ => {}
             }

@@ -1,5 +1,6 @@
 
 use crate::common::*;
+use alloc::string::ToString;
 use alloc::vec::Vec;
 use alloc::vec;
 
@@ -116,8 +117,16 @@ pub fn calculate_adjacent_mines(shared: &mut SharedState) {
 }
 
 
+pub fn cell_size(shared: &mut SharedState) -> u16 {
+    if shared.large_cells {
+        CELL_LARGE + CELL_MARGIN
+    } else {
+        CELL_SMALL + CELL_MARGIN
+    }
+}
+
 pub fn cell_to_coords(shared: &mut SharedState, x: u16, y: u16) -> eadkp::Point {
-    let cell_size = if shared.large_cells { CELL_LARGE + CELL_MARGIN } else { CELL_SMALL + CELL_MARGIN };
+    let cell_size = cell_size(shared);
 
     let p_x = x as u16 * cell_size;
     let p_y = y as u16 * cell_size;
@@ -128,4 +137,56 @@ pub fn cell_to_coords(shared: &mut SharedState, x: u16, y: u16) -> eadkp::Point 
     };
 
     screen_pos
+}
+
+
+pub fn render_cell_dirt(shared: &mut SharedState, point: eadkp::Point) {
+    let cell_image = if shared.large_cells { &shared.asset_dirt_large } else { &shared.asset_dirt_small };
+
+    // Rendre le background de la cellule
+    eadkp::display::push_image(cell_image, point);
+}
+
+pub fn render_cell_flag(shared: &mut SharedState, point: eadkp::Point) {
+    let cell_image = if shared.large_cells { &shared.asset_flag_large } else { &shared.asset_flag_small };
+
+    // Rendre le flag de la cellule
+    eadkp::display::push_image(cell_image, point);
+}
+
+pub fn render_cell_number(shared: &mut SharedState, point: eadkp::Point, number: u8) {
+
+    let cell_size = cell_size(shared);
+
+    let background_rect = eadkp::Rect {
+        x: point.x,
+        y: point.y,
+        width: cell_size,
+        height: cell_size,
+    };
+
+    // Rendre le background de la cellule
+    eadkp::display::push_rect_uniform(background_rect, BACKGROUND_PLAYING);
+
+    // Si >0 afficher le nombre
+    if number > 0 {
+        let text = number.to_string();
+
+        let text_x = point.x + (cell_size / 2) - (eadkp::LARGE_FONT.width / 2);
+        let text_y = point.y + 1;
+
+        let text_point = eadkp::Point {
+            x: text_x,
+            y: text_y,
+        };
+
+        eadkp::display::draw_string(
+            &text, 
+            text_point, 
+            shared.large_cells, 
+            eadkp::COLOR_BLACK, 
+            BACKGROUND_PLAYING
+        );
+    }
+
 }
