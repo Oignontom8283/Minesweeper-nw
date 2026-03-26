@@ -1,5 +1,9 @@
 use alloc::{vec::Vec};
-use alloc::vec;
+
+pub const CELL_SMALL: u16 = 16;
+pub const CELL_LARGE: u16 = 20;
+
+pub const CELL_MARGIN: u16 = 1;
 
 pub enum StateEnum {
     MainMenu,
