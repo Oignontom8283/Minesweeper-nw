@@ -116,3 +116,16 @@ pub fn calculate_adjacent_mines(shared: &mut SharedState) {
 }
 
 
+pub fn cell_to_coords(shared: &mut SharedState, x: u16, y: u16) -> eadkp::Point {
+    let cell_size = if shared.large_cells { CELL_LARGE + CELL_MARGIN } else { CELL_SMALL + CELL_MARGIN };
+
+    let p_x = x as u16 * cell_size;
+    let p_y = y as u16 * cell_size;
+    
+    let screen_pos = eadkp::Point {
+        x: p_x,
+        y: p_y,
+    };
+
+    screen_pos
+}
