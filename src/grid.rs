@@ -202,19 +202,19 @@ pub fn render_cell_cursor(shared: &mut SharedState, point: eadkp::Point) {
 
     // Rendre la bordure du bas
     eadkp::display::push_rect_uniform(
-        eadkp::Rect { x: point.x, y: point.y + cell_size - 1, width: cell_size, height: 1},
+        eadkp::Rect { x: point.x, y: point.y + cell_size - 2, width: cell_size - 2, height: 1},
         CURSOR_COLOR
     );
 
     // Rendre la bordure de gauche
     eadkp::display::push_rect_uniform(
-        eadkp::Rect { x: point.x, y: point.y + 1, width: 1, height: cell_size - 1 },
+        eadkp::Rect { x: point.x, y: point.y + 1, width: 1, height: cell_size - 2 },
         CURSOR_COLOR
     );
 
     // Rendre la bordure de droite
     eadkp::display::push_rect_uniform(
-        eadkp::Rect{ x: point.x + cell_size - 1, y: point.y + 1, width: 1, height: cell_size - 1 },
+        eadkp::Rect{ x: point.x + cell_size - 2, y: point.y + 1, width: 1, height: cell_size - 2 },
         CURSOR_COLOR
     );
 }
