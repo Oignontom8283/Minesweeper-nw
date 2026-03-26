@@ -47,12 +47,9 @@ impl StateRuntime for Playing {
                     cells_to_render.push(RenderCommand::Cell { x: x, y: y });
                 }
             }
-            if cfg!(target_os = "none") {
-                // Code pour nw
-            } else {
-                #[cfg(not(target_os = "none"))]
-                println!("Redrawing");
-            }
+
+            cells_to_render.push(RenderCommand::Cursor { x: _shared.cursor_x, y: _shared.cursor_y });
+
             return cells_to_render;
         }
 
@@ -64,6 +61,8 @@ impl StateRuntime for Playing {
             // Marquer que le premier clic a été effectué
             _shared.first_click = false;
         }
+
+        // 
 
         Vec::new()
     }
@@ -89,7 +88,13 @@ impl StateRuntime for Playing {
                         grid::render_cell_dirt(_shared, point);
                     }
 
-                }
+                },
+                RenderCommand::Cursor { x, y } => {
+                    let point = grid::cell_to_coords(_shared, x as u16, y as u16);
+
+                    // Rendre le curseur a la positon de la cellule
+                    grid::render_cell_cursor(_shared, point);
+                },
                 _ => {}
             }
         }

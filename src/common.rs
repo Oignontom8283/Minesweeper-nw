@@ -5,7 +5,8 @@ pub const CELL_LARGE: u16 = 20;
 
 pub const CELL_MARGIN: u16 = 1;
 
-pub const BACKGROUND_PLAYING: eadkp::Color = eadkp::COLOR_WHITE;
+pub const CURSOR_COLOR: eadkp::Color = eadkp::COLOR_RED;
+pub const BACKGROUND_PLAYING: eadkp::Color = eadkp::COLOR_WHITE; //TODO: rename BACKGROUND_PLAYING_COLOR
 
 pub enum StateEnum {
     MainMenu,
