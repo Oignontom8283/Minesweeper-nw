@@ -24,7 +24,9 @@ impl StateRuntime for MainMenu {
                 #[cfg(not(target_os = "none"))]
                 println!("Switching to Playing state");
             }
+            
             init_playing(_shared, 10, 10, 3, true);
+
             return vec![]; // No need to render anything immediately, the Playing state will handle it
             
         }

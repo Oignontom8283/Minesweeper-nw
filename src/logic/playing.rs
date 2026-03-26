@@ -3,7 +3,7 @@ use crate::grid;
 use alloc::vec::Vec;
 use alloc::vec;
 
-pub fn init_playing(shared: &mut SharedState, width: u8, height: u8, num_mines: usize) {
+pub fn init_playing(shared: &mut SharedState, width: u8, height: u8, num_mines: usize, large_cells: bool) {
     
     // Initialiser la grille
     shared.width = width;
@@ -12,6 +12,7 @@ pub fn init_playing(shared: &mut SharedState, width: u8, height: u8, num_mines: 
 
     shared.num_mines = num_mines;
     shared.first_click = false;
+    shared.large_cells = large_cells;
 
     shared.cursor_x = 0;
     shared.cursor_y = 0;
@@ -21,14 +22,6 @@ pub fn init_playing(shared: &mut SharedState, width: u8, height: u8, num_mines: 
 
     // Demander un redraw
     shared.need_redraw = true;
-}
-
-pub fn cell_to_screen(shared: &mut SharedState, x:u8, y:u8) -> eadkp::Point {
-    let cell_size = if shared.large_cells { 16 } else { 8 };
-    eadkp::Point {
-        x: (x as u16) * cell_size,
-        y: (y as u16) * cell_size,
-    }
 }
 
 pub struct Playing;
@@ -83,9 +76,26 @@ impl StateRuntime for Playing {
                 },
                 RenderCommand::Cell { x, y } => {
 
-                    let screen_pos = cell_to_screen(_shared, x, y);
-                    eadkp::display::push_image(&_shared.asset_dirt, screen_pos);
+                    // let cell_size = if _shared.large_cells { CELL_LARGE } else { CELL_SMALL } + CELL_MARGIN;
+                    // let cell_image = if _shared.large_cells { &_shared.asset_dirt_large } else { &_shared.asset_dirt_small };
 
+                    // Taille de la cellule (avec la marge) et image correspondante
+                    let (cell_size, cell_image) = if _shared.large_cells {
+                        (CELL_LARGE + CELL_MARGIN, &_shared.asset_dirt_large)
+                    } else {
+                        (CELL_SMALL + CELL_MARGIN, &_shared.asset_dirt_small)
+                    };
+
+                    let p_x = x as u16 * cell_size;
+                    let p_y = y as u16 * cell_size;
+                    
+                    let screen_pos = eadkp::Point {
+                        x: p_x,
+                        y: p_y,
+                    };
+
+                    // Rendre le background de la cellule
+                    eadkp::display::push_image(cell_image, screen_pos);
                 }
                 _ => {}
             }

@@ -24,7 +24,8 @@ pub struct SharedState {
     pub num_mines: usize,
     pub large_cells: bool,
 
-    pub asset_dirt: eadkp::Image,
+    pub asset_dirt_large: eadkp::Image,
+    pub asset_dirt_small: eadkp::Image,
 }
 
 pub enum RenderCommand {
