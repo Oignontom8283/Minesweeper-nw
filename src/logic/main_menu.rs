@@ -16,14 +16,10 @@ impl StateRuntime for MainMenu {
             return vec![RenderCommand::Instruction];
         }
 
-        if _keyboard.key_down(eadkp::input::Key::Ok) {
+        if _new_keyboard.get_just_pressed(_old_keyboard).key_down(eadkp::input::Key::Ok) {
+            _shared.state = StateEnum::Playing;
+            return vec![]; // No need to render anything immediately, the Playing state will handle it
             
-            if cfg!(target_os = "none") {
-                // Code pour nw
-            } else {
-                #[cfg(not(target_os = "none"))]
-                println!("Switching to Playing state");
-            }
         }
 
         Vec::new()
