@@ -165,7 +165,7 @@ pub fn render_cell_number(shared: &mut SharedState, point: eadkp::Point, number:
     };
 
     // Rendre le background de la cellule
-    eadkp::display::push_rect_uniform(background_rect, BACKGROUND_PLAYING);
+    eadkp::display::push_rect_uniform(background_rect, BACKGROUND_PLAYING_COLOR);
 
     // Si >0 afficher le nombre
     if number > 0 {
@@ -184,7 +184,7 @@ pub fn render_cell_number(shared: &mut SharedState, point: eadkp::Point, number:
             text_point, 
             shared.large_cells, 
             eadkp::COLOR_BLACK, 
-            BACKGROUND_PLAYING
+            BACKGROUND_PLAYING_COLOR
         );
     }
 
