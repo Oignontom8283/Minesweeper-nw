@@ -196,7 +196,7 @@ pub fn render_cell_cursor(shared: &mut SharedState, point: eadkp::Point) {
 
     // Rendre la bordure du haut
     eadkp::display::push_rect_uniform(
-        eadkp::Rect { x: point.x, y: point.y, width: cell_size, height: 1},
+        eadkp::Rect { x: point.x, y: point.y, width: cell_size - 1, height: 1},
         CURSOR_COLOR
     );
 
