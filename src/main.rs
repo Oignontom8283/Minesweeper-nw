@@ -50,15 +50,15 @@ pub fn main() -> isize {
 
         match shared.state {
             StateEnum::MainMenu => {
-                let cmds = MainMenu::update(&mut shared, now);
+                let cmds = MainMenu::update(&mut shared, now, prev);
                 MainMenu::render(&mut shared, cmds);
             },
             StateEnum::Playing => {
-                let cmds = Playing::update(&mut shared, now);
+                let cmds = Playing::update(&mut shared, now, prev);
                 Playing::render(&mut shared, cmds);
             },
             StateEnum::GameOver => {
-                let cmds = GameOver::update(&mut shared, now);
+                let cmds = GameOver::update(&mut shared, now, prev);
                 GameOver::render(&mut shared, cmds);
             },
         };

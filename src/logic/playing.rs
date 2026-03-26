@@ -9,7 +9,7 @@ impl StateRuntime for Playing {
         //
     }
 
-    fn update(_shared: &mut SharedState, _keyboard: eadkp::input::KeyboardState) -> Vec<RenderCommand> {
+    fn update(_shared: &mut SharedState, _keyboard: eadkp::input::KeyboardState, _old_keyboard: eadkp::input::KeyboardState) -> Vec<RenderCommand> {
         // 
         Vec::new()
     }

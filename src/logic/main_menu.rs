@@ -9,7 +9,7 @@ impl StateRuntime for MainMenu {
         //
     }
 
-    fn update(_shared: &mut SharedState, _keyboard: eadkp::input::KeyboardState) -> Vec<RenderCommand> {
+    fn update(_shared: &mut SharedState, _new_keyboard: eadkp::input::KeyboardState, _old_keyboard: eadkp::input::KeyboardState) -> Vec<RenderCommand> {
         
         if _shared.need_redraw {
             _shared.need_redraw = false;
