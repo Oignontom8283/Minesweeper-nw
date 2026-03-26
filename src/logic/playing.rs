@@ -1,4 +1,5 @@
 use crate::common::*;
+use crate::grid;
 use alloc::vec::Vec;
 use alloc::vec;
 
@@ -38,11 +39,51 @@ impl StateRuntime for Playing {
     }
 
     fn update(_shared: &mut SharedState, _keyboard: eadkp::input::KeyboardState, _old_keyboard: eadkp::input::KeyboardState) -> Vec<RenderCommand> {
-        // 
+        
+        if _shared.need_redraw {
+            _shared.need_redraw = false;
+
+            let mut cells_to_render = Vec::new();
+            for y in 0.._shared.height {
+                for x in 0.._shared.width {
+                    cells_to_render.push(RenderCommand::Cell { x: x, y: y });
+                }
+            }
+            if cfg!(target_os = "none") {
+                // Code pour nw
+            } else {
+                #[cfg(not(target_os = "none"))]
+                println!("Redrawing");
+            }
+            return cells_to_render;
+        }
+
+        if _shared.first_click {
+            // Générer les mines en s'assurant que la première case cliquée n'est pas une mine
+            grid::generate_mines(_shared, _shared.cursor_x, _shared.cursor_y); // Exemple avec 10 mines
+            grid::calculate_adjacent_mines(_shared);
+
+            // Marquer que le premier clic a été effectué
+            _shared.first_click = false;
+        }
+
         Vec::new()
     }
 
     fn render(_shared: &mut SharedState, _to_render: Vec<RenderCommand>) {
-        // 
+        for cmd in _to_render {
+            match cmd {
+                RenderCommand::Instruction => {
+
+                },
+                RenderCommand::Cell { x, y } => {
+
+                    let screen_pos = cell_to_screen(_shared, x, y);
+                    eadkp::display::push_image(&_shared.asset_dirt, screen_pos);
+
+                }
+                _ => {}
+            }
+        }
     }
 }
