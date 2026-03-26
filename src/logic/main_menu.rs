@@ -16,6 +16,16 @@ impl StateRuntime for MainMenu {
             return vec![RenderCommand::Instruction];
         }
 
+        if _keyboard.key_down(eadkp::input::Key::Ok) {
+            
+            if cfg!(target_os = "none") {
+                // Code pour nw
+            } else {
+                #[cfg(not(target_os = "none"))]
+                println!("Switching to Playing state");
+            }
+        }
+
         Vec::new()
     }
 
