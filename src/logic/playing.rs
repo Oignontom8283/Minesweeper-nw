@@ -1,5 +1,6 @@
 use crate::common::*;
 use crate::grid;
+use crate::logic::end_game;
 use alloc::vec::Vec;
 use alloc::vec;
 
@@ -11,6 +12,7 @@ pub fn init_playing(shared: &mut SharedState, width: u8, height: u8, num_mines: 
     shared.grid = vec![0; (width as usize) * (height as usize)];
 
     shared.num_mines = num_mines;
+    shared.remaining_safe_cells = (width as usize) * (height as usize) - num_mines;
     shared.first_action = true;
     shared.large_cells = large_cells;
 
@@ -120,15 +122,38 @@ impl StateRuntime for Playing {
                 grid::calculate_adjacent_mines(_shared);
                 _shared.first_action = false;
             }
-            
-            // Révéler les cellules par propagation et les redraw
-            let revealed = grid::reveal_infect(_shared, before_cursor_x, before_cursor_y);
-            for (rx, ry) in revealed {
-                cells_to_render.push(RenderCommand::Cell { x: rx, y: ry });
-            }
 
-            // Toujours redessiner le curseur après l'interaction
-            cells_to_render.push(RenderCommand::Cursor { x: before_cursor_x, y: before_cursor_y });
+            // Si la cellule est une mine, GAME OVER
+            if grid::is_mine(_shared, before_cursor_x, before_cursor_y) {
+                
+                // Faire afficher toutes les mines
+                for y in 0.._shared.height {
+                    for x in 0.._shared.width {
+                        if grid::is_mine(_shared, x, y) {
+                            grid::set_revealed(_shared, x, y);
+                            cells_to_render.push(RenderCommand::Cell { x: x, y: y });
+                        }
+                    }
+                }
+
+                // Lancer le state de fin en lose
+                end_game::init_end_game(_shared, false);
+
+                return cells_to_render;
+            }
+            // Si ce n'est pas une mine, on révéle
+            else {
+
+                // Révéler les cellules par propagation et les redraw
+                let revealed = grid::reveal_infect(_shared, before_cursor_x, before_cursor_y);
+                for (rx, ry) in revealed {
+                    cells_to_render.push(RenderCommand::Cell { x: rx, y: ry });
+                }
+    
+                // Toujours redessiner le curseur après l'interaction
+                cells_to_render.push(RenderCommand::Cursor { x: before_cursor_x, y: before_cursor_y });
+            }
+            
         }
 
         cells_to_render
