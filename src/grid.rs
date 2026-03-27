@@ -195,6 +195,12 @@ pub fn render_cell_number(shared: &mut SharedState, point: eadkp::Point, number:
 
 }
 
+pub fn render_cell_mine(shared: &mut SharedState, point: eadkp::Point) {
+    let cell_image = if shared.large_cells { &shared.asset_mine_large } else { &shared.asset_mine_small };
+
+    // Rendre la mine de la cellule
+    eadkp::display::push_image(cell_image, point);
+}
 
 pub fn render_cell_cursor(shared: &mut SharedState, point: eadkp::Point) {
     let cell_size = cell_size(shared);

@@ -142,8 +142,14 @@ impl StateRuntime for Playing {
                     let point = grid::cell_to_coords(_shared, x as u16, y as u16);
 
                     if grid::is_revealed(_shared, x, y) {
-                        let n = grid::get_adjacent_mines(_shared, x, y);
-                        grid::render_cell_number(_shared, point, n);
+
+                        if grid::is_mine(_shared, x, y) {
+                            grid::render_cell_mine(_shared, point); // Rendre la mine si c'est une mine
+                        }
+                        else {
+                            let nub = grid::get_adjacent_mines(_shared, x, y); 
+                            grid::render_cell_number(_shared, point, nub); // Rendre le nombre de mines adjacentes sinon
+                        }
                     }
                     else if grid::is_flagged(_shared, x, y) {
                         grid::render_cell_flag(_shared, point);
