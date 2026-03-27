@@ -146,8 +146,14 @@ impl StateRuntime for Playing {
 
                 // Révéler les cellules par propagation et les redraw
                 let revealed = grid::reveal_infect(_shared, before_cursor_x, before_cursor_y);
-                for (rx, ry) in revealed {
-                    cells_to_render.push(RenderCommand::Cell { x: rx, y: ry });
+                for (rx, ry) in revealed.iter() {
+                    cells_to_render.push(RenderCommand::Cell { x: *rx, y: *ry });
+                }
+
+                _shared.remaining_safe_cells -= revealed.len();
+
+                if _shared.remaining_safe_cells <= 0 {
+                    end_game::init_end_game(_shared, true);
                 }
     
                 // Toujours redessiner le curseur après l'interaction
