@@ -67,9 +67,8 @@ pub fn generate_mines(shared: &mut SharedState, first_x: u8, first_y: u8) {
 
         // Générer des coordonnées jusqu'à ce qu'elles soient uniques
         while !unique {
-            // Le randint semble être inclusif pour sa borne supérieure, on utilise donc - 1
-            random_x = eadkp::random::randint(0, (shared.width - 1) as u32) as u8; // x aléatoire
-            random_y = eadkp::random::randint(0, (shared.height - 1) as u32) as u8; // y aléatoire
+            random_x = eadkp::random::randint(0, shared.width as u32) as u8; // x aléatoire
+            random_y = eadkp::random::randint(0, shared.height as u32) as u8; // y aléatoire
 
             // Assurer que les coordonnées sont uniques et ne sont pas la première case révélée
             unique = !coords.contains(&(random_x, random_y)) && !(random_x == first_x && random_y == first_y);
