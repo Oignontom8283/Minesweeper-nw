@@ -2,11 +2,13 @@ use alloc::{vec::Vec};
 
 pub const CELL_SMALL: u16 = 16;
 pub const CELL_LARGE: u16 = 20;
-
 pub const CELL_MARGIN: u16 = 1;
 
 pub const CURSOR_COLOR: eadkp::Color = eadkp::COLOR_MAGENTA;
 pub const BACKGROUND_PLAYING_COLOR: eadkp::Color = eadkp::COLOR_WHITE;
+
+pub const TITLEBAR_RECT: eadkp::Rect = eadkp::Rect { x: 0, y:0, width: eadkp::SCREEN_RECT.width, height: eadkp::LARGE_FONT.height };
+pub const PLAY_AREA_RECT: eadkp::Rect = eadkp::Rect { x: 0, y: TITLEBAR_RECT.height, width: eadkp::SCREEN_RECT.width, height: eadkp::SCREEN_RECT.height - TITLEBAR_RECT.height };
 
 pub enum StateEnum {
     MainMenu,
@@ -42,6 +44,7 @@ pub enum RenderCommand {
 
     // Common
     Background { color: eadkp::Color },
+    TitleBar,
 
     // jeu
     Cell { x: u8, y: u8 },
