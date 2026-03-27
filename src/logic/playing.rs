@@ -24,6 +24,58 @@ pub fn init_playing(shared: &mut SharedState, width: u8, height: u8, num_mines: 
     shared.need_redraw = true;
 }
 
+
+pub fn reveal_infect(shared: &mut SharedState, x_start:u8, y_start:u8, cells_to_render: &mut Vec<RenderCommand>) {
+    let mut stack = Vec::new();
+    stack.push((x_start, y_start));
+
+    while  let Some((x, y)) = stack.pop() {
+        
+        // skipp si déja révélé
+        if grid::is_revealed(shared, x, y) {
+            continue;
+        }
+
+        // Skip si flag
+        if grid::is_flagged(shared, x, y) {
+            continue;
+        }
+
+        // révélé
+        grid::set_revealed(shared, x, y);
+
+        // demander un redraw de la cellule
+        cells_to_render.push(RenderCommand::Cell { x, y });
+
+        // stop si mine (normalement non)
+        if grid::is_mine(shared, x, y) {
+            continue;
+        }
+
+        let count = grid::get_adjacent_mines(shared, x, y);
+
+        if count > 0 {
+            continue;
+        }
+
+        // Propager la révélation aux voisins
+        for ny in y.saturating_sub(1)..=(y + 1).min(shared.height - 1) {
+            for nx in x.saturating_sub(1)..=(x + 1).min(shared.width - 1) {
+
+                if nx == x && ny == y {
+                    continue;
+                }
+
+                if !grid::is_revealed(shared, nx, ny) {
+                    stack.push((nx, ny));
+                }
+            }
+        }
+
+    }
+}
+
+
 pub struct Playing;
 
 impl StateRuntime for Playing {
@@ -108,6 +160,7 @@ impl StateRuntime for Playing {
         if flag { 
             // On priorise le flag en cas d'appui simultané pour éviter une catastrophe
             grid::toggle_flag(_shared, before_cursor_x, before_cursor_y);
+            cells_to_render.push(RenderCommand::Cell { x: before_cursor_x, y: before_cursor_y });
             current_cell_changed = true;
         }
         else if interact && !grid::is_flagged(_shared, before_cursor_x, before_cursor_y) {
@@ -118,13 +171,14 @@ impl StateRuntime for Playing {
                 _shared.first_click = false;
             }
             
-            grid::set_revealed(_shared, before_cursor_x, before_cursor_y);
+            reveal_infect(_shared, before_cursor_x, before_cursor_y, &mut cells_to_render);
+
             current_cell_changed = true;
         }
 
         // Si l'état de la cellule a changé, on la redessine avec le curseur par dessus
         if current_cell_changed {
-            cells_to_render.push(RenderCommand::Cell { x: before_cursor_x, y: before_cursor_y });
+            // cells_to_render.push(RenderCommand::Cell { x: before_cursor_x, y: before_cursor_y });
             cells_to_render.push(RenderCommand::Cursor { x: before_cursor_x, y: before_cursor_y });
         }
 
