@@ -73,7 +73,7 @@ pub fn main() -> isize {
                 let cmds = Playing::update(&mut shared, now, prev);
                 Playing::render(&mut shared, cmds);
             },
-            StateEnum::GameOver => {
+            StateEnum::EndGame => {
                 let cmds = EndGame::update(&mut shared, now, prev);
                 EndGame::render(&mut shared, cmds);
             },

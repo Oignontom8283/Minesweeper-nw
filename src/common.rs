@@ -11,7 +11,7 @@ pub const BACKGROUND_PLAYING_COLOR: eadkp::Color = eadkp::COLOR_WHITE;
 pub enum StateEnum {
     MainMenu,
     Playing,
-    GameOver,
+    EndGame,
 }
 
 pub struct SharedState {
