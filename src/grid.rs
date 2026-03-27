@@ -120,6 +120,47 @@ pub fn calculate_adjacent_mines(shared: &mut SharedState) {
     }
 }
 
+pub fn reveal_infect(shared: &mut SharedState, x_start: u8, y_start: u8) -> Vec<(u8, u8)> {
+    let mut stack = Vec::new();
+    stack.push((x_start, y_start));
+    let mut revealed = Vec::new();
+
+    while let Some((x, y)) = stack.pop() {
+        // skip si déjà révélé ou flaggée
+        if is_revealed(shared, x, y) || is_flagged(shared, x, y) {
+            continue;
+        }
+
+        // révéler
+        set_revealed(shared, x, y);
+        revealed.push((x, y));
+
+        // stop si c'est une mine
+        if is_mine(shared, x, y) {
+            continue;
+        }
+
+        // stop si la case est adjacente à une mine (bordure de la zone vide)
+        if get_adjacent_mines(shared, x, y) > 0 {
+            continue;
+        }
+
+        // Propager la révélation aux voisins (8 directions)
+        for ny in y.saturating_sub(1)..=(y + 1).min(shared.height - 1) {
+            for nx in x.saturating_sub(1)..=(x + 1).min(shared.width - 1) {
+                if nx == x && ny == y {
+                    continue;
+                }
+                if !is_revealed(shared, nx, ny) {
+                    stack.push((nx, ny));
+                }
+            }
+        }
+    }
+
+    revealed
+}
+
 
 pub fn cell_size(shared: &mut SharedState) -> u16 {
     if shared.large_cells {
