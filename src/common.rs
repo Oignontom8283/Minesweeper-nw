@@ -25,7 +25,7 @@ pub struct SharedState {
     pub height: u8,
     pub cursor_x: u8,
     pub cursor_y: u8,
-    pub first_click: bool,
+    pub first_action: bool,
     pub num_mines: usize,
     pub remaining_safe_cells: usize,
     pub large_cells: bool,

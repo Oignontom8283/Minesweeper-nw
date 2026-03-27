@@ -11,7 +11,7 @@ pub fn init_playing(shared: &mut SharedState, width: u8, height: u8, num_mines: 
     shared.grid = vec![0; (width as usize) * (height as usize)];
 
     shared.num_mines = num_mines;
-    shared.first_click = true;
+    shared.first_action = true;
     shared.large_cells = large_cells;
 
     shared.cursor_x = 0;
@@ -115,10 +115,10 @@ impl StateRuntime for Playing {
         }
         else if interact && !grid::is_flagged(_shared, before_cursor_x, before_cursor_y) {
             // Première interaction : génération des mines
-            if _shared.first_click {
+            if _shared.first_action {
                 grid::generate_mines(_shared, before_cursor_x, before_cursor_y);
                 grid::calculate_adjacent_mines(_shared);
-                _shared.first_click = false;
+                _shared.first_action = false;
             }
             
             // Révéler les cellules par propagation et les redraw

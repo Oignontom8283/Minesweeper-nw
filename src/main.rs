@@ -37,7 +37,7 @@ pub fn main() -> isize {
         cursor_x: 0,
         cursor_y: 0,
         need_redraw: true,
-        first_click: false,
+        first_action: false,
         num_mines: 0,
         remaining_safe_cells: 0,
         large_cells: true,
