@@ -45,13 +45,13 @@ pub fn is_flagged(shared: &mut SharedState, x: u8, y: u8) -> bool {
 
 pub fn set_adjacent_mines(shared: &mut SharedState, x: u8, y: u8, count: u8) {
     let index = index_by_coords(x, y, shared.width);
-    shared.grid[index] |= (count << 3) & 0b1111_0000; // Stocker le nombre de mines adjacentes dans les 4 bits supérieurs
-    // Pourais stocker dans les 3 bits supérieurs car 2^3 = 8, mais devrais fait +1 chaque fois donc flm
+    shared.grid[index] &= 0b0000_1111; // Nettoyer les anciens bits au cas où
+    shared.grid[index] |= (count << 4) & 0b1111_0000; // Stocker le nombre de mines adjacentes dans les 4 bits supérieurs
 }
 
 pub fn get_adjacent_mines(shared: &mut SharedState, x: u8, y: u8) -> u8 {
     let index = index_by_coords(x, y, shared.width);
-    (shared.grid[index] & 0b1111_0000) >> 3 // Récupérer le nombre de mines adjacentes
+    (shared.grid[index] & 0b1111_0000) >> 4 // Récupérer le nombre de mines adjacentes
 }
 
 
