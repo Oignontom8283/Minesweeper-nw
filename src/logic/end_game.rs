@@ -1,6 +1,8 @@
 use crate::common::*;
 use alloc::{vec::Vec, vec, string::ToString};
 
+const TITLE_TEXT_COLOR: eadkp::Color = eadkp::COLOR_WHITE;
+
 pub fn init_end_game(shared: &mut SharedState, wined: bool) {
     shared.wined = wined;
     shared.need_redraw = true;
@@ -20,17 +22,16 @@ impl StateRuntime for EndGame {
         if _shared.need_redraw {
             _shared.need_redraw = false;
 
-            return if _shared.wined { // Player won
-                vec![
-                    RenderCommand::TitleBackground { color: TITLE_COLOR_ENDGAME_WIN },
-                    RenderCommand::TitleText { text: TITLE_TEXT_WIN.to_string(), color: eadkp::COLOR_WHITE },
-                ]
-            } else { // Player lost
-                vec![
-                    RenderCommand::TitleBackground { color: TITLE_COLOR_ENDGAME_LOSE },
-                    RenderCommand::TitleText { text: TITLE_TEXT_LOSE.to_string(), color: eadkp::COLOR_WHITE },
-                ]
+            let (text, background) = if _shared.wined {
+                (TITLE_TEXT_WIN, TITLE_COLOR_ENDGAME_WIN)
+            } else {
+                (TITLE_TEXT_LOSE, TITLE_COLOR_ENDGAME_LOSE)
             };
+
+            return vec![
+                RenderCommand::TitleBackground { color: background },
+                RenderCommand::TitleText { text: text.to_string(), color: TITLE_TEXT_COLOR, background }
+            ];
         };
 
         // Générer les entrées clavier
