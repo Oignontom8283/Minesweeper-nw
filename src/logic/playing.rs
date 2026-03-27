@@ -141,7 +141,7 @@ impl StateRuntime for Playing {
 
                     let point = grid::cell_to_coords(_shared, x as u16, y as u16);
 
-                    if grid::is_revealed(_shared, x, y) {
+                    if grid::is_revealed(_shared, x, y) { // Si la cellule est révélée, on affiche soit une mine soit un nombre
 
                         if grid::is_mine(_shared, x, y) {
                             grid::render_cell_mine(_shared, point); // Rendre la mine si c'est une mine
@@ -151,11 +151,11 @@ impl StateRuntime for Playing {
                             grid::render_cell_number(_shared, point, nub); // Rendre le nombre de mines adjacentes sinon
                         }
                     }
-                    else if grid::is_flagged(_shared, x, y) {
+                    else if grid::is_flagged(_shared, x, y) { // Si la cellule n'est pas révélée mais est flaggée, on affiche un drapeau
                         grid::render_cell_flag(_shared, point);
                     }
                     else {
-                        grid::render_cell_dirt(_shared, point);
+                        grid::render_cell_dirt(_shared, point); // Sinon on affiche de la terre
                     }
 
                 },
