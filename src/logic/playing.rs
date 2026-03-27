@@ -103,35 +103,30 @@ impl StateRuntime for Playing {
         let interact = just.key_down(eadkp::input::Key::Ok);
         let flag = just.key_down(eadkp::input::Key::Back);
 
-        if flag { // On priorise le flag en cas d'appui simultané pour éviter une catastrophe
+        let mut current_cell_changed = false;
+
+        if flag { 
+            // On priorise le flag en cas d'appui simultané pour éviter une catastrophe
             grid::toggle_flag(_shared, before_cursor_x, before_cursor_y);
+            current_cell_changed = true;
+        }
+        else if interact && !grid::is_flagged(_shared, before_cursor_x, before_cursor_y) {
+            // Première interaction : génération des mines
+            if _shared.first_click {
+                grid::generate_mines(_shared, before_cursor_x, before_cursor_y);
+                grid::calculate_adjacent_mines(_shared);
+                _shared.first_click = false;
+            }
+            
+            grid::set_revealed(_shared, before_cursor_x, before_cursor_y);
+            current_cell_changed = true;
+        }
+
+        // Si l'état de la cellule a changé, on la redessine avec le curseur par dessus
+        if current_cell_changed {
             cells_to_render.push(RenderCommand::Cell { x: before_cursor_x, y: before_cursor_y });
             cells_to_render.push(RenderCommand::Cursor { x: before_cursor_x, y: before_cursor_y });
         }
-        else if interact {
-            if !grid::is_flagged(_shared, before_cursor_x, before_cursor_y) {
-                
-                // Première interactioon : génération des mines
-                if _shared.first_click {
-                    // Générer les mines en s'assurant que la première case cliquée n'est pas une mine
-                    grid::generate_mines(_shared, before_cursor_x, before_cursor_y); // Exemple avec 10 mines
-                    grid::calculate_adjacent_mines(_shared);
-    
-                    // Marquer que le premier clic a été effectué
-                    _shared.first_click = false;
-                }
-                
-                grid::set_revealed(_shared, before_cursor_x, before_cursor_y); // Révéler la cellule
-
-                cells_to_render.push(RenderCommand::Cell { x: before_cursor_x, y: before_cursor_y });
-                cells_to_render.push(RenderCommand::Cursor { x: before_cursor_x, y: before_cursor_y });
-            }
-
-        }
-
-
-
-
 
         cells_to_render
     }
