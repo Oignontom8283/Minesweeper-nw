@@ -25,7 +25,10 @@ pub struct SharedState {
     pub cursor_y: u8,
     pub first_click: bool,
     pub num_mines: usize,
+    pub remaining_safe_cells: usize,
     pub large_cells: bool,
+
+    pub wined: bool, // true if the player has won, false if they lost (used for end game screen)
 
     pub asset_dirt_large: eadkp::Image,
     pub asset_dirt_small: eadkp::Image,

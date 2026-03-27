@@ -39,7 +39,10 @@ pub fn main() -> isize {
         need_redraw: true,
         first_click: false,
         num_mines: 0,
+        remaining_safe_cells: 0,
         large_cells: true,
+
+        wined: false,
 
         asset_dirt_large: eadkp::ImageLoader::from_flash(eadkp::include_image!("dirt_large.png")).expect("Failed to load dirt large image"),
         asset_dirt_small: eadkp::ImageLoader::from_flash(eadkp::include_image!("dirt_small.png")).expect("Failed to load dirt small image"),
