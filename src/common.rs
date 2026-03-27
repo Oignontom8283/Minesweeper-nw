@@ -31,6 +31,8 @@ pub struct SharedState {
     pub asset_dirt_small: eadkp::Image,
     pub asset_flag_large: eadkp::Image,
     pub asset_flag_small: eadkp::Image,
+    pub asset_mine_large: eadkp::Image,
+    pub asset_mine_small: eadkp::Image,
 }
 
 pub enum RenderCommand {

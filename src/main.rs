@@ -46,6 +46,9 @@ pub fn main() -> isize {
 
         asset_flag_large: eadkp::ImageLoader::from_flash(eadkp::include_image!("flag_large.png")).expect("Failed to load dirt large image"),
         asset_flag_small: eadkp::ImageLoader::from_flash(eadkp::include_image!("flag_small.png")).expect("Failed to load dirt small image"),
+
+        asset_mine_large: eadkp::ImageLoader::from_flash(eadkp::include_image!("mine_large.png")).expect("Failed to load mine large image"),
+        asset_mine_small: eadkp::ImageLoader::from_flash(eadkp::include_image!("mine_small.png")).expect("Failed to load mine small image"),
     };
 
     let mut prev = eadkp::input::KeyboardState::scan(); // Initial keyboard state
