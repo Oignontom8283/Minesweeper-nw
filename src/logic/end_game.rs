@@ -40,6 +40,18 @@ impl StateRuntime for EndGame {
     }
 
     fn render(_shared: &mut SharedState, _to_render: Vec<RenderCommand>) {
-        // 
+        for cmd in _to_render {
+            match cmd {
+                RenderCommand::TitleBackground { color } => {
+                    eadkp::display::push_rect_uniform(TITLEBAR_RECT, color);
+                }
+                RenderCommand::TitleText { text, color, background } => {
+                    let point = title_text_to_point(&text, TITLE_FONT);
+                    
+                    eadkp::display::draw_string(&text, point, true, color, background);
+                },
+                _ => {},
+            }
+        }
     }
 }
