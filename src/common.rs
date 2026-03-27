@@ -53,7 +53,7 @@ pub enum RenderCommand {
     // Common
     Background { color: eadkp::Color },
     TitleBackground { color: eadkp::Color },
-    TitleText { text: String, color: eadkp::Color },
+    TitleText { text: String, color: eadkp::Color, background: eadkp::Color },
 
     // jeu
     Cell { x: u8, y: u8 },
@@ -71,4 +71,12 @@ pub trait StateRuntime {
     fn enter(shared: &mut SharedState);
     fn update(shared: &mut SharedState, new_keyboard: eadkp::input::KeyboardState, old_keyboard: eadkp::input::KeyboardState) -> Vec<RenderCommand>;
     fn render(shared: &mut SharedState, to_render: Vec<RenderCommand>);
+}
+
+
+pub fn title_text_to_point(text: &str) -> eadkp::Point {
+    let x = TITLEBAR_RECT.width / 2 - (text.len() as u16) / 2;
+    let y = TITLEBAR_RECT.height / 2 - eadkp::LARGE_FONT.height / 2;
+
+    eadkp::Point { x, y }
 }
