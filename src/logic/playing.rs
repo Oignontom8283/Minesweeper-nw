@@ -104,9 +104,12 @@ impl StateRuntime for Playing {
         let interact = just.key_down(eadkp::input::Key::Ok);
         let flag = just.key_down(eadkp::input::Key::Back);
 
-        if flag { 
-            // On priorise le flag en cas d'appui simultané pour éviter une catastrophe
+        if flag { // On priorise le flag en cas d'appui simultané pour éviter une catastrophe
+            
+            // Toggle du flag de la cellule
             grid::toggle_flag(_shared, before_cursor_x, before_cursor_y);
+
+            // Redessiner la cellule pour afficher le changement de flag
             cells_to_render.push(RenderCommand::Cell { x: before_cursor_x, y: before_cursor_y });
             cells_to_render.push(RenderCommand::Cursor { x: before_cursor_x, y: before_cursor_y });
         }
@@ -118,12 +121,13 @@ impl StateRuntime for Playing {
                 _shared.first_click = false;
             }
             
+            // Révéler les cellules par propagation et les redraw
             let revealed = grid::reveal_infect(_shared, before_cursor_x, before_cursor_y);
             for (rx, ry) in revealed {
                 cells_to_render.push(RenderCommand::Cell { x: rx, y: ry });
             }
 
-            // Toujours redessiner le curseur après l'interaction pour qu'il reste visible par-dessus la cellule
+            // Toujours redessiner le curseur après l'interaction
             cells_to_render.push(RenderCommand::Cursor { x: before_cursor_x, y: before_cursor_y });
         }
 
