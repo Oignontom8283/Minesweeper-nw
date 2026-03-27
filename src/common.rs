@@ -7,6 +7,7 @@ pub const CELL_MARGIN: u16 = 1;
 pub const CURSOR_COLOR: eadkp::Color = eadkp::COLOR_MAGENTA;
 pub const BACKGROUND_PLAYING_COLOR: eadkp::Color = eadkp::COLOR_WHITE;
 
+pub const TITLE_FONT: eadkp::FontSize = eadkp::LARGE_FONT;
 pub const TITLEBAR_RECT: eadkp::Rect = eadkp::Rect { x: 0, y:0, width: eadkp::SCREEN_RECT.width, height: eadkp::LARGE_FONT.height };
 pub const PLAY_AREA_RECT: eadkp::Rect = eadkp::Rect { x: 0, y: TITLEBAR_RECT.height, width: eadkp::SCREEN_RECT.width, height: eadkp::SCREEN_RECT.height - TITLEBAR_RECT.height };
 
@@ -74,9 +75,10 @@ pub trait StateRuntime {
 }
 
 
-pub fn title_text_to_point(text: &str) -> eadkp::Point {
-    let x = TITLEBAR_RECT.width / 2 - (text.len() as u16) / 2;
-    let y = TITLEBAR_RECT.height / 2 - eadkp::LARGE_FONT.height / 2;
+
+pub fn title_text_to_point(text: &str, font_size: eadkp::FontSize) -> eadkp::Point {
+    let x = TITLEBAR_RECT.width / 2 - ((text.len() * font_size.width as usize) / 2) as u16;
+    let y = TITLEBAR_RECT.height / 2 - font_size.height / 2;
 
     eadkp::Point { x, y }
 }
