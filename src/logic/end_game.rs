@@ -2,9 +2,9 @@ use crate::common::*;
 use alloc::vec::Vec;
 
 
-pub struct GameOver;
+pub struct EndGame;
 
-impl StateRuntime for GameOver {
+impl StateRuntime for EndGame {
     fn enter(_shared: &mut SharedState) {
         //
     }

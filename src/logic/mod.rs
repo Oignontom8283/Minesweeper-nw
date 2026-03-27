@@ -1,8 +1,8 @@
 
-mod game_over;
+mod end_game;
 mod main_menu;
 mod playing;
 
-pub use game_over::*;
+pub use end_game::*;
 pub use main_menu::*;
 pub use playing::*;

@@ -71,8 +71,8 @@ pub fn main() -> isize {
                 Playing::render(&mut shared, cmds);
             },
             StateEnum::GameOver => {
-                let cmds = GameOver::update(&mut shared, now, prev);
-                GameOver::render(&mut shared, cmds);
+                let cmds = EndGame::update(&mut shared, now, prev);
+                EndGame::render(&mut shared, cmds);
             },
         };
 
