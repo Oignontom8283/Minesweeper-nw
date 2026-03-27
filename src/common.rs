@@ -1,4 +1,4 @@
-use alloc::{vec::Vec};
+use alloc::{vec::Vec, string::String};
 
 pub const CELL_SMALL: u16 = 16;
 pub const CELL_LARGE: u16 = 20;
@@ -9,6 +9,14 @@ pub const BACKGROUND_PLAYING_COLOR: eadkp::Color = eadkp::COLOR_WHITE;
 
 pub const TITLEBAR_RECT: eadkp::Rect = eadkp::Rect { x: 0, y:0, width: eadkp::SCREEN_RECT.width, height: eadkp::LARGE_FONT.height };
 pub const PLAY_AREA_RECT: eadkp::Rect = eadkp::Rect { x: 0, y: TITLEBAR_RECT.height, width: eadkp::SCREEN_RECT.width, height: eadkp::SCREEN_RECT.height - TITLEBAR_RECT.height };
+
+pub const TITLE_COLOR_PLAYING: eadkp::Color = eadkp::Color::from_888(255, 181, 49);
+pub const TITLE_COLOR_MENU: eadkp::Color = eadkp::Color::from_888(255, 181, 49);
+pub const TITLE_COLOR_ENDGAME_WIN: eadkp::Color = eadkp::Color::from_888(50, 168, 82);
+pub const TITLE_COLOR_ENDGAME_LOSE: eadkp::Color = eadkp::Color::from_888(255, 104, 74);
+
+pub const TITLE_TEXT_WIN: &str = "You win !";
+pub const TITLE_TEXT_LOSE: &str = "You lose !";
 
 pub enum StateEnum {
     MainMenu,
@@ -44,7 +52,8 @@ pub enum RenderCommand {
 
     // Common
     Background { color: eadkp::Color },
-    TitleBar,
+    TitleBackground { color: eadkp::Color },
+    TitleText { text: String, color: eadkp::Color },
 
     // jeu
     Cell { x: u8, y: u8 },
@@ -52,6 +61,9 @@ pub enum RenderCommand {
 
     // menu
     Instruction
+
+    // end game
+
 }
 
 pub trait StateRuntime {
