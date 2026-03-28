@@ -1,3 +1,5 @@
+use core::cell;
+
 use crate::common::*;
 use crate::grid;
 use crate::logic::end_game;
@@ -11,9 +13,8 @@ pub fn init_playing(shared: &mut SharedState, width: u8, height: u8, num_mines: 
     shared.height = height;
     shared.grid = vec![0; (width as usize) * (height as usize)];
 
-    let cell_size = grid::cell_size(shared);
-    shared.start_x = eadkp::SCREEN_RECT.width / 2 - (shared.width as u16 * cell_size) / 2;
-    shared.start_y = (eadkp::SCREEN_RECT.height - TITLEBAR_RECT.height) / 2 - (shared.height as u16 * cell_size) / 2 + TITLEBAR_RECT.height;
+    // Calculer la position de départ pour centrer la grille à l'écran
+    grid::set_start_pos(shared);
 
     shared.num_mines = num_mines;
     shared.remaining_safe_cells = (width as usize) * (height as usize) - num_mines;
@@ -48,6 +49,7 @@ impl StateRuntime for Playing {
 
             // Rendre le fond d'écran
             cells_to_render.push(RenderCommand::Background { color: eadkp::COLOR_WHITE });
+            cells_to_render.push(RenderCommand::Frame { color: FRAME_COLOR }); // Rendre le cadre du jeu
 
             // Rerendre tout les cellules
             for y in 0.._shared.height {
@@ -202,6 +204,9 @@ impl StateRuntime for Playing {
 
                     // Rendre le curseur a la positon de la cellule
                     grid::render_cell_cursor(_shared, point);
+                },
+                RenderCommand::Frame { color } => {
+
                 },
                 _ => {}
             }

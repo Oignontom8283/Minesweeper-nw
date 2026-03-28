@@ -185,6 +185,14 @@ pub fn cell_to_coords(shared: &mut SharedState, x: u16, y: u16) -> eadkp::Point 
     screen_pos
 }
 
+pub fn set_start_pos(shared: &mut SharedState) {
+    let cell_size = cell_size(shared);
+
+    // Calculer la position de départ pour centrer la grille à l'écran
+    shared.start_x = eadkp::SCREEN_RECT.width / 2 - (shared.width as u16 * cell_size + shared.width as u16 * CELL_MARGIN) / 2;
+    shared.start_y = (eadkp::SCREEN_RECT.height - TITLEBAR_RECT.height) / 2 - (shared.height as u16 * cell_size + shared.height as u16 * CELL_MARGIN) / 2 + TITLEBAR_RECT.height;
+}
+
 
 pub fn render_cell_dirt(shared: &mut SharedState, point: eadkp::Point) {
     let cell_image = if shared.large_cells { &shared.asset_dirt_large } else { &shared.asset_dirt_small };
