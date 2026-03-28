@@ -1,4 +1,4 @@
-use alloc::{vec::Vec, string::String};
+use alloc::{format, string::String, vec::Vec};
 
 pub const CELL_SMALL: u16 = 16;
 pub const CELL_LARGE: u16 = 20;
@@ -73,6 +73,8 @@ pub enum RenderCommand {
     Cell { x: u8, y: u8 },
     Cursor { x: u8, y: u8 },
     Frame { color: eadkp::Color },
+    TitleTime { time: String, color: eadkp::Color, background: eadkp::Color },
+    TitleMines { mines: String, color: eadkp::Color, background: eadkp::Color },
 
     // menu
     Instruction
@@ -95,4 +97,16 @@ pub fn title_text_to_point(text: &str, font_size: eadkp::FontSize) -> eadkp::Poi
     let y = TITLEBAR_RECT.height / 2 - font_size.height / 2;
 
     eadkp::Point { x, y }
+}
+
+pub fn time_to_string(time: u64) -> String {
+    let seconds = (time / 1000) % 60;
+    let minutes  =(time / (60 * 1000)) % 60;
+    let hours = time / (60 *60 *1000);
+
+    if hours > 0 {
+        format!("{:02}:{:02}:{:02}", hours, minutes, seconds)
+    } else {
+        format!("{:02}:{:02}", minutes, seconds)
+    }
 }
