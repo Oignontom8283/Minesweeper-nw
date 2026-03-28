@@ -5,6 +5,8 @@ pub const CELL_LARGE: u16 = 20;
 pub const CELL_MARGIN: u16 = 1;
 
 pub const CURSOR_COLOR: eadkp::Color = eadkp::COLOR_MAGENTA;
+pub const FRAME_COLOR: eadkp::Color = eadkp::Color::from_888(135, 135, 135); // gray
+
 pub const BACKGROUND_PLAYING_COLOR: eadkp::Color = eadkp::COLOR_WHITE;
 
 pub const TITLE_FONT: eadkp::FontSize = eadkp::LARGE_FONT;
@@ -61,6 +63,7 @@ pub enum RenderCommand {
     // jeu
     Cell { x: u8, y: u8 },
     Cursor { x: u8, y: u8 },
+    Frame { color: eadkp::Color },
 
     // menu
     Instruction
