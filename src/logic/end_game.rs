@@ -56,7 +56,7 @@ impl StateRuntime for EndGame {
                 RenderCommand::TitleText { text, color, background } => {
                     let point = title_text_to_point(&text, TITLE_FONT);
                     
-                    eadkp::display::draw_string(&text, point, true, color, background);
+                    eadkp::display::draw_string(&text, point, TITLE_FONT_IS_LARGE, color, background);
                 },
                 _ => {},
             }
