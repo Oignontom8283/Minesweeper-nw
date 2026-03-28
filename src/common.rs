@@ -32,6 +32,8 @@ pub struct SharedState {
     pub grid: Vec<u8>,
     pub width: u8,
     pub height: u8,
+    pub start_x: u16,
+    pub start_y: u16,
     pub cursor_x: u8,
     pub cursor_y: u8,
     pub first_action: bool,

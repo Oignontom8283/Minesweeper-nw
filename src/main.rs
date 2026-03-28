@@ -34,6 +34,8 @@ pub fn main() -> isize {
         grid: vec![0; 0], // Empty grid
         width: 0,
         height: 0,
+        start_x: 0,
+        start_y: 0,
         cursor_x: 0,
         cursor_y: 0,
         need_redraw: true,

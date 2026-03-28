@@ -11,6 +11,10 @@ pub fn init_playing(shared: &mut SharedState, width: u8, height: u8, num_mines: 
     shared.height = height;
     shared.grid = vec![0; (width as usize) * (height as usize)];
 
+    let cell_size = grid::cell_size(shared);
+    shared.start_x = eadkp::SCREEN_RECT.width / 2 - (shared.width as u16 * cell_size) / 2;
+    shared.start_y = (eadkp::SCREEN_RECT.height - TITLEBAR_RECT.height) / 2 - (shared.height as u16 * cell_size) / 2 + TITLEBAR_RECT.height;
+
     shared.num_mines = num_mines;
     shared.remaining_safe_cells = (width as usize) * (height as usize) - num_mines;
     shared.first_action = true;

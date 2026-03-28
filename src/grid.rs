@@ -171,11 +171,12 @@ pub fn cell_size(shared: &mut SharedState) -> u16 {
 }
 
 pub fn cell_to_coords(shared: &mut SharedState, x: u16, y: u16) -> eadkp::Point {
+
     let cell_size = cell_size(shared);
 
-    let p_x = x as u16 * cell_size;
-    let p_y = y as u16 * cell_size;
-    
+    let p_x = x as u16 * cell_size + shared.start_x;
+    let p_y = y as u16 * cell_size + shared.start_y;
+
     let screen_pos = eadkp::Point {
         x: p_x,
         y: p_y,
