@@ -1,6 +1,7 @@
 use crate::common::*;
 use alloc::{vec::Vec};
 
+
 pub fn index_by_coords(x: u8, y: u8, width: u8) -> usize {
     (y as usize) * (width as usize) + (x as usize)
 }
@@ -26,6 +27,7 @@ pub fn is_revealed(shared: &mut SharedState, x: u8, y: u8) -> bool {
     (shared.grid[index] & 0b0000_0010) != 0 // Vérifier si le deuxième bit est à 1
 }
 
+#[allow(dead_code)]
 pub fn set_flagged(shared: &mut SharedState, x: u8, y: u8) {
     let index = index_by_coords(x, y, shared.width);
     shared.grid[index] |= 0b0000_0100; // Marquer comme flaggé (troisième bit à 1)

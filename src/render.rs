@@ -98,7 +98,7 @@ pub fn render_frame(shared: &mut SharedState, color: eadkp::Color, thickness: u8
     // Les bords du cadre intérieur commencent juste avant la première marge
     let frame_x = shared.start_x - CELL_MARGIN;
     let frame_y = shared.start_y - CELL_MARGIN;
-    let t = FRAME_THICKNESS as u16;
+    let t = thickness as u16;
 
     // On englobe complètement la zone (la barre englobe frame_x jusqu'à frame_x + total_width)
 
