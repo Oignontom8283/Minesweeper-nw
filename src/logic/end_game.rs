@@ -24,9 +24,9 @@ impl StateRuntime for EndGame {
             _shared.need_redraw = false;
 
             let (text, background) = if _shared.wined {
-                (TITLE_TEXT_WIN, TITLE_COLOR_ENDGAME_WIN)
+                (TITLE_TEXT_WIN, TITLE_BACKGROUND_COLOR_ENDGAME_WIN)
             } else {
-                (TITLE_TEXT_LOSE, TITLE_COLOR_ENDGAME_LOSE)
+                (TITLE_TEXT_LOSE, TITLE_BACKGROUND_COLOR_ENDGAME_LOSE)
             };
 
             return vec![

@@ -60,7 +60,7 @@ impl StateRuntime for Playing {
             cells_to_render.push(RenderCommand::Cursor { x: _shared.cursor_x, y: _shared.cursor_y });
 
             // Rendre le title
-            cells_to_render.push(RenderCommand::TitleBackground { color: TITLE_COLOR_PLAYING });
+            cells_to_render.push(RenderCommand::TitleBackground { color: TITLE_BACKGROUND_COLOR_PLAYING });
 
             return cells_to_render;
         }
