@@ -14,7 +14,10 @@ impl StateRuntime for MainMenu {
         
         if _shared.need_redraw {
             _shared.need_redraw = false;
-            return vec![RenderCommand::Instruction];
+            return vec![
+                RenderCommand::Background { color: eadkp::COLOR_WHITE },
+                RenderCommand::Instruction
+            ];
         }
 
         if _new_keyboard.get_just_pressed(_old_keyboard).key_down(eadkp::input::Key::Ok) {
@@ -38,11 +41,15 @@ impl StateRuntime for MainMenu {
         
         for cmd in _to_render {
             match cmd {
+                RenderCommand::Background { color } => {
+                    eadkp::display::push_rect_uniform(eadkp::SCREEN_RECT, color);
+                },
                 RenderCommand::Instruction => {
 
                     let text = "Press OK to start";
 
-                    let x =eadkp::SCREEN_RECT.width / 2 - (text.len() as u16) / 2;
+                    let text_width = (text.len() as u16) * eadkp::LARGE_FONT.width;
+                    let x = eadkp::SCREEN_RECT.width / 2 - text_width / 2;
                     let y = eadkp::SCREEN_RECT.height / 2 - eadkp::LARGE_FONT.height / 2;
 
                     eadkp::display::draw_string(

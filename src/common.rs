@@ -6,6 +6,7 @@ pub const CELL_MARGIN: u16 = 1;
 
 pub const CURSOR_COLOR: eadkp::Color = eadkp::COLOR_MAGENTA;
 pub const FRAME_COLOR: eadkp::Color = eadkp::Color::from_888(135, 135, 135); // gray
+pub const FRAME_THICKNESS: u8 = 3;
 
 pub const BACKGROUND_PLAYING_COLOR: eadkp::Color = eadkp::COLOR_WHITE;
 

@@ -56,30 +56,18 @@ pub fn get_adjacent_mines(shared: &mut SharedState, x: u8, y: u8) -> u8 {
 
 
 pub fn generate_mines(shared: &mut SharedState, first_x: u8, first_y: u8) {
-    let mut coords: Vec<(u8, u8)> = Vec::new();
+    let mut mines_placed = 0;
 
-    // Générer des coordonnées uniques pour les mines
-    for _ in 0..shared.num_mines {
+    // Générer des coordonnées uniques pour les mines sans passer par un vecteur temporaire
+    while mines_placed < shared.num_mines {
+        let random_x = eadkp::random::randint(0, shared.width as u32) as u8;
+        let random_y = eadkp::random::randint(0, shared.height as u32) as u8;
 
-        let mut unique = false;
-        let mut random_x = 0;
-        let mut random_y = 0;
-
-        // Générer des coordonnées jusqu'à ce qu'elles soient uniques
-        while !unique {
-            random_x = eadkp::random::randint(0, shared.width as u32) as u8; // x aléatoire
-            random_y = eadkp::random::randint(0, shared.height as u32) as u8; // y aléatoire
-
-            // Assurer que les coordonnées sont uniques et ne sont pas la première case révélée
-            unique = !coords.contains(&(random_x, random_y)) && !(random_x == first_x && random_y == first_y);
+        // Vérifier qu'on n'est pas sur la première case et que la case ne contient pas déjà une mine
+        if !(random_x == first_x && random_y == first_y) && !is_mine(shared, random_x, random_y) {
+            set_mine(shared, random_x, random_y);
+            mines_placed += 1;
         }
-
-        coords.push((random_x, random_y));
-    }
-
-    // Placer les mines dans la grille
-    for (x, y) in coords {
-        set_mine(shared, x, y);
     }
 }
 
@@ -122,20 +110,20 @@ pub fn calculate_adjacent_mines(shared: &mut SharedState) {
 
 pub fn reveal_infect(shared: &mut SharedState, x_start: u8, y_start: u8) -> Vec<(u8, u8)> {
     let mut stack = Vec::new();
-    stack.push((x_start, y_start));
     let mut revealed = Vec::new();
 
+    // S'assurer qu'on ne traite pas une case déjà gérée
+    if is_revealed(shared, x_start, y_start) || is_flagged(shared, x_start, y_start) {
+        return revealed;
+    }
+
+    // On marque et push le pixel de départ
+    set_revealed(shared, x_start, y_start);
+    revealed.push((x_start, y_start));
+    stack.push((x_start, y_start));
+
     while let Some((x, y)) = stack.pop() {
-        // skip si déjà révélé ou flaggée
-        if is_revealed(shared, x, y) || is_flagged(shared, x, y) {
-            continue;
-        }
-
-        // révéler
-        set_revealed(shared, x, y);
-        revealed.push((x, y));
-
-        // stop si c'est une mine
+        // stop si c'est une mine (théoriquement impossible sur le premier clic grâce à generate_mines)
         if is_mine(shared, x, y) {
             continue;
         }
@@ -151,7 +139,11 @@ pub fn reveal_infect(shared: &mut SharedState, x_start: u8, y_start: u8) -> Vec<
                 if nx == x && ny == y {
                     continue;
                 }
-                if !is_revealed(shared, nx, ny) {
+                
+                // Si la case n'a pas encore été traitée
+                if !is_revealed(shared, nx, ny) && !is_flagged(shared, nx, ny) {
+                    set_revealed(shared, nx, ny); // Marquer pour éviter de l'ajouter en double dans le stack
+                    revealed.push((nx, ny));
                     stack.push((nx, ny));
                 }
             }
@@ -188,9 +180,18 @@ pub fn cell_to_coords(shared: &mut SharedState, x: u16, y: u16) -> eadkp::Point 
 pub fn set_start_pos(shared: &mut SharedState) {
     let cell_size = cell_size(shared);
 
-    // Calculer la position de départ pour centrer la grille à l'écran
-    shared.start_x = eadkp::SCREEN_RECT.width / 2 - (shared.width as u16 * cell_size + shared.width as u16 * CELL_MARGIN) / 2;
-    shared.start_y = (eadkp::SCREEN_RECT.height - TITLEBAR_RECT.height) / 2 - (shared.height as u16 * cell_size + shared.height as u16 * CELL_MARGIN) / 2 + TITLEBAR_RECT.height;
+    // Taille totale avec toutes les bordures : nb_cellules * (taille_cellule + marge) + 1 marge initiale
+    let total_width = (shared.width as u16 * cell_size) + CELL_MARGIN;
+    let total_height = (shared.height as u16 * cell_size) + CELL_MARGIN;
+
+    // Centrage global du bloc
+    let full_start_x = eadkp::SCREEN_RECT.width / 2 - total_width / 2;
+    let full_start_y = TITLEBAR_RECT.height + PLAY_AREA_RECT.height / 2 - total_height / 2;
+
+    // start_x et start_y sont les coordonnées de dessin de la PREMIÈRE case.
+    // Il faut donc décaler d'une marge car draw commence après la bordure initiale.
+    shared.start_x = full_start_x + CELL_MARGIN;
+    shared.start_y = full_start_y + CELL_MARGIN;
 }
 
 

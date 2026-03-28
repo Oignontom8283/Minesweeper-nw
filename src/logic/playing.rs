@@ -11,7 +11,10 @@ pub fn init_playing(shared: &mut SharedState, width: u8, height: u8, num_mines: 
     // Initialiser la grille
     shared.width = width;
     shared.height = height;
-    shared.grid = vec![0; (width as usize) * (height as usize)];
+    
+    let size = (width as usize) * (height as usize);
+    shared.grid.clear();          // On vide la grille précédente
+    shared.grid.resize(size, 0);  // On la remplit de 0 en réutilisant la mémoire allouée
 
     // Calculer la position de départ pour centrer la grille à l'écran
     grid::set_start_pos(shared);
@@ -206,6 +209,40 @@ impl StateRuntime for Playing {
                     grid::render_cell_cursor(_shared, point);
                 },
                 RenderCommand::Frame { color } => {
+
+                    let total_width = (_shared.width as u16) * grid::cell_size(_shared) + CELL_MARGIN;
+                    let total_height = (_shared.height as u16) * grid::cell_size(_shared) + CELL_MARGIN;
+
+                    // Les bords du cadre intérieur commencent juste avant la première marge
+                    let frame_x = _shared.start_x - CELL_MARGIN;
+                    let frame_y = _shared.start_y - CELL_MARGIN;
+                    let t = FRAME_THICKNESS as u16;
+
+                    // On englobe complètement la zone (la barre englobe frame_x jusqu'à frame_x + total_width)
+
+                    // Barre du haut
+                    eadkp::display::push_rect_uniform(
+                        eadkp::Rect { x: frame_x - t, y: frame_y - t, width: total_width + 2 * t, height: t },
+                        color,
+                    );
+
+                    // Barre du bas
+                    eadkp::display::push_rect_uniform(
+                        eadkp::Rect { x: frame_x - t, y: frame_y + total_height, width: total_width + 2 * t, height: t },
+                        color,
+                    );
+
+                    // Barre de gauche
+                    eadkp::display::push_rect_uniform(
+                        eadkp::Rect { x: frame_x - t, y: frame_y, width: t, height: total_height },
+                        color,
+                    );
+
+                    // Barre de droite
+                    eadkp::display::push_rect_uniform(
+                        eadkp::Rect { x: frame_x + total_width, y: frame_y, width: t, height: total_height },
+                        color,
+                    );
 
                 },
                 _ => {}
