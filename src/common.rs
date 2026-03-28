@@ -47,9 +47,10 @@ pub struct SharedState {
     pub remaining_safe_cells: usize,
     pub large_cells: bool,
 
-    pub base_time: u64,
-    pub start_time: u64,
-    pub stoped_time: u64,
+    pub time_base: u64,
+    pub time_started: u64,
+    pub time_stoped: u64,
+    pub time_to_next_update: u64,
 
     pub wined: bool, // true if the player has won, false if they lost (used for end game screen)
 

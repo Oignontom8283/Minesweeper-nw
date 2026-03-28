@@ -45,9 +45,10 @@ pub fn main() -> isize {
         remaining_safe_cells: 0,
         large_cells: true,
 
-        base_time: 0,
-        start_time: 0,
-        stoped_time: 0,
+        time_base: 0,
+        time_started: 0,
+        time_stoped: 0,
+        time_to_next_update: 0,
 
         wined: false,
 
