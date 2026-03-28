@@ -56,7 +56,11 @@ impl StateRuntime for Playing {
                 }
             }
 
+            // Rerendre le curseur
             cells_to_render.push(RenderCommand::Cursor { x: _shared.cursor_x, y: _shared.cursor_y });
+
+            // Rendre le title
+            cells_to_render.push(RenderCommand::TitleBackground { color: TITLE_COLOR_PLAYING });
 
             return cells_to_render;
         }
@@ -207,6 +211,10 @@ impl StateRuntime for Playing {
 
                     // Rendre le cadre du jeu
                     render::render_frame(_shared, color, FRAME_THICKNESS);
+                },
+                RenderCommand::TitleBackground { color } => {
+                    // rendre le background du titre
+                    eadkp::display::push_rect_uniform(TITLEBAR_RECT, color);
                 },
                 _ => {}
             }
