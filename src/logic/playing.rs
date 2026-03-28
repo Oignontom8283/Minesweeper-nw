@@ -1,10 +1,7 @@
-use core::cell;
-
 use crate::common::*;
 use crate::grid;
 use crate::logic::end_game;
 use alloc::vec::Vec;
-use alloc::vec;
 
 pub fn init_playing(shared: &mut SharedState, width: u8, height: u8, num_mines: usize, large_cells: bool) {
     

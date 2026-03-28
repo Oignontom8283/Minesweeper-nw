@@ -210,14 +210,15 @@ pub fn render_cell_flag(shared: &mut SharedState, point: eadkp::Point) {
 }
 
 pub fn render_cell_number(shared: &mut SharedState, point: eadkp::Point, number: u8) {
-
-    let cell_size = cell_size(shared);
+    // On ne "peint" de background blanc QUE sur la partie correspondant à la cellule elle-même, 
+    // pas sur la marge, sinon on écrase le cadre si on est sur la bordure !
+    let cell_visual_size = if shared.large_cells { CELL_LARGE } else { CELL_SMALL };
 
     let background_rect = eadkp::Rect {
         x: point.x,
         y: point.y,
-        width: cell_size,
-        height: cell_size,
+        width: cell_visual_size,
+        height: cell_visual_size,
     };
 
     // Rendre le background de la cellule
@@ -227,7 +228,7 @@ pub fn render_cell_number(shared: &mut SharedState, point: eadkp::Point, number:
     if number > 0 {
         let text = number.to_string();
 
-        let text_x = point.x + (cell_size / 2) - (eadkp::LARGE_FONT.width / 2);
+        let text_x = point.x + (cell_visual_size / 2) - (eadkp::LARGE_FONT.width / 2);
         let text_y = point.y + 1;
 
         let text_point = eadkp::Point {
@@ -243,7 +244,6 @@ pub fn render_cell_number(shared: &mut SharedState, point: eadkp::Point, number:
             BACKGROUND_PLAYING_COLOR
         );
     }
-
 }
 
 pub fn render_cell_mine(shared: &mut SharedState, point: eadkp::Point) {
@@ -254,29 +254,31 @@ pub fn render_cell_mine(shared: &mut SharedState, point: eadkp::Point) {
 }
 
 pub fn render_cell_cursor(shared: &mut SharedState, point: eadkp::Point) {
-    let cell_size = cell_size(shared);
+    // Le curseur doit uniquement entourer la cellule elle-même et JAMAIS sa marge
+    // Sinon le curseur dessinera par-dessus l'espace entre les cases
+    let cell_visual_size = if shared.large_cells { CELL_LARGE } else { CELL_SMALL };
 
     // Rendre la bordure du haut
     eadkp::display::push_rect_uniform(
-        eadkp::Rect { x: point.x, y: point.y, width: cell_size - 1, height: 1},
+        eadkp::Rect { x: point.x, y: point.y, width: cell_visual_size, height: 1},
         CURSOR_COLOR
     );
 
     // Rendre la bordure du bas
     eadkp::display::push_rect_uniform(
-        eadkp::Rect { x: point.x, y: point.y + cell_size - 2, width: cell_size - 2, height: 1},
+        eadkp::Rect { x: point.x, y: point.y + cell_visual_size - 1, width: cell_visual_size, height: 1},
         CURSOR_COLOR
     );
 
     // Rendre la bordure de gauche
     eadkp::display::push_rect_uniform(
-        eadkp::Rect { x: point.x, y: point.y + 1, width: 1, height: cell_size - 2 },
+        eadkp::Rect { x: point.x, y: point.y + 1, width: 1, height: cell_visual_size - 2 },
         CURSOR_COLOR
     );
 
     // Rendre la bordure de droite
     eadkp::display::push_rect_uniform(
-        eadkp::Rect{ x: point.x + cell_size - 2, y: point.y + 1, width: 1, height: cell_size - 2 },
+        eadkp::Rect{ x: point.x + cell_visual_size - 1, y: point.y + 1, width: 1, height: cell_visual_size - 1},
         CURSOR_COLOR
     );
 }
