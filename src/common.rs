@@ -10,7 +10,8 @@ pub const FRAME_THICKNESS: u8 = 1;
 
 pub const BACKGROUND_PLAYING_COLOR: eadkp::Color = eadkp::COLOR_WHITE;
 
-pub const TITLE_FONT: eadkp::FontSize = eadkp::LARGE_FONT;
+pub const TITLE_FONT_IS_LARGE: bool = true;
+pub const TITLE_FONT: eadkp::FontSize = if TITLE_FONT_IS_LARGE { eadkp::LARGE_FONT } else { eadkp::SMALL_FONT };
 pub const TITLEBAR_RECT: eadkp::Rect = eadkp::Rect { x: 0, y:0, width: eadkp::SCREEN_RECT.width, height: eadkp::LARGE_FONT.height };
 pub const PLAY_AREA_RECT: eadkp::Rect = eadkp::Rect { x: 0, y: TITLEBAR_RECT.height, width: eadkp::SCREEN_RECT.width, height: eadkp::SCREEN_RECT.height - TITLEBAR_RECT.height };
 
@@ -19,6 +20,7 @@ pub const TITLE_COLOR_MENU: eadkp::Color = eadkp::Color::from_888(255, 181, 49);
 pub const TITLE_COLOR_ENDGAME_WIN: eadkp::Color = eadkp::Color::from_888(50, 168, 82);
 pub const TITLE_COLOR_ENDGAME_LOSE: eadkp::Color = eadkp::Color::from_888(255, 104, 74);
 
+pub const TITLE_TEXT_MAIN_MENU: &str = "Minesweeper";
 pub const TITLE_TEXT_WIN: &str = "You win !";
 pub const TITLE_TEXT_LOSE: &str = "You lose !";
 

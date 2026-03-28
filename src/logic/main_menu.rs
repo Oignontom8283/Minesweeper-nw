@@ -1,5 +1,5 @@
 use crate::{common::*, logic::*};
-use alloc::{vec, vec::Vec};
+use alloc::{vec, vec::Vec, string::ToString};
 
 pub struct MainMenu;
 
@@ -14,7 +14,9 @@ impl StateRuntime for MainMenu {
             _shared.need_redraw = false;
             return vec![
                 RenderCommand::Background { color: eadkp::COLOR_WHITE },
-                RenderCommand::Instruction
+                RenderCommand::TitleBackground { color: TITLE_COLOR_MENU },
+                RenderCommand::TitleText { text: TITLE_TEXT_MAIN_MENU.to_string(), color: eadkp::COLOR_BLACK, background: TITLE_COLOR_MENU },
+                RenderCommand::Instruction,
             ];
         }
 
@@ -58,6 +60,22 @@ impl StateRuntime for MainMenu {
                         eadkp::COLOR_WHITE
                     );
                     
+                },
+                RenderCommand::TitleBackground { color } => {
+                  eadkp::display::push_rect_uniform(TITLEBAR_RECT, color);  
+                },
+                RenderCommand::TitleText { text, color, background }     => {
+
+                    // Obtenir positon du texte
+                    let point = title_text_to_point(&text, TITLE_FONT);
+
+                    eadkp::display::draw_string( // Afficher le texte du titre
+                        &text, 
+                        point, 
+                        TITLE_FONT_IS_LARGE,
+                        color,
+                        background
+                    );
                 },
                 _ => {}
             }
