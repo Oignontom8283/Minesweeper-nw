@@ -12,7 +12,8 @@ extern crate eadkp;
 
 mod common;
 mod logic;
-pub mod grid;
+mod grid;
+mod render;
 
 use alloc::vec;
 use common::*;

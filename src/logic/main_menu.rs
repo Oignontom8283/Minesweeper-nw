@@ -1,7 +1,5 @@
-use crate::common::*;
-use crate::logic::init_playing;
-use alloc::vec::Vec;
-use alloc::vec;
+use crate::{common::*, logic::*};
+use alloc::{vec, vec::Vec};
 
 pub struct MainMenu;
 

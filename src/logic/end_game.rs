@@ -1,4 +1,5 @@
-use crate::common::*;
+#[allow(unused_imports)]
+use crate::{common::*, logic::*};
 use alloc::{vec::Vec, vec, string::ToString};
 
 const TITLE_TEXT_COLOR: eadkp::Color = eadkp::COLOR_WHITE;

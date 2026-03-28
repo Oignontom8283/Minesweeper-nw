@@ -1,6 +1,4 @@
-use crate::common::*;
-use crate::grid;
-use crate::logic::end_game;
+use crate::{common::*, grid, render, logic::*};
 use alloc::vec::Vec;
 
 pub fn init_playing(shared: &mut SharedState, width: u8, height: u8, num_mines: usize, large_cells: bool) {
@@ -184,18 +182,18 @@ impl StateRuntime for Playing {
                     if grid::is_revealed(_shared, x, y) { // Si la cellule est révélée, on affiche soit une mine soit un nombre
 
                         if grid::is_mine(_shared, x, y) {
-                            grid::render_cell_mine(_shared, point); // Rendre la mine si c'est une mine
+                            render::render_cell_mine(_shared, point); // Rendre la mine si c'est une mine
                         }
                         else {
                             let nub = grid::get_adjacent_mines(_shared, x, y); 
-                            grid::render_cell_number(_shared, point, nub); // Rendre le nombre de mines adjacentes sinon
+                            render::render_cell_number(_shared, point, nub); // Rendre le nombre de mines adjacentes sinon
                         }
                     }
                     else if grid::is_flagged(_shared, x, y) { // Si la cellule n'est pas révélée mais est flaggée, on affiche un drapeau
-                        grid::render_cell_flag(_shared, point);
+                        render::render_cell_flag(_shared, point);
                     }
                     else {
-                        grid::render_cell_dirt(_shared, point); // Sinon on affiche de la terre
+                        render::render_cell_dirt(_shared, point); // Sinon on affiche de la terre
                     }
 
                 },
@@ -203,7 +201,7 @@ impl StateRuntime for Playing {
                     let point = grid::cell_to_coords(_shared, x as u16, y as u16);
 
                     // Rendre le curseur a la positon de la cellule
-                    grid::render_cell_cursor(_shared, point);
+                    render::render_cell_cursor(_shared, point);
                 },
                 RenderCommand::Frame { color } => {
 
