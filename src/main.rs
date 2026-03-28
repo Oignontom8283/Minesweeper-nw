@@ -45,6 +45,10 @@ pub fn main() -> isize {
         remaining_safe_cells: 0,
         large_cells: true,
 
+        base_time: 0,
+        start_time: 0,
+        stoped_time: 0,
+
         wined: false,
 
         asset_dirt_large: eadkp::ImageLoader::from_flash(eadkp::include_image!("dirt_large.png")).expect("Failed to load dirt large image"),

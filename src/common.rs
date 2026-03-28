@@ -47,6 +47,10 @@ pub struct SharedState {
     pub remaining_safe_cells: usize,
     pub large_cells: bool,
 
+    pub base_time: u64,
+    pub start_time: u64,
+    pub stoped_time: u64,
+
     pub wined: bool, // true if the player has won, false if they lost (used for end game screen)
 
     pub asset_dirt_large: eadkp::Image,
