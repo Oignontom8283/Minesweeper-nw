@@ -2,8 +2,6 @@
 use crate::{common::*, logic::*};
 use alloc::{vec::Vec, vec, string::ToString};
 
-const TITLE_TEXT_COLOR: eadkp::Color = eadkp::COLOR_WHITE;
-
 pub fn init_end_game(shared: &mut SharedState, wined: bool) {
     shared.wined = wined;
     shared.need_redraw = true;
@@ -31,7 +29,7 @@ impl StateRuntime for EndGame {
 
             return vec![
                 RenderCommand::TitleBackground { color: background },
-                RenderCommand::TitleText { text: text.to_string(), color: TITLE_TEXT_COLOR, background }
+                RenderCommand::TitleText { text: text.to_string(), color: TITLE_COLOR, background }
             ];
         };
 

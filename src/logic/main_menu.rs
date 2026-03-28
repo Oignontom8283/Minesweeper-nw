@@ -15,7 +15,7 @@ impl StateRuntime for MainMenu {
             return vec![
                 RenderCommand::Background { color: eadkp::COLOR_WHITE },
                 RenderCommand::TitleBackground { color: TITLE_BACKGROUND_COLOR_MENU },
-                RenderCommand::TitleText { text: TITLE_TEXT_MAIN_MENU.to_string(), color: eadkp::COLOR_BLACK, background: TITLE_BACKGROUND_COLOR_MENU },
+                RenderCommand::TitleText { text: TITLE_TEXT_MAIN_MENU.to_string(), color: TITLE_COLOR, background: TITLE_BACKGROUND_COLOR_MENU },
                 RenderCommand::Instruction,
             ];
         }

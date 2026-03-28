@@ -12,6 +12,7 @@ pub const BACKGROUND_PLAYING_COLOR: eadkp::Color = eadkp::COLOR_WHITE;
 
 pub const TITLE_FONT_IS_LARGE: bool = true;
 pub const TITLE_FONT: eadkp::FontSize = if TITLE_FONT_IS_LARGE { eadkp::LARGE_FONT } else { eadkp::SMALL_FONT };
+pub const TITLE_COLOR: eadkp::Color = eadkp::COLOR_WHITE;
 pub const TITLEBAR_RECT: eadkp::Rect = eadkp::Rect { x: 0, y:0, width: eadkp::SCREEN_RECT.width, height: eadkp::LARGE_FONT.height };
 pub const PLAY_AREA_RECT: eadkp::Rect = eadkp::Rect { x: 0, y: TITLEBAR_RECT.height, width: eadkp::SCREEN_RECT.width, height: eadkp::SCREEN_RECT.height - TITLEBAR_RECT.height };
 
