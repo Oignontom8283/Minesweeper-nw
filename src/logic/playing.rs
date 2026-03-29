@@ -177,7 +177,7 @@ impl StateRuntime for Playing {
 
 
         // Gérer le timer
-        let now = eadkp::timing::millis();
+        let now = eadkp::timing::millis(); // temps actuelle
         if now >= _shared.time_to_next_update {
             _shared.time_to_next_update = now + UPDATE_TIME_INTERVAL; // Planifier la prochaine update
 
