@@ -10,6 +10,8 @@ pub fn init_playing(shared: &mut SharedState, width: u8, height: u8, num_mines: 
     let size = (width as usize) * (height as usize);
     shared.grid.clear();          // On vide la grille précédente
     shared.grid.resize(size, 0);  // On la remplit de 0 en réutilisant la mémoire allouée
+    
+    shared.large_cells = large_cells; // Choix de la taille des cellules
 
     // Calculer la position de départ pour centrer la grille à l'écran
     grid::set_start_pos(shared);
@@ -18,7 +20,6 @@ pub fn init_playing(shared: &mut SharedState, width: u8, height: u8, num_mines: 
     shared.remaining_safe_cells = (width as usize) * (height as usize) - num_mines;
     shared.theoretical_remaining_mines = num_mines as i32;
     shared.first_action = true;
-    shared.large_cells = large_cells;
 
     shared.cursor_x = 0;
     shared.cursor_y = 0;
