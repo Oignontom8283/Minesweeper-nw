@@ -36,7 +36,7 @@ It takes the form of an external application that must be injected into the calc
 
 2. Connect your Numworks calculator to your computer using a USB data cable (official or compatible cable).
 
-3. Open a Chromium-based web browser (Google Chrome, Microsoft Edge, Brave, etc.) on your computer.
+3. Open a Chromium-based web browser (Google Chrome, Microsoft Edge, Brave, etc.) on your computer or mobile device (yes, it works on mobile too!).
 
 4. Go to the official Numworks injection page: [https://my.numworks.com/apps](https://my.numworks.com/apps).
 
