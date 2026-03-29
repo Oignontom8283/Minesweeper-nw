@@ -1,6 +1,6 @@
 [package]
 name = "minesweeper_nw"
-version = "0.1.0"
+version = "0.1.0" # Doesn't matter, the real version number is the one in the github release
 edition = "2024"
 
 [lib]
