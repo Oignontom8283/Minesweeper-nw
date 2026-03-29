@@ -3,10 +3,7 @@
     <img src="./assets/icon.png" alt="Minesweeper-Nw Icon" width="100">
     <br>
     Minesweeper-Nw
-    <br>
-    <small>A Minesweeper game for the Numworks calculator</small>
 </h1>
-
 
 ---
 
