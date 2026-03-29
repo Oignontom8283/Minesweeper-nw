@@ -22,6 +22,11 @@ pub fn init_playing(shared: &mut SharedState, width: u8, height: u8, num_mines: 
     shared.cursor_x = 0;
     shared.cursor_y = 0;
 
+    shared.time_base = 0;
+
+    shared.time_started = eadkp::timing::millis();
+    shared.time_to_next_update = shared.time_started; // Déclencher une update imméditatement
+
     // Changer le state
     shared.state = StateEnum::Playing;
 
@@ -170,6 +175,19 @@ impl StateRuntime for Playing {
             
         }
 
+
+        // Gérer le timer
+        let now = eadkp::timing::millis();
+        if now >= _shared.time_to_next_update {
+            _shared.time_to_next_update = now + UPDATE_TIME_INTERVAL; // Planifier la prochaine update
+
+            let elapsed_time = now - _shared.time_started; // Calculer le temps écoulé depuis le début de la partie
+            let time_str = time_to_string(elapsed_time); // Convertir le temps écoulé en une string formatée
+
+            // Remander le redraw du temps dans le titre
+            cells_to_render.push(RenderCommand::TitleTime { time: time_str, color: TITLE_COLOR, background: TITLE_BACKGROUND_COLOR_PLAYING });
+        }
+
         cells_to_render
     }
 
@@ -216,6 +234,13 @@ impl StateRuntime for Playing {
                     // rendre le background du titre
                     eadkp::display::push_rect_uniform(TITLEBAR_RECT, color);
                 },
+                RenderCommand::TitleTime { time, color, background } => {
+                    // obtenir le point de rendu du texte du timer
+                    let point = title_text_to_point_pourcent(&time, TITLE_FONT, 0.25);
+
+                    // Rendre le texte du timer
+                    eadkp::display::draw_string(&time, point, true, color, background);
+                }
                 _ => {}
             }
         }
