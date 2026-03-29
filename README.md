@@ -11,6 +11,17 @@ Minesweeper-Nw (Minesweeper for Numworks) is a classic minesweeper game for the 
 
 It takes the form of an external application that must be injected into the calculator, making it available in the applications list alongside the default ones.
 
+<p align="center">
+  <img src="./docs/images/gameplay.png" alt="gameplay" width="45%">
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <img src="./docs/images/hard.png" alt="hard mode" width="45%">
+</p>
+<p align="center">
+  <img src="./docs/images/win.png" alt="win screen" width="45%">
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <img src="./docs/images/lose.png" alt="lose screen" width="45%">
+</p>
+
 ## Controls
 
 - Use the directional arrows to move the cursor on the grid.
