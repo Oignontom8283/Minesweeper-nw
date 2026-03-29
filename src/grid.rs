@@ -33,9 +33,14 @@ pub fn set_flagged(shared: &mut SharedState, x: u8, y: u8) {
     shared.grid[index] |= 0b0000_0100; // Marquer comme flaggé (troisième bit à 1)
 }
 
-pub fn toggle_flag(shared: &mut SharedState, x: u8, y: u8) {
+pub fn toggle_flag(shared: &mut SharedState, x: u8, y: u8) -> i8 {
     let index = index_by_coords(x, y, shared.width);
+
+    let was_flagged = is_flagged(shared, x, y);
+
     shared.grid[index] ^= 0b0000_0100; // Inverser l'état du flag (troisième bit)
+
+    return if was_flagged { -1 } else { 1 }; // Retourner +1 si flag ajouté, -1 si flag retiré
 }
 
 pub fn is_flagged(shared: &mut SharedState, x: u8, y: u8) -> bool {
