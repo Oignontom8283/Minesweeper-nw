@@ -1,6 +1,6 @@
 #[allow(unused_imports)]
 use crate::{common::*, logic::*};
-use alloc::{vec::Vec, vec, string::ToString};
+use alloc::{format, vec, vec::Vec, string::ToString};
 
 pub fn init_end_game(shared: &mut SharedState, wined: bool) {
     shared.wined = wined;
@@ -30,7 +30,11 @@ impl StateRuntime for EndGame {
 
             return vec![
                 RenderCommand::TitleBackground { color: background },
-                RenderCommand::TitleText { text: text.to_string(), color: TITLE_COLOR, background }
+                RenderCommand::TitleText { text: text.to_string(), color: TITLE_COLOR, background },
+                RenderCommand::SubTitleText { text: vec![
+                    format!("Time: {}", time_to_string((_shared.time_stoped - _shared.time_started) + _shared.time_base)),
+                    "Press OK or BACK to return to menu".to_string(),
+                ], color: TITLE_COLOR, background },
             ];
         };
 
@@ -57,6 +61,20 @@ impl StateRuntime for EndGame {
                     
                     eadkp::display::draw_string(&text, point, TITLE_FONT_IS_LARGE, color, background);
                 },
+                RenderCommand::SubTitleText { text, color, background} => {
+                    let font = if SUBTITLE_ENDGAME_IS_LAGE { eadkp::LARGE_FONT } else { eadkp::SMALL_FONT };
+                    let x_base = eadkp::SCREEN_RECT.width / 2;
+
+                    for (i, line) in text.iter().enumerate() {
+                        
+                        let x = x_base - (line.len() as u16 * font.width) / 2;
+                        let y = eadkp::SCREEN_RECT.height - ((i as u16 + 1) * (font.height + SUBTITLE_ENDGAME_MARGIN));
+
+                        let point = eadkp::Point { x, y };
+
+                        eadkp::display::draw_string(line, point, SUBTITLE_ENDGAME_IS_LAGE, color, background);
+                    }
+                }
                 _ => {},
             }
         }
