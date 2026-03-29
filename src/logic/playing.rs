@@ -1,5 +1,5 @@
 use crate::{common::*, grid, render, logic::*};
-use alloc::vec::Vec;
+use alloc::{format, string::ToString, vec::Vec};
 
 pub fn init_playing(shared: &mut SharedState, width: u8, height: u8, num_mines: usize, large_cells: bool) {
     
@@ -16,6 +16,7 @@ pub fn init_playing(shared: &mut SharedState, width: u8, height: u8, num_mines: 
 
     shared.num_mines = num_mines;
     shared.remaining_safe_cells = (width as usize) * (height as usize) - num_mines;
+    shared.theoretical_remaining_mines = num_mines as i32;
     shared.first_action = true;
     shared.large_cells = large_cells;
 
@@ -23,7 +24,6 @@ pub fn init_playing(shared: &mut SharedState, width: u8, height: u8, num_mines: 
     shared.cursor_y = 0;
 
     shared.time_base = 0;
-
     shared.time_started = eadkp::timing::millis();
     shared.time_to_next_update = shared.time_started; // Déclencher une update imméditatement
 
@@ -61,11 +61,9 @@ impl StateRuntime for Playing {
                 }
             }
 
-            // Rerendre le curseur
-            cells_to_render.push(RenderCommand::Cursor { x: _shared.cursor_x, y: _shared.cursor_y });
-
-            // Rendre le title
-            cells_to_render.push(RenderCommand::TitleBackground { color: TITLE_BACKGROUND_COLOR_PLAYING });
+            cells_to_render.push(RenderCommand::Cursor { x: _shared.cursor_x, y: _shared.cursor_y }); // Rerendre le curseur
+            cells_to_render.push(RenderCommand::TitleBackground { color: TITLE_BACKGROUND_COLOR_PLAYING }); // Rendre le title
+            cells_to_render.push(RenderCommand::TitleMines { mines: _shared.theoretical_remaining_mines.to_string(), color: TITLE_COLOR, background: TITLE_BACKGROUND_COLOR_PLAYING }); // Rendre le nb de mines
 
             return cells_to_render;
         }
@@ -122,11 +120,15 @@ impl StateRuntime for Playing {
         if flag { // On priorise le flag en cas d'appui simultané pour éviter une catastrophe
             
             // Toggle du flag de la cellule
-            grid::toggle_flag(_shared, before_cursor_x, before_cursor_y);
+            let flag_change = -grid::toggle_flag(_shared, before_cursor_x, before_cursor_y);
+
+            // Actualiser le nombre de mines théorique restante
+            _shared.theoretical_remaining_mines += flag_change as i32;
 
             // Redessiner la cellule pour afficher le changement de flag
             cells_to_render.push(RenderCommand::Cell { x: before_cursor_x, y: before_cursor_y });
             cells_to_render.push(RenderCommand::Cursor { x: before_cursor_x, y: before_cursor_y });
+            cells_to_render.push(RenderCommand::TitleMines { mines: format!(" {} ", _shared.theoretical_remaining_mines), color: TITLE_COLOR, background: TITLE_BACKGROUND_COLOR_PLAYING })
         }
         else if interact && !grid::is_flagged(_shared, before_cursor_x, before_cursor_y) {
             // Première interaction : génération des mines
@@ -239,8 +241,14 @@ impl StateRuntime for Playing {
                     let point = title_text_to_point_pourcent(&time, TITLE_FONT, 0.25);
 
                     // Rendre le texte du timer
-                    eadkp::display::draw_string(&time, point, true, color, background);
-                }
+                    eadkp::display::draw_string(&time, point, TITLE_FONT_IS_LARGE, color, background);
+                },
+                RenderCommand::TitleMines { mines, color, background } => {
+
+                    let point = title_text_to_point_pourcent(&mines, TITLE_FONT, 0.75);
+
+                    eadkp::display::draw_string(&mines, point, TITLE_FONT_IS_LARGE, color, background);
+                },
                 _ => {}
             }
         }
