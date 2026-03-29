@@ -100,6 +100,13 @@ pub fn title_text_to_point(text: &str, font_size: eadkp::FontSize) -> eadkp::Poi
     eadkp::Point { x, y }
 }
 
+pub fn title_text_to_point_pourcent(text: &str, font_size: eadkp::FontSize, pourcent: f32) -> eadkp::Point {
+    let x = (TITLEBAR_RECT.width as f32 * pourcent) as u16 - ((text.len() * font_size.width as usize) / 2) as u16;
+    let y = TITLEBAR_RECT.height / 2 - font_size.height / 2;
+
+    eadkp::Point { x, y }
+}
+
 pub fn time_to_string(time: u64) -> String {
     let seconds = (time / 1000) % 60;
     let minutes  =(time / (60 * 1000)) % 60;
