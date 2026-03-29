@@ -43,6 +43,7 @@ pub fn main() -> isize {
         first_action: false,
         num_mines: 0,
         remaining_safe_cells: 0,
+        theoretical_remaining_mines: 0,
         large_cells: true,
 
         time_base: 0,

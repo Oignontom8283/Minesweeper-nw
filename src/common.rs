@@ -46,6 +46,7 @@ pub struct SharedState {
     pub first_action: bool,
     pub num_mines: usize,
     pub remaining_safe_cells: usize,
+    pub theoretical_remaining_mines: i32,
     pub large_cells: bool,
 
     pub time_base: u64,
