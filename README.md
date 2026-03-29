@@ -1,11 +1,13 @@
 
-<h1 align="center">
-    <img src="./assets/icon.png" alt="Minesweeper-Nw Icon" width="100">
-    <br>
-    Minesweeper-Nw
-    <br>
-    <sub align="center">A Minesweeper game in Numworks calculator.</sub>
-</h1>
+<p align="center">
+  <img src="./assets/icon.png" alt="Minesweeper-Nw Icon" width="100">
+</p>
+
+<h1 align="center">Minesweeper-Nw</h1>
+
+<p align="center">
+  <strong>A Minesweeper game for the Numworks calculator</strong>
+</p>
 
 
 ---
