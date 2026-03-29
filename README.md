@@ -7,65 +7,64 @@
 
 ---
 
-Minesweeper-Nw (Minesweeper for Numworks) est un jeu de démineur classique pour la calculatrice Numworks.
+Minesweeper-Nw (Minesweeper for Numworks) is a classic minesweeper game for the Numworks calculator.
 
-Il prend la forme d'une application externe qu'il faut injecter dans la calculatrice et par
-suite disponible dans la liste des applications, à côté de celles de base.
+It takes the form of an external application that must be injected into the calculator, making it available in the applications list alongside the default ones.
 
-## Contrôles
+## Controls
 
-- Utilisez les flèches directionnelles pour déplacer le curseur sur la grille.
-- Appuyez sur la touche "OK" pour révéler une case.
-- Appuyez sur la touche "Back" pour marquer/démarquer une case comme contenant une mine (drapeau).
-- Le reste des contrôles seront indiqués à l'écran au moment venu (menu).
+- Use the directional arrows to move the cursor on the grid.
+- Press the "OK" key to reveal a cell.
+- Press the "Back" key to flag/unflag a cell as a mine.
+- The rest of the controls will be indicated on the screen at the appropriate time (menus).
 
 
 ## Installation
 
-1. Téléchargez le fichier `minesweeper_nw.nwa` depuis la section "Releases" de ce dépôt GitHub.
+1. Download the `minesweeper_nw.nwa` file from the "Releases" section of this GitHub repository.
 
-2. Connectez votre calculatrice Numworks à votre ordinateur via un câble USB de données (câble officiel ou compatible).
+2. Connect your Numworks calculator to your computer using a USB data cable (official or compatible cable).
 
-3. Ouvrez un navigateur web basé sur Chromium (Google Chrome, Microsoft Edge, Brave, etc.) sur votre ordinateur.
+3. Open a Chromium-based web browser (Google Chrome, Microsoft Edge, Brave, etc.) on your computer.
 
-4. Accédez à la page d'injection officielle de Numworks : [https://my.numworks.com/apps](https://my.numworks.com/apps).
+4. Go to the official Numworks injection page: [https://my.numworks.com/apps](https://my.numworks.com/apps).
 
-5. Connectez-vous à votre compte Numworks (ou créez-en un si vous n'en avez pas).
+5. Log in to your Numworks account (or create one if you don't have it).
 
-6. Cliquez sur le bouton "Connect" et selectionnez votre calculatrice.
+6. Click the "Connect" button and select your calculator.
 > [!NOTE]
-> Si elle n'est pas détectée et qu'elle est bien allumée, éteignez-la puis rallumez-la jusqu'à ce que ça marche, ça peut prendre plusieurs tentatives
+> If it is not detected and is properly turned on, turn it off and on again until it works. It may take a few tries.
 
-7. Une fois connectée, cliquez sur "Select a NWA file or drop it here" et sélectionnez le fichier `minesweeper_nw.nwa` que vous avez téléchargé.
+7. Once connected, click on "Select a NWA file or drop it here" and select the `minesweeper_nw.nwa` file you downloaded.
 
-8. Cliquez sur "install" et attendez la fin de l'installation (Ne pas déconnecter la calculatrice pendant l'installation).
+8. Click on "Install" and wait for the installation to finish (Do not disconnect the calculator during the installation).
 
-9. L'application **Minesweeper** devrait maintenant être visible tout en bas de la liste des applications (après les app de base) de votre calculatrice.
+9. The **Minesweeper** app should now be visible at the very bottom of the application list (after the basic apps) on your calculator.
 
 
-## Pourquoi ce projet ?
+## Why this project?
 
-Parce qu'une application externe en code machine est beaucoup plus performante qu'un script Python,
-et bien plus belle grâce à la possibilité d'utiliser des images.
+Because an external application in machine code is much more performant than a Python script,
+and much better looking thanks to the ability to use images.
 
-Aussi car ce projet est essentiellement développé pour le fun, et pour m'améliorer en Rust.
+Also, this project is primarily developed for fun, and to improve my Rust skills.
 
 
 ## Contributing
 
-Les contributions sont les bienvenues !
+Contributions are welcome!
 
-> La branche `main` est utilisée pour le développement, pour les version stables, référez-vous à la section "Releases" de ce dépôt GitHub.
+> The `main` branch is used for development. For stable versions, refer to the "Releases" section of this GitHub repository.
 
-Pour contribuer, utilisez le docker fourni et le `justfile` qui font tout le travail pour vous (développer dans le container via **Remote Containers** sur VS Code).
-
-
-## Licence
-
-Ce projet est sous [licence GPL-3.0](./LICENSE) (GNU General Public License version 3).
+To contribute, use the provided Docker environment and the `justfile` which do all the setup work for you (develop in the container via **Dev Containers** on VS Code).
 
 
-## Informations légales
+## License
 
-Ce projet n'est en aucun cas affilié à Numworks ou à leurs partenaires.
+This project is licensed under the [GPL-3.0 License](./LICENSE) (GNU General Public License version 3).
+
+
+## Legal Information
+
+This project is in no way affiliated with Numworks or their partners.
 
