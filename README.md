@@ -1,7 +1,9 @@
 
-<img src="./assets/icon.png" alt="Minesweeper-Nw Icon" align="center">
-
-<h1 align="center">Minesweeper-Nw</h1>
+<h1 align="center">
+    <img src="./assets/icon.png" alt="Minesweeper-Nw Icon" width="100">
+    <br>
+    Minesweeper-Nw
+</h1>
 
 <span align="center">A Minesweeper game in Numworks calculator.</span>
 
@@ -58,3 +60,4 @@ Ce projet est sous [licence GPL-3.0](./LICENSE) (GNU General Public License vers
 ## Information légales
 
 Ce projet n'est en aucun cas affilié à Numworks ou a leur partenaires.
+
