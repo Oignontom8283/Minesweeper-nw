@@ -3,6 +3,7 @@
     <img src="./assets/icon.png" alt="Minesweeper-Nw Icon" width="100">
     <br>
     Minesweeper-Nw
+    <br>
     <a href="https://github.com/Oignontom8283/Minesweeper-nw/releases">
         <img src="https://img.shields.io/github/v/release/Oignontom8283/Minesweeper-nw?include_prereleases&style=flat&logo=github" alt="Version"/>
     </a>
