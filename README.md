@@ -55,7 +55,9 @@ Aussi car ce projet est essentiellement dev pour le fun, et pour m'améliorer en
 
 Les contributions sont les bienvenues !
 
-La branche `main` est utilisée pour le développement, pour les version stables, référez-vous à la section "Releases" de ce dépôt GitHub.
+> La branche `main` est utilisée pour le développement, pour les version stables, référez-vous à la section "Releases" de ce dépôt GitHub.
+
+Pour contribuer, utilisez le docker fourni et le `justfile` qui font tout le travaille pour vous (dévlopper dans le container via **Remote Containers** sur VS Code).
 
 
 ## Licence
