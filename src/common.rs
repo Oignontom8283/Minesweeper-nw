@@ -1,7 +1,7 @@
 use alloc::{format, string::String, vec::Vec};
 
 pub const MINES_DENSITY_NORMALE: f32 = 0.10; // 10% des cellules contiennent des mines
-pub const MINES_DENSITY_HARD: f32 = 0.20; // 15% des cellules contiennent des mines
+pub const MINES_DENSITY_HARD: f32 = 0.15; // 15% des cellules contiennent des mines
 pub const CELL_SMALL: u16 = 16;
 pub const CELL_LARGE: u16 = 20;
 pub const CELL_MARGIN: u16 = 1;
