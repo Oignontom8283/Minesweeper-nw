@@ -4,7 +4,7 @@
     <br>
     Minesweeper-Nw
     <br>
-    <sub align="center">A Minesweeper game in Numworks calculator.</sub>
+    <font size="2">A Minesweeper game for the Numworks calculator</font>
 </h1>
 
 
