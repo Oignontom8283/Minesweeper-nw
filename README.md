@@ -29,6 +29,8 @@ It takes the form of an external application that must be injected into the calc
   <img src="./docs/images/lose.png" alt="lose screen" width="45%">
 </p>
 
+This project use the [eadkp](https://github.com/Oignontom8283/eadkp) library/framework !
+
 ## Controls
 
 - Use the directional arrows to move the cursor on the grid.
