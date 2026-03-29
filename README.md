@@ -1,7 +1,9 @@
 
 <p align="center">
-  <img src="./assets/icon.png" alt="Minesweeper-Nw Icon" width="100"><br>
-  <font size="5"><b>Minesweeper-Nw</b></font><br>
+  <img src="./assets/icon.png" alt="Minesweeper-Nw Icon" width="100">
+  <br>
+  Minesweeper-Nw
+  <br>
   <font size="2">A Minesweeper game for the Numworks calculator</font>
 </p>
 
