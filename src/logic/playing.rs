@@ -183,7 +183,7 @@ impl StateRuntime for Playing {
         if now >= _shared.time_to_next_update {
             _shared.time_to_next_update = now + UPDATE_TIME_INTERVAL; // Planifier la prochaine update
 
-            let elapsed_time = now - _shared.time_started; // Calculer le temps écoulé depuis le début de la partie
+            let elapsed_time = _shared.time_base + (now - _shared.time_started); // Calculer le temps écoulé depuis le début de la partie
             let time_str = time_to_string(elapsed_time); // Convertir le temps écoulé en une string formatée
 
             // Remander le redraw du temps dans le titre

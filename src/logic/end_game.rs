@@ -5,6 +5,7 @@ use alloc::{vec::Vec, vec, string::ToString};
 pub fn init_end_game(shared: &mut SharedState, wined: bool) {
     shared.wined = wined;
     shared.need_redraw = true;
+    shared.time_stoped = eadkp::timing::millis(); // moment de fin
     shared.state = StateEnum::EndGame
 }
 
