@@ -12,6 +12,14 @@ Minesweeper-Nw (Minesweeper for Numworks) est un jeu de démineur classique pour
 Il prend la forme d'une application externe qu'il faut injecter dans la calculatrice et par
 suite disponible dans la liste des applications, à côté de celles de base.
 
+## Contrôles
+
+- Utilisez les flèches directionnelles pour déplacer le curseur sur la grille.
+- Appuyez sur la touche "OK" pour révéler une case.
+- Appuyez sur la touche "Back" pour marquer/démarquer une case comme contenant une mine (drapeau).
+- Le reste des contrôles serront indiqués a l'écran au moment venu (menu).
+
+
 ## Installation
 
 1. Téléchargez le fichier `minesweeper_nw.nwa` depuis la section "Releases" de ce dépôt GitHub.
