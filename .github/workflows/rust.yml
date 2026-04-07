@@ -39,23 +39,32 @@ jobs:
         with:
           targets: thumbv7em-none-eabihf
 
-      - name: Build external app (device)
-        run: cargo +nightly build --release --example device --target thumbv7em-none-eabihf
+      - name: Install just
+        uses: taiki-e/install-action@just
 
-      - name: Prepare NWA Output
+      - name: Extract project name
+        id: proj
         run: |
-          mkdir -p build
-          # Copy the generated elf to the specific name nwa file
-          cp target/thumbv7em-none-eabihf/release/examples/device build/minesweeper_nw.nwa
-          ls -lah build/
-          file build/minesweeper_nw.nwa
-          sha256sum build/minesweeper_nw.nwa
+          NAME=$(just --evaluate | awk '/^project_name/ { print $3 }' | tr -d '"')
+          echo "name=$NAME" >> $GITHUB_OUTPUT
 
-      - name: Upload Artifact
+      - name: Build and Export NWA and Linux SO
+        run: |
+          just export
+          just export-linux
+          ls -lah build/
+
+      - name: Upload NWA Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: minesweeper_nw.nwa
-          path: build/minesweeper_nw.nwa
+          name: ${{ steps.proj.outputs.name }}.nwa
+          path: build/${{ steps.proj.outputs.name }}.nwa
+
+      - name: Upload Linux SO Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.proj.outputs.name }}.so
+          path: build/${{ steps.proj.outputs.name }}.so
 
   release:
     needs: build
@@ -64,16 +73,30 @@ jobs:
     permissions:
       contents: write
     steps:
-      - name: Download Artifacts
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install just
+        uses: taiki-e/install-action@just
+
+      - name: Extract project name
+        id: proj
+        run: |
+          NAME=$(just --evaluate | awk '/^project_name/ { print $3 }' | tr -d '"')
+          echo "name=$NAME" >> $GITHUB_OUTPUT
+
+      - name: Download All Artifacts
         uses: actions/download-artifact@v4
         with:
-          name: minesweeper_nw.nwa
           path: build/
+          merge-multiple: true
 
       - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
-          files: build/minesweeper_nw.nwa
+          files: |
+            build/${{ steps.proj.outputs.name }}.nwa
+            build/${{ steps.proj.outputs.name }}.so
           generate_release_notes: true
           draft: false
           prerelease: false
