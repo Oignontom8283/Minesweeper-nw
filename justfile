@@ -1,5 +1,5 @@
 current_target := shell("rustc -vV | grep \"host:\" | awk '{print $2}'")
-project_name := `cargo metadata --format-version 1 --no-deps | jq -r '.packages[0].name'`
+project_name := shell("echo minesweeper")
 
 out_dir := "build/"
 simulator_dir := "epsilon_simulator/"
@@ -27,11 +27,6 @@ export:
         echo -e "\n\n\033[1;31mError: Build failed. No .nwa file found.\033[0m\n"; \
     fi
 
-[macos]
-run_nwb:
-    ./epsilon_simulator/output/release/simulator/macos/epsilon.app/Contents/MacOS/Epsilon --nwb ./target/release/target/libsimulator.dylib
-
-[linux]
 run_nwb:
     echo -e "\033[1;95mRunning simulator... (if it freezes, kill it with 'pkill epsilon.bin')\033[0m"
     ./epsilon_simulator/output/release/simulator/linux/epsilon.bin --nwb ./target/release/examples/libsimulator.so & # Run in background to free up terminal. If simulator freezes, kill it with `pkill epsilon.bin`.
