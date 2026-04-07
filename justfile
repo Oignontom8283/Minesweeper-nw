@@ -22,9 +22,18 @@ export:
     rm -rf {{out_dir}} 2>/dev/null
     mkdir -p {{out_dir}}
     if mv target/thumbv7em-none-eabihf/release/examples/device {{out_dir}}{{project_name}}.nwa; then \
-        echo -e "\n\n\033[1;92m{{project_name}} build successfully!\n\n-> $(realpath {{out_dir}}{{project_name}}.nwa)\033[0m\n"; \
+        echo -e "\n\n\033[1;92m{{project_name}} (.nwa) build successfully!\n\n-> $(realpath {{out_dir}}{{project_name}}.nwa)\033[0m\n"; \
     else \
         echo -e "\n\n\033[1;31mError: Build failed. No .nwa file found.\033[0m\n"; \
+    fi
+
+export-linux:
+    just build_simulator
+    mkdir -p {{out_dir}}
+    if cp target/release/examples/libsimulator.so {{out_dir}}{{project_name}}.so 2>/dev/null; then \
+        echo -e "\n\n\033[1;92m{{project_name}} (.so) exported successfully!\n\n-> $(realpath {{out_dir}}{{project_name}}.so)\033[0m\n"; \
+    else \
+        echo -e "\n\n\033[1;31mError: Build failed. No .so file found.\033[0m\n"; \
     fi
 
 run_nwb:
