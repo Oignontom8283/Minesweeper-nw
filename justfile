@@ -27,15 +27,6 @@ export:
         echo -e "\n\n\033[1;31mError: Build failed. No .nwa file found.\033[0m\n"; \
     fi
 
-export-linux:
-    just build_simulator
-    mkdir -p {{out_dir}}
-    if cp target/release/examples/libsimulator.so {{out_dir}}{{project_name}}.so 2>/dev/null; then \
-        echo -e "\n\n\033[1;92m{{project_name}} (.so) exported successfully!\n\n-> $(realpath {{out_dir}}{{project_name}}.so)\033[0m\n"; \
-    else \
-        echo -e "\n\n\033[1;31mError: Build failed. No .so file found.\033[0m\n"; \
-    fi
-
 run_nwb:
     echo -e "\033[1;95mRunning simulator... (if it freezes, kill it with 'pkill epsilon.bin')\033[0m"
     ./epsilon_simulator/output/release/simulator/linux/epsilon.bin --nwb ./target/release/examples/libsimulator.so & # Run in background to free up terminal. If simulator freezes, kill it with `pkill epsilon.bin`.
