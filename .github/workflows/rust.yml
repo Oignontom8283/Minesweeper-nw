@@ -40,10 +40,10 @@ jobs:
           NAME=$(just --evaluate | awk '/^project_name/ { print $3 }' | tr -d '"')
           echo "name=$NAME" >> $GITHUB_OUTPUT
 
-      - name: Build and Export NWA and Linux SO
+      - name: Build and Export NWA and check Linux simulator compilation
         run: |
           just export
-          just export-linux
+          just build_simulator
           ls -lah build/
 
       - name: Upload NWA Artifact
@@ -51,12 +51,6 @@ jobs:
         with:
           name: ${{ steps.proj.outputs.name }}.nwa
           path: build/${{ steps.proj.outputs.name }}.nwa
-
-      - name: Upload Linux SO Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: ${{ steps.proj.outputs.name }}.so
-          path: build/${{ steps.proj.outputs.name }}.so
 
   release:
     needs: build
@@ -88,7 +82,6 @@ jobs:
         with:
           files: |
             build/${{ steps.proj.outputs.name }}.nwa
-            build/${{ steps.proj.outputs.name }}.so
           generate_release_notes: true
           draft: false
           prerelease: false
