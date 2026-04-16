@@ -1,4 +1,5 @@
 use alloc::{format, string::String, vec::Vec};
+use serde::{Serialize, Deserialize};
 
 pub const MINES_DENSITY_NORMALE: f32 = 0.10; // 10% des cellules contiennent des mines
 pub const MINES_DENSITY_HARD: f32 = 0.15; // 15% des cellules contiennent des mines
@@ -98,6 +99,20 @@ pub trait StateRuntime {
     fn render(shared: &mut SharedState, to_render: Vec<RenderCommand>);
 }
 
+#[derive(Serialize, Deserialize)]
+pub struct GameSave {
+    pub grid: Vec<u8>,
+    pub width: u8,
+    pub height: u8,
+    pub cursor_x: u8,
+    pub cursor_y: u8,
+    pub first_action: bool,
+    pub num_mines: usize,
+    pub remaining_safe_cells: usize,
+    pub theoretical_remaining_mines: i32,
+    pub large_cells: bool,
+    pub time_base: u64,
+}
 
 
 pub fn title_text_to_point(text: &str, font_size: eadkp::FontSize) -> eadkp::Point {
