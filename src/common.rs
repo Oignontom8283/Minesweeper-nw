@@ -56,7 +56,7 @@ pub struct SharedState {
     pub large_cells: bool,
 
     pub time_base: u64,
-    pub time_started: u64,
+    pub time_started: u64, // Mment de chargement de l'instance, pas du start !
     pub time_stoped: u64,
     pub time_to_next_update: u64,
 
