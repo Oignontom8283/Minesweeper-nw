@@ -71,7 +71,7 @@ case "$COMMAND" in
         get_service_name
         docker compose logs -f "$SERVICE_NAME" "$@"
         ;;
-
+        
     *)
         echo "Usage: ./docker.sh {start|shell|stop|restart|remove|logs} [args...]"
         echo "  start   - Starts the docker container in exactly the same way as the old start.sh."
