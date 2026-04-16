@@ -31,6 +31,9 @@ pub const TITLE_TEXT_MAIN_MENU: &str = "Minesweeper";
 pub const TITLE_TEXT_WIN: &str = "You win !";
 pub const TITLE_TEXT_LOSE: &str = "You lose !";
 
+pub const SAVE_GAME_FILE_NAME: &str = "minesweeper_game.sav";
+pub const SAVE_SCORE_FILE_NAME: &str = "minesweeper_score.sav";
+
 pub enum StateEnum {
     MainMenu,
     Playing,
