@@ -1,4 +1,4 @@
-use crate::{common::*, grid, render, logic::*};
+use crate::{common::*, grid, logic::*, render, save};
 use alloc::{format, string::ToString, vec::Vec};
 
 pub fn init_playing(shared: &mut SharedState, width: u8, height: u8, num_mines: usize, large_cells: bool) {
@@ -25,6 +25,23 @@ pub fn init_playing(shared: &mut SharedState, width: u8, height: u8, num_mines: 
     shared.cursor_y = 0;
 
     shared.time_base = 0;
+    shared.time_started = eadkp::timing::millis();
+    shared.time_to_next_update = shared.time_started; // Déclencher une update imméditatement
+
+    // Changer le state
+    shared.state = StateEnum::Playing;
+
+    // Demander un redraw
+    shared.need_redraw = true;
+}
+
+pub fn resume_playing(shared: &mut SharedState) {
+    
+    // Charger la save
+    save::load_game(shared);
+
+    save::delete_game_save(); // Supprimer la save. save_game() le fait, mais comme ça on vide déja le storage, pas besoin de le faire au end_game
+    
     shared.time_started = eadkp::timing::millis();
     shared.time_to_next_update = shared.time_started; // Déclencher une update imméditatement
 
