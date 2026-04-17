@@ -22,7 +22,13 @@ impl StateRuntime for MainMenu {
 
         let just_pressed= _new_keyboard.get_just_pressed(_old_keyboard);
 
-        if just_pressed.key_down(eadkp::input::Key::Ok) {
+
+        if just_pressed.key_down(eadkp::input::Key::Home) {
+
+            _shared.running = false; // Exit the game if Exe key is pressed
+        }
+
+        else if just_pressed.key_down(eadkp::input::Key::Ok) {
 
             #[cfg(not(target_os = "none"))]
             println!("Switching to Playing state with large cells");
