@@ -37,6 +37,8 @@ pub enum StateEnum {
 }
 
 pub struct SharedState {
+    pub running: bool,
+
     pub state: StateEnum,
     pub need_redraw: bool,
 
