@@ -52,6 +52,9 @@ pub fn resume_playing(shared: &mut SharedState) {
     shared.need_redraw = true;
 }
 
+pub fn pause_playing(shared: &mut SharedState) {
+    
+}
 
 pub struct Playing;
 
