@@ -78,10 +78,10 @@ impl StateRuntime for MainMenu {
 
                     let text_hard = ",BACK to start a large grid";
 
-                    let text_small_width = (text_hard.len() as u16) * font.width;
-                    let x_hard = base_x - text_small_width / 2;
+                    let text_hard_width = (text_hard.len() as u16) * font.width;
+                    let x_hard = base_x - text_hard_width / 2;
                     let y_hard = base_y  + 15;
-                    
+
 
                     eadkp::display::draw_string(
                         text_normal,
