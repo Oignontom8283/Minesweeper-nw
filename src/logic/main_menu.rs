@@ -76,7 +76,7 @@ impl StateRuntime for MainMenu {
                     let y_normal = base_y - 12;
 
 
-                    let text_hard = ",BACK to start a large grid";
+                    let text_hard = "BACK to start a large grid";
 
                     let text_hard_width = (text_hard.len() as u16) * font.width;
                     let x_hard = base_x - text_hard_width / 2;
