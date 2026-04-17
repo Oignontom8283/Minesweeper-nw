@@ -53,8 +53,14 @@ pub fn resume_playing(shared: &mut SharedState) {
 }
 
 pub fn pause_playing(shared: &mut SharedState) {
-    
+
+    // Sauvegarder la partie
+    save::save_game(shared);
+
+    // Exit game
+    shared.running = false;
 }
+
 
 pub struct Playing;
 
