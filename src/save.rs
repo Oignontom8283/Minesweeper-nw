@@ -36,3 +36,31 @@ pub fn save_game(shared: &SharedState) {
     });
 
 }
+
+pub fn load_game(shared: &mut SharedState) {
+
+    if eadkp::storage::file_exists(SAVE_GAME_FILE_NAME).unwrap() { panic!("Trying to load game while save file already exists."); } // garde fou
+
+    // Lire les données sérialisées a partir du fichier de save
+    let serialized = unsafe {eadkp::storage::file_read_raw(SAVE_GAME_FILE_NAME).unwrap_or_else(|e| {
+        panic!("Failed to read game save: {:?}", e)
+    }) };
+
+    // Désérialiser les données en utilisant postcard
+    let save: GameSave = postcard::from_bytes(serialized).unwrap_or_else(|e| {
+        panic!("Failed to deserialize game save: {:?}", e)
+    });
+
+    // Charger les donnée dans Shared
+    shared.grid = save.grid;
+    shared.width = save.width;
+    shared.height = save.height;
+    shared.cursor_x = save.cursor_x;
+    shared.cursor_y = save.cursor_y;
+    shared.first_action = save.first_action;
+    shared.num_mines = save.num_mines;
+    shared.remaining_safe_cells = save.remaining_safe_cells;
+    shared.theoretical_remaining_mines = save.theoretical_remaining_mines;
+    shared.large_cells = save.large_cells;
+    shared.time_base = save.time_base;
+}
