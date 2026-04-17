@@ -67,10 +67,10 @@ pub fn main() -> isize {
 
     let mut prev = eadkp::input::KeyboardState::scan(); // Initial keyboard state
 
-    loop {
+    while shared.running {
         let now = eadkp::input::KeyboardState::scan(); // Scan the current keyboard state
         let just = now.get_just_pressed(prev); // Get keys that were just pressed
-        if just.key_down(eadkp::input::Key::Home) { break 0; }; // Exit if Home key is pressed
+        if just.key_down(eadkp::input::Key::Home) { shared.running = false; }; // Exit if Home key is pressed
 
         // Clear the screen to white
         eadkp::display::wait_for_vblank(); // Wait for VBlank before updating the display
@@ -93,4 +93,6 @@ pub fn main() -> isize {
         // Update previous keyboard state
         prev = now;
     }
+
+    return 0;
 }
