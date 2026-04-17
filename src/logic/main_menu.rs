@@ -20,36 +20,28 @@ impl StateRuntime for MainMenu {
             ];
         }
 
-        if _new_keyboard.get_just_pressed(_old_keyboard).key_down(eadkp::input::Key::Ok) {
-            if cfg!(target_os = "none") {
-                // Code pour nw
-            } else {
-                #[cfg(not(target_os = "none"))]
-                println!("Switching to Playing state with large cells");
-            }
+        let just_pressed= _new_keyboard.get_just_pressed(_old_keyboard);
 
-            let width = 10.0;
-            let height = 10.0;
+        if just_pressed.key_down(eadkp::input::Key::Ok) {
+
+            #[cfg(not(target_os = "none"))]
+            println!("Switching to Playing state with large cells");
+
+            let width = 10;
+            let height = 10;
             
-            init_playing(_shared, 10, 10, (MINES_DENSITY_NORMALE*(width*height)) as usize, true);
- 
-            return vec![]; // No need to render anything immediately, the Playing state will handle it
+            init_playing(_shared, width, height, (MINES_DENSITY_NORMALE*(width*height) as f32 + 0.5) as usize, true); // +0.5 pour arrondir correctement a l'entier le plus proche
         }
 
-        if _new_keyboard.get_just_pressed(_old_keyboard).key_down(eadkp::input::Key::Back) {
-            if cfg!(target_os = "none") {
-                // Code pour nw
-            } else {
-                #[cfg(not(target_os = "none"))]
-                println!("Switching to Playing state with small cells");
-            }
+        else if just_pressed.key_down(eadkp::input::Key::Back) {
 
-            let width = 17.0;
-            let height = 12.0;
+            #[cfg(not(target_os = "none"))]
+            println!("Switching to Playing state with small cells");
 
-            init_playing(_shared, 17, 12, (MINES_DENSITY_HARD*(width*height)) as usize, false);
+            let width = 17;
+            let height = 12;
 
-            return vec![];
+            init_playing(_shared, width, height, (MINES_DENSITY_HARD*(width*height) as f32 + 0.5) as usize, false);
         }
 
         Vec::new()
