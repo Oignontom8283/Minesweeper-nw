@@ -31,6 +31,8 @@ pub fn main() -> isize {
     // Initialize the shared state
 
     let mut shared = SharedState {
+        running: true, // Le jeu court ? Hmm... interesting.
+
         state: StateEnum::MainMenu,
         grid: vec![0; 0], // Empty grid
         width: 0,
