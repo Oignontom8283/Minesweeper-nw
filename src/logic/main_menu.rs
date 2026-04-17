@@ -81,6 +81,13 @@ impl StateRuntime for MainMenu {
                     let text_hard_width = (text_hard.len() as u16) * font.width;
                     let x_hard = base_x - text_hard_width / 2;
                     let y_hard = base_y  + 15;
+                        
+
+                    let text_exit = "EXE to exit; Don't use HOME !";
+
+                    let text_exit_width = (text_exit.len() as u16) * font.width;
+                    let x_exit = base_x - text_exit_width / 2;
+                    let y_exit = eadkp::SCREEN_RECT.height - font.height - 1;
 
 
                     eadkp::display::draw_string(
@@ -94,6 +101,14 @@ impl StateRuntime for MainMenu {
                     eadkp::display::draw_string(
                         text_hard,
                         eadkp::Point { x: x_hard, y: y_hard },
+                        is_large,
+                        eadkp::COLOR_BLACK,
+                        eadkp::COLOR_WHITE
+                    );
+
+                    eadkp::display::draw_string(
+                        text_exit,
+                        eadkp::Point { x: x_exit, y: y_exit },
                         is_large,
                         eadkp::COLOR_BLACK,
                         eadkp::COLOR_WHITE
