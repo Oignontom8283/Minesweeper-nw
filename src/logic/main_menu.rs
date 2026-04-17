@@ -69,31 +69,31 @@ impl StateRuntime for MainMenu {
                     let base_y = eadkp::SCREEN_RECT.height / 2 - font.height / 2;
                     
                     
-                    let text_large = "Press OK to start";
+                    let text_normal = "Press OK to start";
 
-                    let text_large_width = (text_large.len() as u16) * font.width;
-                    let x_large = base_x - text_large_width / 2;
-                    let y_large = base_y - 12;
+                    let text_normal_width = (text_normal.len() as u16) * font.width;
+                    let x_normal = base_x - text_normal_width / 2;
+                    let y_normal = base_y - 12;
 
 
-                    let text_small = ",BACK to start a large grid";
+                    let text_hard = ",BACK to start a large grid";
 
-                    let text_small_width = (text_small.len() as u16) * font.width;
-                    let x_small = base_x - text_small_width / 2;
-                    let y_small = base_y  + 15;
-
+                    let text_small_width = (text_hard.len() as u16) * font.width;
+                    let x_hard = base_x - text_small_width / 2;
+                    let y_hard = base_y  + 15;
+                    
 
                     eadkp::display::draw_string(
-                        text_large,
-                        eadkp::Point { x: x_large, y: y_large },
+                        text_normal,
+                        eadkp::Point { x: x_normal, y: y_normal },
                         is_large,
                         eadkp::COLOR_BLACK,
                         eadkp::COLOR_WHITE
                     );
 
                     eadkp::display::draw_string(
-                        text_small,
-                        eadkp::Point { x: x_small, y: y_small },
+                        text_hard,
+                        eadkp::Point { x: x_hard, y: y_hard },
                         is_large,
                         eadkp::COLOR_BLACK,
                         eadkp::COLOR_WHITE
