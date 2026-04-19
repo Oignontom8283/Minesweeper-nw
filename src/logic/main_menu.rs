@@ -31,7 +31,7 @@ impl StateRuntime for MainMenu {
         let just_pressed= _new_keyboard.get_just_pressed(_old_keyboard);
 
 
-        if just_pressed.key_down(eadkp::input::Key::Exe) {
+        if just_pressed.key_down(KEY_EXIT) {
 
             _shared.running = false; // Exit the game if Exe key is pressed
         }

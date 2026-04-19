@@ -100,7 +100,7 @@ impl StateRuntime for Playing {
         let just = _keyboard.get_just_pressed(_old_keyboard);
 
         // Quitter le jeu
-        if just.key_down(eadkp::input::Key::Exe) {
+        if just.key_down(KEY_EXIT) {
             pause_playing(_shared);
             _shared.running = false;
             #[cfg(not(target_os = "none"))]
