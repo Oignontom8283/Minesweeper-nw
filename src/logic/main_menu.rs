@@ -15,8 +15,10 @@ impl StateRuntime for MainMenu {
 
             // Si une save existe, la charger
             if eadkp::storage::file_exists(SAVE_GAME_FILE_NAME).unwrap() {
+                
                 #[cfg(not(target_os = "none"))]
                 println!("Save file found, resuming game...");
+
                 resume_playing(_shared);
             }
 
