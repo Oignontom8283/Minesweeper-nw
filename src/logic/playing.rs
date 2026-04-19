@@ -103,6 +103,8 @@ impl StateRuntime for Playing {
         if just.key_down(eadkp::input::Key::Exe) {
             pause_playing(_shared);
             _shared.running = false;
+            #[cfg(not(target_os = "none"))]
+            println!("Saving game and exiting...");
             return cells_to_render;
         }
 
