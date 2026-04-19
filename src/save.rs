@@ -41,7 +41,7 @@ pub fn save_game(shared: &SharedState, filename: &str) {
 
 pub fn load_game(shared: &mut SharedState, filename: &str) {
 
-    if !eadkp::storage::file_exists(filename).unwrap() { panic!("Trying to load game while save file already exists."); } // garde fou
+    if !eadkp::storage::file_exists(filename).unwrap() { panic!("Save file not founds"); } // garde fou
 
     // Lire les données sérialisées a partir du fichier de save
     let serialized = unsafe {eadkp::storage::file_read_raw(filename).unwrap_or_else(|e| {
