@@ -99,6 +99,13 @@ impl StateRuntime for Playing {
         // Générer les entrées clavier
         let just = _keyboard.get_just_pressed(_old_keyboard);
 
+        // Quitter le jeu
+        if just.key_down(eadkp::input::Key::Exe) {
+            pause_playing(_shared);
+            _shared.running = false;
+            return cells_to_render;
+        }
+
         // Déplacement du curseur :
         let before_cursor_x = _shared.cursor_x;
         let before_cursor_y = _shared.cursor_y;
