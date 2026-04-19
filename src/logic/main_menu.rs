@@ -12,6 +12,14 @@ impl StateRuntime for MainMenu {
         
         if _shared.need_redraw {
             _shared.need_redraw = false;
+
+            // Si une save existe, la charger
+            if eadkp::storage::file_exists(SAVE_GAME_FILE_NAME).unwrap() {
+                #[cfg(not(target_os = "none"))]
+                println!("Save file found, resuming game...");
+                resume_playing(_shared);
+            }
+
             return vec![
                 RenderCommand::Background { color: eadkp::COLOR_WHITE },
                 RenderCommand::TitleBackground { color: TITLE_BACKGROUND_COLOR_MENU },
