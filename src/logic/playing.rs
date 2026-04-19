@@ -41,7 +41,10 @@ pub fn resume_playing(shared: &mut SharedState) {
     save::load_game(shared, SAVE_GAME_FILE_NAME);
 
     save::delete_game_save(SAVE_GAME_FILE_NAME); // Supprimer la save. save_game() le fait, mais comme ça on vide déja le storage, pas besoin de le faire au end_game
-    
+
+    // Recalculer la position de base pour l'affiche
+    grid::set_start_pos(shared);
+
     shared.time_started = eadkp::timing::millis();
     shared.time_to_next_update = shared.time_started; // Déclencher une update imméditatement
 
