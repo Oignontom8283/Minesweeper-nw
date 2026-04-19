@@ -34,7 +34,7 @@ pub const TITLE_TEXT_LOSE: &str = "You lose !";
 pub const SAVE_GAME_FILE_NAME: &str = "minesweeper_game.sav";
 pub const SAVE_SCORE_FILE_NAME: &str = "minesweeper_score.sav";
 
-pub const KEY_EXIT: eadkp::input::Key = eadkp::input::Key::Exe;
+pub const KEY_EXIT: eadkp::input::Key = eadkp::input::Key::Backspace;
 
 #[derive(PartialEq)]
 pub enum StateEnum {
