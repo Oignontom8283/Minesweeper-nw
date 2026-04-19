@@ -38,9 +38,9 @@ pub fn init_playing(shared: &mut SharedState, width: u8, height: u8, num_mines: 
 pub fn resume_playing(shared: &mut SharedState) {
     
     // Charger la save
-    save::load_game(shared);
+    save::load_game(shared, SAVE_GAME_FILE_NAME);
 
-    save::delete_game_save(); // Supprimer la save. save_game() le fait, mais comme ça on vide déja le storage, pas besoin de le faire au end_game
+    save::delete_game_save(SAVE_GAME_FILE_NAME); // Supprimer la save. save_game() le fait, mais comme ça on vide déja le storage, pas besoin de le faire au end_game
     
     shared.time_started = eadkp::timing::millis();
     shared.time_to_next_update = shared.time_started; // Déclencher une update imméditatement
@@ -55,7 +55,7 @@ pub fn resume_playing(shared: &mut SharedState) {
 pub fn pause_playing(shared: &mut SharedState) {
 
     // Sauvegarder la partie
-    save::save_game(shared);
+    save::save_game(shared, SAVE_GAME_FILE_NAME);
 
     // Exit game
     shared.running = false;
