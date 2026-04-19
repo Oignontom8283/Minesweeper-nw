@@ -65,8 +65,8 @@ pub fn load_game(shared: &mut SharedState, filename: &str) {
     shared.time_base = save.time_base;
 }
 
-pub fn delete_game_save() {
-    if eadkp::storage::file_exists(SAVE_GAME_FILE_NAME).unwrap() {
-        unsafe { eadkp::storage::file_erase(SAVE_GAME_FILE_NAME).unwrap() };
+pub fn delete_game_save(filename: &str) {
+    if eadkp::storage::file_exists(filename).unwrap() {
+        unsafe { eadkp::storage::file_erase(filename).unwrap() };
     }
 }
