@@ -31,9 +31,11 @@ pub fn save_game(shared: &SharedState, filename: &str) {
     } 
     
     // Écrire les données sérialisées le fichier de save
-    eadkp::storage::file_write_raw(filename, &serialized).unwrap_or_else(|e| {
-        panic!("Failed to save game: {:?}", e)
-    });
+    match eadkp::storage::file_write_raw(filename, &serialized) {
+        Ok(_) => (),
+        Err(eadkp::GlobalError::Software(eadkp::SoftwareError::SimulatorNotSupported)) => (),
+        Err(e) => panic!("Failed to save game: {:?}", e),
+    }
 
 }
 
