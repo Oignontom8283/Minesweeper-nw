@@ -1,7 +1,7 @@
 use crate::{common::*};
 
 
-pub fn save_game(shared: &SharedState) {
+pub fn save_game(shared: &SharedState, filename: &str) {
 
     if shared.state != StateEnum::Playing { panic!("Trying to save game while not in playing state !"); } // Garde fou
 
@@ -26,12 +26,12 @@ pub fn save_game(shared: &SharedState) {
     });
 
     // Si le fichier de save existe déja, le supprimer
-    if eadkp::storage::file_exists(SAVE_GAME_FILE_NAME).unwrap() {
-        unsafe { eadkp::storage::file_erase(SAVE_GAME_FILE_NAME).unwrap() };
+    if eadkp::storage::file_exists(filename).unwrap() {
+        unsafe { eadkp::storage::file_erase(filename).unwrap() };
     } 
     
     // Écrire les données sérialisées le fichier de save
-    eadkp::storage::file_write_raw(SAVE_GAME_FILE_NAME, &serialized).unwrap_or_else(|e| {
+    eadkp::storage::file_write_raw(filename, &serialized).unwrap_or_else(|e| {
         panic!("Failed to save game: {:?}", e)
     });
 
