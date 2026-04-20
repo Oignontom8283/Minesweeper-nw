@@ -42,8 +42,7 @@ impl StateRuntime for EndGame {
         let just = _keyboard.get_just_pressed(_old_keyboard);
         
         if just.key_down(eadkp::input::Key::Ok) || just.key_down(eadkp::input::Key::Back) {
-            _shared.state = StateEnum::MainMenu;
-            _shared.need_redraw = true;
+            init_main_menu(_shared);
             return vec![];
         }
 

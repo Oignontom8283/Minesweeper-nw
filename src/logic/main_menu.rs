@@ -1,6 +1,11 @@
 use crate::{common::*, logic::*};
 use alloc::{vec, vec::Vec, string::ToString};
 
+pub fn init_main_menu(shared: &mut SharedState) {
+    shared.need_redraw = true;
+    shared.state = StateEnum::MainMenu;
+}
+
 pub struct MainMenu;
 
 impl StateRuntime for MainMenu {
@@ -15,7 +20,7 @@ impl StateRuntime for MainMenu {
 
             // Si une save existe, la charger
             if eadkp::storage::file_exists(SAVE_GAME_FILE_NAME).unwrap() {
-                
+
                 #[cfg(not(target_os = "none"))]
                 println!("Save file found, resuming game...");
 

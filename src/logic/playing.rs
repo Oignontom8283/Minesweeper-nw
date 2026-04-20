@@ -111,6 +111,10 @@ impl StateRuntime for Playing {
             return cells_to_render;
         }
 
+        if just.key_down(KEY_MENU) {
+            
+        }
+
         // Déplacement du curseur :
         let before_cursor_x = _shared.cursor_x;
         let before_cursor_y = _shared.cursor_y;
