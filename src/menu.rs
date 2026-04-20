@@ -54,11 +54,16 @@ impl<'a> TextLayout<'a> {
     }
 
     pub fn get_line_x(&self, line:&TextStyle, anchor_x: u16) -> u16 {
-        match self.h_align {
-            HorizontalAlign::Left => anchor_x,
-            HorizontalAlign::Center => anchor_x - (line.width() / 2),
-            HorizontalAlign::Right => anchor_x - line.width(),
-        }
+        let lw = line.width() as i32;
+        let ax = anchor_x as i32;
+
+        let x = match self.h_align {
+            HorizontalAlign::Left => ax,
+            HorizontalAlign::Center => ax - (lw / 2),
+            HorizontalAlign::Right => ax - lw,
+        };
+
+        x.max(0) as u16
     }
 }
 
