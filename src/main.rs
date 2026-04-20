@@ -14,6 +14,7 @@ mod common;
 mod logic;
 mod grid;
 mod render;
+mod save;
 
 use alloc::vec;
 use common::*;

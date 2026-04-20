@@ -1,6 +1,11 @@
 use crate::{common::*, logic::*};
 use alloc::{vec, vec::Vec, string::ToString};
 
+pub fn init_main_menu(shared: &mut SharedState) {
+    shared.need_redraw = true;
+    shared.state = StateEnum::MainMenu;
+}
+
 pub struct MainMenu;
 
 impl StateRuntime for MainMenu {
@@ -12,6 +17,16 @@ impl StateRuntime for MainMenu {
         
         if _shared.need_redraw {
             _shared.need_redraw = false;
+
+            // Si une save existe, la charger
+            if eadkp::storage::file_exists(SAVE_GAME_FILE_NAME).unwrap() {
+
+                #[cfg(not(target_os = "none"))]
+                println!("Save file found, resuming game...");
+
+                resume_playing(_shared);
+            }
+
             return vec![
                 RenderCommand::Background { color: eadkp::COLOR_WHITE },
                 RenderCommand::TitleBackground { color: TITLE_BACKGROUND_COLOR_MENU },
@@ -23,7 +38,7 @@ impl StateRuntime for MainMenu {
         let just_pressed= _new_keyboard.get_just_pressed(_old_keyboard);
 
 
-        if just_pressed.key_down(eadkp::input::Key::Exe) {
+        if just_pressed.key_down(KEY_EXIT) {
 
             _shared.running = false; // Exit the game if Exe key is pressed
         }
@@ -76,18 +91,25 @@ impl StateRuntime for MainMenu {
                     let y_normal = base_y - 12;
 
 
-                    let text_hard = "BACK to start a large grid";
+                    let text_hard = "BACK to start in hard mode";
 
                     let text_hard_width = (text_hard.len() as u16) * font.width;
                     let x_hard = base_x - text_hard_width / 2;
                     let y_hard = base_y  + 15;
                         
 
-                    let text_exit = "EXE to exit; Don't use HOME !";
+                    let text_exit = "DEL to exit; Don't use HOME !";
 
                     let text_exit_width = (text_exit.len() as u16) * font.width;
                     let x_exit = base_x - text_exit_width / 2;
-                    let y_exit = eadkp::SCREEN_RECT.height - font.height - 1;
+                    let y_exit = eadkp::SCREEN_RECT.height - (font.height*2) - 1;
+
+
+                    let text_back = "TOOL to back to menu";
+
+                    let text_back_width = (text_back.len() as u16) * font.width;
+                    let x_back = base_x - text_back_width / 2;
+                    let y_back = eadkp::SCREEN_RECT.height - (font.height*1) - 1;
 
 
                     eadkp::display::draw_string(
@@ -109,6 +131,14 @@ impl StateRuntime for MainMenu {
                     eadkp::display::draw_string(
                         text_exit,
                         eadkp::Point { x: x_exit, y: y_exit },
+                        is_large,
+                        eadkp::COLOR_BLACK,
+                        eadkp::COLOR_WHITE
+                    );
+                    
+                    eadkp::display::draw_string(
+                        text_back,
+                        eadkp::Point { x: x_back, y: y_back },
                         is_large,
                         eadkp::COLOR_BLACK,
                         eadkp::COLOR_WHITE

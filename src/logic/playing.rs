@@ -1,4 +1,4 @@
-use crate::{common::*, grid, render, logic::*};
+use crate::{common::*, grid, logic::*, render, save};
 use alloc::{format, string::ToString, vec::Vec};
 
 pub fn init_playing(shared: &mut SharedState, width: u8, height: u8, num_mines: usize, large_cells: bool) {
@@ -33,6 +33,35 @@ pub fn init_playing(shared: &mut SharedState, width: u8, height: u8, num_mines: 
 
     // Demander un redraw
     shared.need_redraw = true;
+}
+
+pub fn resume_playing(shared: &mut SharedState) {
+    
+    // Charger la save
+    save::load_game(shared, SAVE_GAME_FILE_NAME);
+
+    save::delete_game_save(SAVE_GAME_FILE_NAME); // Supprimer la save. save_game() le fait, mais comme ça on vide déja le storage, pas besoin de le faire au end_game
+
+    // Recalculer la position de base pour l'affiche
+    grid::set_start_pos(shared);
+
+    shared.time_started = eadkp::timing::millis();
+    shared.time_to_next_update = shared.time_started; // Déclencher une update imméditatement
+
+    // Changer le state
+    shared.state = StateEnum::Playing;
+
+    // Demander un redraw
+    shared.need_redraw = true;
+}
+
+pub fn pause_playing(shared: &mut SharedState) {
+
+    // Sauvegarder la partie
+    save::save_game(shared, SAVE_GAME_FILE_NAME);
+
+    // Exit game
+    shared.running = false;
 }
 
 
@@ -72,6 +101,21 @@ impl StateRuntime for Playing {
 
         // Générer les entrées clavier
         let just = _keyboard.get_just_pressed(_old_keyboard);
+
+        // Quitter le jeu
+        if just.key_down(KEY_EXIT) {
+            pause_playing(_shared);
+            _shared.running = false;
+            #[cfg(not(target_os = "none"))]
+            println!("Saving game and exiting...");
+            return cells_to_render;
+        }
+
+        // Retourner au menu / abandonner la partie en cours
+        if just.key_down(KEY_MENU) {
+            init_main_menu(_shared);
+            return cells_to_render;
+        }
 
         // Déplacement du curseur :
         let before_cursor_x = _shared.cursor_x;

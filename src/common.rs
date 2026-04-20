@@ -1,4 +1,5 @@
 use alloc::{format, string::String, vec::Vec};
+use serde::{Serialize, Deserialize};
 
 pub const MINES_DENSITY_NORMALE: f32 = 0.10; // 10% des cellules contiennent des mines
 pub const MINES_DENSITY_HARD: f32 = 0.15; // 15% des cellules contiennent des mines
@@ -30,6 +31,13 @@ pub const TITLE_TEXT_MAIN_MENU: &str = "Minesweeper";
 pub const TITLE_TEXT_WIN: &str = "You win !";
 pub const TITLE_TEXT_LOSE: &str = "You lose !";
 
+pub const SAVE_GAME_FILE_NAME: &str = "minesweeper_game.sav";
+pub const SAVE_SCORE_FILE_NAME: &str = "minesweeper_score.sav";
+
+pub const KEY_EXIT: eadkp::input::Key = eadkp::input::Key::Backspace;
+pub const KEY_MENU: eadkp::input::Key = eadkp::input::Key::Toolbox; // abandon
+
+#[derive(PartialEq)]
 pub enum StateEnum {
     MainMenu,
     Playing,
@@ -56,7 +64,7 @@ pub struct SharedState {
     pub large_cells: bool,
 
     pub time_base: u64,
-    pub time_started: u64,
+    pub time_started: u64, // Mment de chargement de l'instance, pas du start !
     pub time_stoped: u64,
     pub time_to_next_update: u64,
 
@@ -98,6 +106,20 @@ pub trait StateRuntime {
     fn render(shared: &mut SharedState, to_render: Vec<RenderCommand>);
 }
 
+#[derive(Serialize, Deserialize)]
+pub struct GameSave {
+    pub grid: Vec<u8>,
+    pub width: u8,
+    pub height: u8,
+    pub cursor_x: u8,
+    pub cursor_y: u8,
+    pub first_action: bool,
+    pub num_mines: usize,
+    pub remaining_safe_cells: usize,
+    pub theoretical_remaining_mines: i32,
+    pub large_cells: bool,
+    pub time_base: u64,
+}
 
 
 pub fn title_text_to_point(text: &str, font_size: eadkp::FontSize) -> eadkp::Point {
