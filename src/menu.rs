@@ -23,3 +23,36 @@ impl<'a> TextStyle<'a> {
     }
 }
 
+
+pub struct TextLayout<'a> {
+    pub lines: &'a [TextStyle<'a>],
+    pub h_align: HorizontalAlign,
+    pub v_align: VerticalAlign,
+    pub spacing: u16,
+}
+
+impl<'a> TextLayout<'a> {
+    pub fn total_height(&self) -> u16 {
+        if self.lines.is_empty() { return 0; }
+
+        let h: u16 = self.lines.iter().map(|l| l.height()).sum();
+        let s = (self.lines.len() as u16 - 1) * self.spacing;
+        h + s
+    }
+
+    pub fn get_start_y(&self, anchor_y: u16) -> u16 {
+        match self.v_align {
+            VerticalAlign::Top => anchor_y,
+            VerticalAlign::Center => anchor_y - (self.total_height() / 2),
+            VerticalAlign::Bottom => anchor_y - self.total_height(),
+        }
+    }
+
+    pub fn get_line_x(&self, line:&TextStyle, anchor_x: u16) -> u16 {
+        match self.h_align {
+            HorizontalAlign::Left => anchor_x,
+            HorizontalAlign::Center => anchor_x - (line.width() / 2),
+            HorizontalAlign::Right => anchor_x - line.width(),
+        }
+    }
+}
