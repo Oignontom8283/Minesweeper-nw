@@ -41,11 +41,16 @@ impl<'a> TextLayout<'a> {
     }
 
     pub fn get_start_y(&self, anchor_y: u16) -> u16 {
-        match self.v_align {
-            VerticalAlign::Top => anchor_y,
-            VerticalAlign::Center => anchor_y - (self.total_height() / 2),
-            VerticalAlign::Bottom => anchor_y - self.total_height(),
-        }
+        let total = self.total_height() as i32;
+        let ay = anchor_y as i32;
+        
+        let y =match self.v_align {
+            VerticalAlign::Top => total,
+            VerticalAlign::Center => ay - (total / 2),
+            VerticalAlign::Bottom => ay - total,
+        };
+
+        y.max(0) as u16
     }
 
     pub fn get_line_x(&self, line:&TextStyle, anchor_x: u16) -> u16 {
