@@ -3,7 +3,9 @@ fn get_font_size(is_large: bool) -> eadkp::FontSize {
     if is_large { eadkp::LARGE_FONT } else { eadkp::SMALL_FONT }
 }
 
+#[allow(dead_code)]
 pub enum HorizontalAlign { Left, Center, Right }
+#[allow(dead_code)]
 pub enum VerticalAlign { Top, Center, Bottom }
 
 pub struct TextStyle<'a> {
