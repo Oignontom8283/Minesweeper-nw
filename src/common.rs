@@ -34,6 +34,12 @@ pub const TITLE_TEXT_LOSE: &str = "You lose !";
 pub const SAVE_GAME_FILE_NAME: &str = "minesweeper_game.sav";
 pub const SAVE_SCORE_FILE_NAME: &str = "minesweeper_score.sav";
 
+pub const KEY_UP: eadkp::input::Key = eadkp::input::Key::Up;
+pub const KEY_DOWN: eadkp::input::Key = eadkp::input::Key::Down;
+pub const KEY_LEFT: eadkp::input::Key = eadkp::input::Key::Left;
+pub const KEY_RIGHT: eadkp::input::Key = eadkp::input::Key::Right;
+pub const KEY_FLAG: eadkp::input::Key = eadkp::input::Key::Ok;
+pub const KEY_REVEAL: eadkp::input::Key = eadkp::input::Key::Back;
 pub const KEY_EXIT: eadkp::input::Key = eadkp::input::Key::Backspace;
 pub const KEY_MENU: eadkp::input::Key = eadkp::input::Key::Toolbox; // abandon
 
