@@ -40,6 +40,8 @@ pub const KEY_LEFT: eadkp::input::Key = eadkp::input::Key::Left;
 pub const KEY_RIGHT: eadkp::input::Key = eadkp::input::Key::Right;
 pub const KEY_FLAG: eadkp::input::Key = eadkp::input::Key::Ok;
 pub const KEY_REVEAL: eadkp::input::Key = eadkp::input::Key::Back;
+pub const KEY_NORMALE_MODE: eadkp::input::Key = eadkp::input::Key::Ok;
+pub const KEY_HARD_MODE: eadkp::input::Key = eadkp::input::Key::Back;
 pub const KEY_EXIT: eadkp::input::Key = eadkp::input::Key::Backspace;
 pub const KEY_MENU: eadkp::input::Key = eadkp::input::Key::Toolbox; // abandon
 
