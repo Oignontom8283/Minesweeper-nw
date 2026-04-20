@@ -102,7 +102,14 @@ impl StateRuntime for MainMenu {
 
                     let text_exit_width = (text_exit.len() as u16) * font.width;
                     let x_exit = base_x - text_exit_width / 2;
-                    let y_exit = eadkp::SCREEN_RECT.height - font.height - 1;
+                    let y_exit = eadkp::SCREEN_RECT.height - (font.height*2) - 1;
+
+
+                    let text_back = "TOOl to back to menu";
+
+                    let text_back_width = (text_back.len() as u16) * font.width;
+                    let x_back = base_x - text_back_width / 2;
+                    let y_back = eadkp::SCREEN_RECT.height - (font.height*1) - 1;
 
 
                     eadkp::display::draw_string(
@@ -124,6 +131,14 @@ impl StateRuntime for MainMenu {
                     eadkp::display::draw_string(
                         text_exit,
                         eadkp::Point { x: x_exit, y: y_exit },
+                        is_large,
+                        eadkp::COLOR_BLACK,
+                        eadkp::COLOR_WHITE
+                    );
+                    
+                    eadkp::display::draw_string(
+                        text_back,
+                        eadkp::Point { x: x_back, y: y_back },
                         is_large,
                         eadkp::COLOR_BLACK,
                         eadkp::COLOR_WHITE
