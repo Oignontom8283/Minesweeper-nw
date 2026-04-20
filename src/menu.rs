@@ -2,3 +2,9 @@
 pub enum HorizontalAlign { Left, Center, Right }
 pub enum VerticalAlign { Top, Center, Bottom }
 
+pub struct TextStyle<'a> {
+    pub text: &'a str,
+    pub color: eadkp::Color,
+    pub bg_color: eadkp::Color,
+    pub is_large: bool,
+}
