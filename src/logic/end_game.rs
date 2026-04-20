@@ -41,7 +41,7 @@ impl StateRuntime for EndGame {
         // Générer les entrées clavier
         let just = _keyboard.get_just_pressed(_old_keyboard);
         
-        if just.key_down(eadkp::input::Key::Ok) || just.key_down(eadkp::input::Key::Back) {
+        if just.key_down(KEY_REVEAL) || just.key_down(KEY_FLAG) || just.key_down(KEY_MENU) {
             init_main_menu(_shared);
         }
 

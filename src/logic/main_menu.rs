@@ -43,7 +43,8 @@ impl StateRuntime for MainMenu {
             _shared.running = false; // Exit the game if Exe key is pressed
         }
 
-        else if just_pressed.key_down(eadkp::input::Key::Ok) {
+        else if just_pressed.key_down(KEY_NORMALE_MODE) {
+            // Starte une nouvelle partie en mode normale
 
             #[cfg(not(target_os = "none"))]
             println!("Switching to Playing state with large cells");
@@ -54,7 +55,8 @@ impl StateRuntime for MainMenu {
             init_playing(_shared, width, height, (MINES_DENSITY_NORMALE*(width*height) as f32 + 0.5) as usize, true); // +0.5 pour arrondir correctement a l'entier le plus proche
         }
 
-        else if just_pressed.key_down(eadkp::input::Key::Back) {
+        else if just_pressed.key_down(KEY_HARD_MODE) {
+            // Start une nouvelle partie en mode difficile
 
             #[cfg(not(target_os = "none"))]
             println!("Switching to Playing state with small cells");

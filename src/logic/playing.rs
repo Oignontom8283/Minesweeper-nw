@@ -124,22 +124,22 @@ impl StateRuntime for Playing {
         let mut after_cursor_x = before_cursor_x;
         let mut after_cursor_y = before_cursor_y;
 
-        if just.key_down(eadkp::input::Key::Up) {
+        if just.key_down(KEY_UP) {
             if before_cursor_y > 0 {
                 after_cursor_y -= 1;
             }
         }
-        if just.key_down(eadkp::input::Key::Down) {
+        if just.key_down(KEY_DOWN) {
             if before_cursor_y < _shared.height - 1 {
                 after_cursor_y += 1;
             }
         }
-        if just.key_down(eadkp::input::Key::Left) {
+        if just.key_down(KEY_LEFT) {
             if before_cursor_x > 0 {
                 after_cursor_x -= 1;
             }
         }
-        if just.key_down(eadkp::input::Key::Right) {
+        if just.key_down(KEY_RIGHT) {
             if before_cursor_x < _shared.width - 1 {
                 after_cursor_x += 1;
             }
@@ -159,8 +159,8 @@ impl StateRuntime for Playing {
             cells_to_render.push(RenderCommand::Cursor { x: after_cursor_x, y: after_cursor_y });
         }
 
-        let interact = just.key_down(eadkp::input::Key::Ok);
-        let flag = just.key_down(eadkp::input::Key::Back);
+        let interact = just.key_down(KEY_REVEAL);
+        let flag = just.key_down(KEY_FLAG);
 
         if flag { // On priorise le flag en cas d'appui simultané pour éviter une catastrophe
             
