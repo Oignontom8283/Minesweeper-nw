@@ -59,7 +59,7 @@ impl<'a> TextLayout<'a> {
 
 
 
-pub fn draw_text_group(layout: &TextLayout, anchor: eadkp::Point) {
+pub fn draw_texts(layout: &TextLayout, anchor: eadkp::Point) {
     let mut current_y = layout.get_start_y(anchor.y);
 
     for line in layout.lines {
