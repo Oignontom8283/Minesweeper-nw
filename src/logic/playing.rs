@@ -81,7 +81,7 @@ impl StateRuntime for Playing {
             _shared.need_redraw = false;
 
             // Rendre le fond d'écran
-            cells_to_render.push(RenderCommand::Background { color: eadkp::COLOR_WHITE });
+            cells_to_render.push(RenderCommand::Background { color: BACKGROUND_COLOR });
             cells_to_render.push(RenderCommand::Frame { color: FRAME_COLOR }); // Rendre le cadre du jeu
 
             // Rerendre tout les cellules
