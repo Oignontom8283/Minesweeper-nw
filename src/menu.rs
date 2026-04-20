@@ -18,18 +18,17 @@ pub struct TextConfig<'a> {
     pub v_align: VerticalAlign,
     pub color: eadkp::Color,
     pub bg_color: eadkp::Color,
-    pub font: eadkp::FontSize,
+    pub large_font: bool,
 }
 
 
 pub fn draw_text_configured(config: TextConfig) {
 
-    let font_width = config.font.width;
-    let font_height = config.font.height;
+    let font = if config.large_font { eadkp::LARGE_FONT } else { eadkp::SMALL_FONT };
+
 
     // Calculer la largeur
-    let total_width = config.text.len() as u16 * font_width;
-
+    let total_width = config.text.len() as u16 * font.width;
 
     // Calcule du X
     let final_x = match config.h_align {
@@ -41,18 +40,16 @@ pub fn draw_text_configured(config: TextConfig) {
     // Calcule du Y
     let final_y = match config.v_align {
         VerticalAlign::Top => config.pos.y,
-        VerticalAlign::Center => config.pos.y - (font_height / 2),
-        VerticalAlign::Botton => config.pos.y - font_height,
+        VerticalAlign::Center => config.pos.y - (font.height / 2),
+        VerticalAlign::Botton => config.pos.y - font.height,
     };
-
-    let is_large = config.font == eadkp::LARGE_FONT;
 
     
     // Afficher le texte
     eadkp::display::draw_string(
         config.text,
         eadkp::Point { x: final_x, y: final_y },
-        is_large,
+        config.large_font,
         config.color,
         config.bg_color
     )
