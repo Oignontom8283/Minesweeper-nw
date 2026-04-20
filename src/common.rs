@@ -12,7 +12,7 @@ pub const FRAME_COLOR: eadkp::Color = eadkp::Color::from_888(135, 135, 135); // 
 pub const FRAME_THICKNESS: u8 = 1;
 pub const UPDATE_TIME_INTERVAL: u64 = 1000; // en milliseconds
 
-pub const BACKGROUND_PLAYING_COLOR: eadkp::Color = eadkp::COLOR_WHITE;
+pub const BACKGROUND_COLOR: eadkp::Color = eadkp::COLOR_WHITE;
 
 pub const TITLE_FONT_IS_LARGE: bool = true;
 pub const TITLE_FONT: eadkp::FontSize = if TITLE_FONT_IS_LARGE { eadkp::LARGE_FONT } else { eadkp::SMALL_FONT };
