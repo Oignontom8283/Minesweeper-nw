@@ -91,7 +91,7 @@ impl StateRuntime for MainMenu {
                     let y_normal = base_y - 12;
 
 
-                    let text_hard = "BACK to start a large grid";
+                    let text_hard = "BACK to start in hard mode";
 
                     let text_hard_width = (text_hard.len() as u16) * font.width;
                     let x_hard = base_x - text_hard_width / 2;
@@ -105,7 +105,7 @@ impl StateRuntime for MainMenu {
                     let y_exit = eadkp::SCREEN_RECT.height - (font.height*2) - 1;
 
 
-                    let text_back = "TOOl to back to menu";
+                    let text_back = "TOOL to back to menu";
 
                     let text_back_width = (text_back.len() as u16) * font.width;
                     let x_back = base_x - text_back_width / 2;
