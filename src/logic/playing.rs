@@ -1,4 +1,4 @@
-use crate::{common::*, grid, logic::*, render, save};
+use crate::{common::*, grid, logic::*, menu, render, save};
 use alloc::{format, string::ToString, vec::Vec};
 
 pub fn init_playing(shared: &mut SharedState, width: u8, height: u8, num_mines: usize, large_cells: bool) {
@@ -282,17 +282,20 @@ impl StateRuntime for Playing {
                     eadkp::display::push_rect_uniform(TITLEBAR_RECT, color);
                 },
                 RenderCommand::TitleTime { time, color, background } => {
-                    // obtenir le point de rendu du texte du timer
-                    let point = title_text_to_point_pourcent(&time, TITLE_FONT, 0.25);
-
-                    // Rendre le texte du timer
-                    eadkp::display::draw_string(&time, point, TITLE_FONT_IS_LARGE, color, background);
+                    menu::draw_texts(&menu::TextLayout {
+                        lines: &[menu::TextStyle { text: time.as_str(), color, bg_color: background, is_large:TITLE_FONT_IS_LARGE }],
+                        h_align: menu::HorizontalAlign::Center,
+                        v_align: menu::VerticalAlign::Center,
+                        spacing: 0
+                    }, title_point_pourcent(0.25));
                 },
                 RenderCommand::TitleMines { mines, color, background } => {
-
-                    let point = title_text_to_point_pourcent(&mines, TITLE_FONT, 0.75);
-
-                    eadkp::display::draw_string(&mines, point, TITLE_FONT_IS_LARGE, color, background);
+                    menu::draw_texts(&menu::TextLayout {
+                        lines: &[menu::TextStyle { text: mines.as_str(), color, bg_color: background, is_large:TITLE_FONT_IS_LARGE }],
+                        h_align: menu::HorizontalAlign::Center,
+                        v_align: menu::VerticalAlign::Center,
+                        spacing: 0
+                    }, title_point_pourcent(0.75));
                 },
                 _ => {}
             }

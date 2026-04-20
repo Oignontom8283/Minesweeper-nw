@@ -1,3 +1,4 @@
+use crate::menu;
 #[allow(unused_imports)]
 use crate::{common::*, logic::*};
 use alloc::{format, vec, vec::Vec, string::ToString};
@@ -60,9 +61,12 @@ impl StateRuntime for EndGame {
                     eadkp::display::push_rect_uniform(TITLEBAR_RECT, color);
                 }
                 RenderCommand::TitleText { text, color, background } => {
-                    let point = title_text_to_point(&text, TITLE_FONT);
-                    
-                    eadkp::display::draw_string(&text, point, TITLE_FONT_IS_LARGE, color, background);
+                    menu::draw_texts(&menu::TextLayout {
+                        lines: &[menu::TextStyle { text: text.as_str(), color, bg_color: background, is_large:TITLE_FONT_IS_LARGE }],
+                        h_align: menu::HorizontalAlign::Center,
+                        v_align: menu::VerticalAlign::Center,
+                        spacing: 0
+                    }, title_point());
                 },
                 RenderCommand::SubTitleText { text, color, background} => {
                     let font = if SUBTITLE_ENDGAME_IS_LAGE { eadkp::LARGE_FONT } else { eadkp::SMALL_FONT };

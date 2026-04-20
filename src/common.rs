@@ -12,10 +12,9 @@ pub const FRAME_COLOR: eadkp::Color = eadkp::Color::from_888(135, 135, 135); // 
 pub const FRAME_THICKNESS: u8 = 1;
 pub const UPDATE_TIME_INTERVAL: u64 = 1000; // en milliseconds
 
-pub const BACKGROUND_PLAYING_COLOR: eadkp::Color = eadkp::COLOR_WHITE;
+pub const BACKGROUND_COLOR: eadkp::Color = eadkp::COLOR_WHITE;
 
 pub const TITLE_FONT_IS_LARGE: bool = true;
-pub const TITLE_FONT: eadkp::FontSize = if TITLE_FONT_IS_LARGE { eadkp::LARGE_FONT } else { eadkp::SMALL_FONT };
 pub const TITLE_COLOR: eadkp::Color = eadkp::COLOR_WHITE; // coleur du texte du titre
 pub const SUBTITLE_ENDGAME_IS_LAGE: bool = false;
 pub const SUBTITLE_ENDGAME_MARGIN: u16 = 2;
@@ -130,18 +129,12 @@ pub struct GameSave {
 }
 
 
-pub fn title_text_to_point(text: &str, font_size: eadkp::FontSize) -> eadkp::Point {
-    let x = TITLEBAR_RECT.width / 2 - ((text.len() * font_size.width as usize) / 2) as u16;
-    let y = TITLEBAR_RECT.height / 2 - font_size.height / 2;
-
-    eadkp::Point { x, y }
+pub fn title_point() -> eadkp::Point {
+    eadkp::Point { x: eadkp::SCREEN_RECT.width / 2, y: eadkp::LARGE_FONT.height / 2 }
 }
 
-pub fn title_text_to_point_pourcent(text: &str, font_size: eadkp::FontSize, pourcent: f32) -> eadkp::Point {
-    let x = (TITLEBAR_RECT.width as f32 * pourcent) as u16 - ((text.len() * font_size.width as usize) / 2) as u16;
-    let y = TITLEBAR_RECT.height / 2 - font_size.height / 2;
-
-    eadkp::Point { x, y }
+pub fn title_point_pourcent(p: f32) -> eadkp::Point {
+    eadkp::Point { x: (eadkp::SCREEN_RECT.width as f32 * p) as u16, y: eadkp::LARGE_FONT.height / 2 }
 }
 
 pub fn time_to_string(time: u64) -> String {
