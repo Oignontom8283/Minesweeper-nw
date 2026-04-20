@@ -56,3 +56,23 @@ impl<'a> TextLayout<'a> {
         }
     }
 }
+
+
+
+pub fn draw_text_group(layout: &TextLayout, anchor: eadkp::Point) {
+    let mut current_y = layout.get_start_y(anchor.y);
+
+    for line in layout.lines {
+        let x = layout.get_line_x(line, anchor.x);
+
+        eadkp::display::draw_string(
+            line.text, 
+            eadkp::Point { x, y: current_y}, 
+            line.is_large, 
+            line.color, 
+            line.bg_color
+        );
+        
+        current_y += line.height() + layout.spacing;
+    }
+}
