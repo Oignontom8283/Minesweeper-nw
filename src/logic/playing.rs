@@ -111,8 +111,10 @@ impl StateRuntime for Playing {
             return cells_to_render;
         }
 
+        // Retourner au menu / abandonner la partie en cours
         if just.key_down(KEY_MENU) {
-            
+            init_main_menu(_shared);
+            return cells_to_render;
         }
 
         // Déplacement du curseur :
