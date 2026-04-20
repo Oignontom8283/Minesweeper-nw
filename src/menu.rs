@@ -5,3 +5,9 @@ pub enum HorizontalAlign {
     Right,
 }
 
+pub enum VerticalAlign {
+    Top,
+    Center,
+    Botton,
+}
+
