@@ -98,7 +98,7 @@ impl StateRuntime for MainMenu {
                     let y_hard = base_y  + 15;
                         
 
-                    let text_exit = "EXE to exit; Don't use HOME !";
+                    let text_exit = "DEL to exit; Don't use HOME !";
 
                     let text_exit_width = (text_exit.len() as u16) * font.width;
                     let x_exit = base_x - text_exit_width / 2;
