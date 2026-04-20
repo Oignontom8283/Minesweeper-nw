@@ -1,4 +1,4 @@
-use crate::{common::*, logic::*};
+use crate::{common::*, logic::*, menu};
 use alloc::{vec, vec::Vec, string::ToString};
 
 pub fn init_main_menu(shared: &mut SharedState) {
@@ -79,72 +79,34 @@ impl StateRuntime for MainMenu {
                 },
                 RenderCommand::Instruction => {
 
-                    let is_large = true;
-                    let font = if is_large { eadkp::LARGE_FONT } else { eadkp::SMALL_FONT };
+                    let width = eadkp::SCREEN_RECT.width;
+                    let height = eadkp::SCREEN_RECT.height;
 
-                    let base_x = eadkp::SCREEN_RECT.width / 2;
-                    let base_y = eadkp::SCREEN_RECT.height / 2 - font.height / 2;
+
+                    let menu_lines = [
+                        menu::TextStyle { text: "Press OK to normal game", color: eadkp::COLOR_BLACK, bg_color: BACKGROUND_COLOR, is_large: true },
+                        menu::TextStyle { text: "Press BACK to hard game", color: eadkp::COLOR_BLACK, bg_color: BACKGROUND_COLOR, is_large: true },
+                    ];
+
+                    menu::draw_texts(&menu::TextLayout {
+                        lines: &menu_lines,
+                        h_align: menu::HorizontalAlign::Center,
+                        v_align: menu::VerticalAlign::Center,
+                        spacing: 5
+                    }, eadkp::Point { x: width / 2, y: height - (height / 2) });
                     
-                    
-                    let text_normal = "Press OK to start";
 
-                    let text_normal_width = (text_normal.len() as u16) * font.width;
-                    let x_normal = base_x - text_normal_width / 2;
-                    let y_normal = base_y - 12;
+                    let footer_lines = [
+                        menu::TextStyle { text: "Press DEL to exit; Don't use HOME !", color: eadkp::COLOR_BLACK, bg_color: BACKGROUND_COLOR, is_large: false },
+                        menu::TextStyle { text: "TOOL to back to menu", color: eadkp::COLOR_BLACK, bg_color: BACKGROUND_COLOR, is_large: false },
+                    ];
 
-
-                    let text_hard = "BACK to start in hard mode";
-
-                    let text_hard_width = (text_hard.len() as u16) * font.width;
-                    let x_hard = base_x - text_hard_width / 2;
-                    let y_hard = base_y  + 15;
-                        
-
-                    let text_exit = "DEL to exit; Don't use HOME !";
-
-                    let text_exit_width = (text_exit.len() as u16) * font.width;
-                    let x_exit = base_x - text_exit_width / 2;
-                    let y_exit = eadkp::SCREEN_RECT.height - (font.height*2) - 1;
-
-
-                    let text_back = "TOOL to back to menu";
-
-                    let text_back_width = (text_back.len() as u16) * font.width;
-                    let x_back = base_x - text_back_width / 2;
-                    let y_back = eadkp::SCREEN_RECT.height - (font.height*1) - 1;
-
-
-                    eadkp::display::draw_string(
-                        text_normal,
-                        eadkp::Point { x: x_normal, y: y_normal },
-                        is_large,
-                        eadkp::COLOR_BLACK,
-                        eadkp::COLOR_WHITE
-                    );
-
-                    eadkp::display::draw_string(
-                        text_hard,
-                        eadkp::Point { x: x_hard, y: y_hard },
-                        is_large,
-                        eadkp::COLOR_BLACK,
-                        eadkp::COLOR_WHITE
-                    );
-
-                    eadkp::display::draw_string(
-                        text_exit,
-                        eadkp::Point { x: x_exit, y: y_exit },
-                        is_large,
-                        eadkp::COLOR_BLACK,
-                        eadkp::COLOR_WHITE
-                    );
-                    
-                    eadkp::display::draw_string(
-                        text_back,
-                        eadkp::Point { x: x_back, y: y_back },
-                        is_large,
-                        eadkp::COLOR_BLACK,
-                        eadkp::COLOR_WHITE
-                    );
+                    menu::draw_texts(&menu::TextLayout {
+                        lines: &footer_lines,
+                        h_align: menu::HorizontalAlign::Center,
+                        v_align: menu::VerticalAlign::Bottom,
+                        spacing: 1
+                    }, eadkp::Point { x: width / 2, y: height - 1});
                 },
                 RenderCommand::TitleBackground { color } => {
                   eadkp::display::push_rect_uniform(TITLEBAR_RECT, color);  
