@@ -1,4 +1,8 @@
 
+fn get_font_size(is_large: bool) -> eadkp::FontSize {
+    return if is_large { eadkp::LARGE_FONT } else { eadkp::SMALL_FONT };
+}
+
 pub enum HorizontalAlign { Left, Center, Right }
 pub enum VerticalAlign { Top, Center, Bottom }
 
