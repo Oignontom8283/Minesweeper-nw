@@ -15,7 +15,6 @@ pub const UPDATE_TIME_INTERVAL: u64 = 1000; // en milliseconds
 pub const BACKGROUND_COLOR: eadkp::Color = eadkp::COLOR_WHITE;
 
 pub const TITLE_FONT_IS_LARGE: bool = true;
-pub const TITLE_FONT: eadkp::FontSize = if TITLE_FONT_IS_LARGE { eadkp::LARGE_FONT } else { eadkp::SMALL_FONT };
 pub const TITLE_COLOR: eadkp::Color = eadkp::COLOR_WHITE; // coleur du texte du titre
 pub const SUBTITLE_ENDGAME_IS_LAGE: bool = false;
 pub const SUBTITLE_ENDGAME_MARGIN: u16 = 2;

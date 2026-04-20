@@ -111,12 +111,14 @@ impl StateRuntime for MainMenu {
                 RenderCommand::TitleBackground { color } => {
                   eadkp::display::push_rect_uniform(TITLEBAR_RECT, color);  
                 },
-                RenderCommand::TitleText { text, color, background }     => {
-                    // Obtenir positon du texte
-                    let point = title_text_to_point(&text, TITLE_FONT);
+                RenderCommand::TitleText { text, color, background } => {
+                    menu::draw_texts(&menu::TextLayout {
+                        lines: &[menu::TextStyle { text:text.as_str(), color: color, bg_color: background, is_large: TITLE_FONT_IS_LARGE }],
+                        h_align: menu::HorizontalAlign::Center,
+                        v_align: menu::VerticalAlign::Center,
+                        spacing: 0
+                    }, title_point());
 
-                    // Rendre le texte du titre
-                    eadkp::display::draw_string(&text, point, TITLE_FONT_IS_LARGE, color, background);
                 },
                 _ => {}
             }
