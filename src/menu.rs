@@ -12,3 +12,14 @@ pub struct TextStyle<'a> {
     pub bg_color: eadkp::Color,
     pub is_large: bool,
 }
+
+impl<'a> TextStyle<'a> {
+    pub fn width(&self) -> u16 {
+        self.text.len() as u16 * get_font_size(self.is_large).width
+    }
+
+    pub fn height(&self) -> u16 {
+        get_font_size(self.is_large).height
+    }
+}
+
