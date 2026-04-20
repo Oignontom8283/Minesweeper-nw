@@ -43,7 +43,11 @@ impl StateRuntime for EndGame {
         
         if just.key_down(eadkp::input::Key::Ok) || just.key_down(eadkp::input::Key::Back) {
             init_main_menu(_shared);
-            return vec![];
+        }
+
+        // exit
+        if just.key_down(KEY_EXIT) {
+            _shared.running = false;
         }
 
         Vec::new()
