@@ -130,18 +130,12 @@ pub struct GameSave {
 }
 
 
-pub fn title_text_to_point(text: &str, font_size: eadkp::FontSize) -> eadkp::Point {
-    let x = TITLEBAR_RECT.width / 2 - ((text.len() * font_size.width as usize) / 2) as u16;
-    let y = TITLEBAR_RECT.height / 2 - font_size.height / 2;
-
-    eadkp::Point { x, y }
+pub fn title_point() -> eadkp::Point {
+    eadkp::Point { x: eadkp::SCREEN_RECT.width / 2, y: eadkp::LARGE_FONT.height / 2 }
 }
 
-pub fn title_text_to_point_pourcent(text: &str, font_size: eadkp::FontSize, pourcent: f32) -> eadkp::Point {
-    let x = (TITLEBAR_RECT.width as f32 * pourcent) as u16 - ((text.len() * font_size.width as usize) / 2) as u16;
-    let y = TITLEBAR_RECT.height / 2 - font_size.height / 2;
-
-    eadkp::Point { x, y }
+pub fn title_point_pourcent(p: f32) -> eadkp::Point {
+    eadkp::Point { x: (eadkp::SCREEN_RECT.width as f32 * p) as u16, y: eadkp::LARGE_FONT.height / 2 }
 }
 
 pub fn time_to_string(time: u64) -> String {
