@@ -51,11 +51,18 @@ pub enum StateEnum {
     EndGame,
 }
 
+#[derive(PartialEq)]
+pub enum DifficultyEnum {
+    Normale,
+    Hard,
+}
+
 pub struct SharedState {
     pub running: bool,
 
     pub state: StateEnum,
     pub need_redraw: bool,
+    pub difficulty: DifficultyEnum,
 
     pub grid: Vec<u8>,
     pub width: u8,
@@ -162,5 +169,12 @@ pub fn time_to_string(time: u64) -> String {
         format!("{:02}:{:02}:{:02}", hours, minutes, seconds)
     } else {
         format!("{:02}:{:02}", minutes, seconds)
+    }
+}
+
+pub fn size_by_difficulty(difficulty: DifficultyEnum) -> (u8, u8) {
+    match difficulty {
+        DifficultyEnum::Normale => (10, 10),
+        DifficultyEnum::Hard => (17, 10)
     }
 }
