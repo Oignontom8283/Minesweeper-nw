@@ -74,4 +74,22 @@ pub fn delete_game_save(filename: &str) {
 }
 
 
-pub fn save_score()
+pub fn save_score(filename: &str, score: Score) {
+
+    // Si le fichier existe, le supprimer
+    if eadkp::storage::file_exists(filename).unwrap() {
+        unsafe { eadkp::storage::file_erase(filename).unwrap() };
+    }
+
+    // Sérialiser le score
+    let serialized = postcard::to_allocvec(&score).unwrap_or_else(|e| {
+        panic!("Failed to serialize score: {:?}", e)
+    });
+
+    // Enregistrer le fichier
+    match eadkp::storage::file_write_raw(filename, &serialized) {
+        Ok(_) => (),
+        Err(eadkp::GlobalError::Software(eadkp::SoftwareError::SimulatorNotSupported)) => (),
+        Err(e) => panic!("Failed to write score to {} : {:?}", filename, e),
+    }
+}
