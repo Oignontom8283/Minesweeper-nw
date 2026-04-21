@@ -109,3 +109,14 @@ pub fn load_score(filename: &str) -> Score {
 
     score
 }
+
+pub fn load_score_or_default(filename: &str) -> Score {
+    if eadkp::storage::file_exists(filename).unwrap() {
+        load_score(filename)
+    } else {
+        Score {
+            normal: GameScore { games_played: 0, wins: 0, losses: 0, playtime: 0 },
+            hard: GameScore { games_played: 0, wins: 0, losses: 0, playtime: 0 },
+        }
+    }
+}
