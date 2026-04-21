@@ -39,7 +39,7 @@ It takes the form of an external application that must be injected into the calc
 
 ## Installation
 
-1. Download the `minesweeper_nw.nwa` file from the [Releases](https://github.com/Oignontom8283/Minesweeper-nw/releases) section of this GitHub repository.
+1. Download the `minesweeper.nwa` file from the [Releases](https://github.com/Oignontom8283/Minesweeper-nw/releases) section of this GitHub repository.
 
 2. Connect your Numworks calculator to your computer using a USB data cable (official or compatible cable).
 
