@@ -1,6 +1,6 @@
 use crate::{menu, save::save_score};
 #[allow(unused_imports)]
-use crate::{common::*, logic::*};
+use crate::{common::*, scenes::*};
 use alloc::{format, vec, vec::Vec, string::ToString};
 
 pub fn init_end_game(shared: &mut SharedState, wined: bool) {

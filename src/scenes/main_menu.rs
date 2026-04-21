@@ -1,4 +1,4 @@
-use crate::{common::*, logic::*, menu};
+use crate::{common::*, scenes::*, menu};
 use alloc::{format, string::ToString, vec::Vec, vec};
 
 pub fn init_main_menu(shared: &mut SharedState) {

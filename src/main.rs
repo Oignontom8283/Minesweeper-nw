@@ -11,7 +11,7 @@ and displaying "Hello, world!" on the screen.
 extern crate eadkp;
 
 mod common;
-mod logic;
+mod scenes;
 mod grid;
 mod render;
 mod save;
@@ -19,7 +19,7 @@ mod menu;
 
 use alloc::vec;
 use common::*;
-use logic::*;
+use scenes::*;
 
 // Setup the NWA environment.
 eadk_setup!(name = "Minesweeper");

@@ -1,4 +1,4 @@
-use crate::{common::*, grid, logic::*, menu, render, save};
+use crate::{common::*, grid, scenes::*, menu, render, save};
 use alloc::{format, string::ToString, vec::Vec};
 
 pub fn init_playing(shared: &mut SharedState, difficulty: &DifficultyEnum, large_cells: bool) {
