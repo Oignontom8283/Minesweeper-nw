@@ -74,7 +74,7 @@ pub fn delete_game_save(filename: &str) {
 }
 
 
-pub fn save_score(filename: &str, score: Score) {
+pub fn save_score(filename: &str, score: &Score) {
 
     // Si le fichier existe, le supprimer
     if eadkp::storage::file_exists(filename).unwrap() {
@@ -82,7 +82,7 @@ pub fn save_score(filename: &str, score: Score) {
     }
 
     // Sérialiser le score
-    let serialized = postcard::to_allocvec(&score).unwrap_or_else(|e| {
+    let serialized = postcard::to_allocvec(score).unwrap_or_else(|e| {
         panic!("Failed to serialize score: {:?}", e)
     });
 
