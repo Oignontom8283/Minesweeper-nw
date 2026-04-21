@@ -48,7 +48,7 @@ impl<'a> TextLayout<'a> {
         let ay = anchor_y as i32;
         
         let y =match self.v_align {
-            VerticalAlign::Top => total,
+            VerticalAlign::Top => ay,
             VerticalAlign::Center => ay - (total / 2),
             VerticalAlign::Bottom => ay - total,
         };
