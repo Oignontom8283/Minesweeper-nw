@@ -60,8 +60,8 @@ pub fn main() -> isize {
         asset_dirt_large: eadkp::ImageLoader::from_flash(eadkp::include_image!("dirt_large.png")).expect("Failed to load dirt large image"),
         asset_dirt_small: eadkp::ImageLoader::from_flash(eadkp::include_image!("dirt_small.png")).expect("Failed to load dirt small image"),
 
-        asset_flag_large: eadkp::ImageLoader::from_flash(eadkp::include_image!("flag_large.png")).expect("Failed to load dirt large image"),
-        asset_flag_small: eadkp::ImageLoader::from_flash(eadkp::include_image!("flag_small.png")).expect("Failed to load dirt small image"),
+        asset_flag_large: eadkp::ImageLoader::from_flash(eadkp::include_image!("flag_large.png")).expect("Failed to load flag large image"),
+        asset_flag_small: eadkp::ImageLoader::from_flash(eadkp::include_image!("flag_small.png")).expect("Failed to load flag small image"),
 
         asset_mine_large: eadkp::ImageLoader::from_flash(eadkp::include_image!("mine_large.png")).expect("Failed to load mine large image"),
         asset_mine_small: eadkp::ImageLoader::from_flash(eadkp::include_image!("mine_small.png")).expect("Failed to load mine small image"),
