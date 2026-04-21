@@ -69,18 +69,16 @@ impl StateRuntime for EndGame {
                     }, title_point());
                 },
                 RenderCommand::SubTitleText { text, color, background} => {
-                    let font = if SUBTITLE_ENDGAME_IS_LAGE { eadkp::LARGE_FONT } else { eadkp::SMALL_FONT };
-                    let x_base = eadkp::SCREEN_RECT.width / 2;
+                    let lines: Vec<menu::TextStyle> = text.iter().map(|t| {
+                        menu::TextStyle { text: t.as_str(), color, bg_color: background, is_large: SUBTITLE_ENDGAME_IS_LAGE }
+                    }).collect();
 
-                    for (i, line) in text.iter().enumerate() {
-                        
-                        let x = x_base - (line.len() as u16 * font.width) / 2;
-                        let y = eadkp::SCREEN_RECT.height - ((i as u16 + 1) * (font.height + SUBTITLE_ENDGAME_MARGIN));
-
-                        let point = eadkp::Point { x, y };
-
-                        eadkp::display::draw_string(line, point, SUBTITLE_ENDGAME_IS_LAGE, color, background);
-                    }
+                    menu::draw_texts(&menu::TextLayout {
+                        lines: &lines,
+                        h_align: menu::HorizontalAlign::Center,
+                        v_align: menu::VerticalAlign::Bottom,
+                        spacing: SUBTITLE_ENDGAME_MARGIN
+                    }, eadkp::Point { x: eadkp::SCREEN_RECT.width / 2, y: eadkp::SCREEN_RECT.height - SUBTITLE_ENDGAME_MARGIN });
                 }
                 _ => {},
             }
