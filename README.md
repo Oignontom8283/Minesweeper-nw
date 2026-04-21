@@ -28,6 +28,9 @@ It takes the form of an external application that must be injected into the calc
   &nbsp;&nbsp;&nbsp;&nbsp;
   <img src="./docs/images/lose.png" alt="lose screen" width="45%">
 </p>
+<p align="center">
+  <img src="./docs/images/animation.gif" alt="animation" width="45%">
+</p>
 
 ## Controls
 
