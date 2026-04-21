@@ -179,3 +179,22 @@ pub fn size_by_difficulty(difficulty: DifficultyEnum) -> (u8, u8) {
         DifficultyEnum::Hard => (17, 10)
     }
 }
+
+/// Calcule et applique le socre
+pub fn calculate_score(shared: &mut SharedState) {
+
+    // Get le score du mode correspondent
+    let score = match shared.difficulty {
+        DifficultyEnum::Normale => &mut shared.score.normal,
+        DifficultyEnum::Hard => &mut shared.score.hard,
+    };
+    
+    if shared.wined {
+        score.wins += 1;
+    } else {
+        score.losses += 1;
+    }
+
+    score.games_played += 1;
+    score.playtime += shared.time_elapsed;
+}
