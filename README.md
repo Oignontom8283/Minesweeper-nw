@@ -29,8 +29,6 @@ It takes the form of an external application that must be injected into the calc
   <img src="./docs/images/lose.png" alt="lose screen" width="45%">
 </p>
 
-This project use the [eadkp](https://github.com/Oignontom8283/eadkp) library/framework !
-
 ## Controls
 
 - Use the directional arrows to move the cursor on the grid.
@@ -55,12 +53,17 @@ This project use the [eadkp](https://github.com/Oignontom8283/eadkp) library/fra
 > [!NOTE]
 > If it is not detected and is properly turned on, turn it off and on again until it works. It may take a few tries.
 
-7. Once connected, click on "Select a NWA file or drop it here" and select the `minesweeper_nw.nwa` file you downloaded.
+7. Once connected, click on "Select a NWA file or drop it here" and select the `minesweeper.nwa` file you downloaded.
 
 8. Click on "Install" and wait for the installation to finish (Do not disconnect the calculator during the installation).
 
 9. The **Minesweeper** app should now be visible at the very bottom of the application list (after the basic apps) on your calculator.
 
+## Technologies
+- This project uses the [Eadkp](https://github.com/Oignontom8283/eadkp/wiki) framework!
+- Developed in Rust. C or C++ would have been easier, but I prefer Rust!
+- Uses the following crates: `heapless`, `serde`, `postcard`, `embedded-alloc`, and `eadkp`.
+- I'm using Blockbench to create assets (okay, they're ugly, but I'm no artist).
 
 ## Why this project?
 
