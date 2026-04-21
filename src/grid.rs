@@ -63,13 +63,29 @@ pub fn get_adjacent_mines(shared: &mut SharedState, x: u8, y: u8) -> u8 {
 pub fn generate_mines(shared: &mut SharedState, first_x: u8, first_y: u8) {
     let mut mines_placed = 0;
 
+    // Calculer les case disponible en 3x3
+    let safe_cells = (3_u32.min(shared.width as u32)) * (3_u32.min(shared.height as u32));
+    let total_cells = shared.width as u32 * shared.height as u32;
+
+    // si pas suffisament on passe a 1x1
+    let use_safe_zone = total_cells.saturating_sub(safe_cells) >= shared.num_mines as u32;
+
     // Générer des coordonnées uniques pour les mines sans passer par un vecteur temporaire
     while mines_placed < shared.num_mines {
         let random_x = eadkp::random::randint(0, shared.width as u32) as u8;
         let random_y = eadkp::random::randint(0, shared.height as u32) as u8;
 
-        // Vérifier qu'on n'est pas sur la première case et que la case ne contient pas déjà une mine
-        if !(random_x == first_x && random_y == first_y) && !is_mine(shared, random_x, random_y) {
+        // Es que est dans le rayon d'exclusion
+        let is_excluded = if use_safe_zone {
+            let dx = (random_x as i16 - first_x as i16).abs();
+            let dy = (random_y as i16 - first_y as i16).abs();
+            dx <= 1 && dy <= 1 // rayon de 1 autour du premier clic (3x3)
+        } else {
+            random_x == first_x && random_y == first_y // si pas de zone, la casse elle même
+        };
+
+        // set la mine si elle nn'est pas eclue et pas déja une mine
+        if !is_excluded && !is_mine(shared, random_x, random_y) {
             set_mine(shared, random_x, random_y);
             mines_placed += 1;
         }
