@@ -1,5 +1,5 @@
 use crate::{common::*, logic::*, menu};
-use alloc::{vec, vec::Vec, string::ToString};
+use alloc::{format, string::ToString, vec::Vec, vec};
 
 pub fn init_main_menu(shared: &mut SharedState) {
     shared.need_redraw = true;
@@ -104,6 +104,43 @@ impl StateRuntime for MainMenu {
 
                     // Scores
 
+                    let is_large:bool = false;
+                    let marge_h = 2;
+                    let marge_v = 1;
+                    let spacing = 0;
+
+                    let score_normal = [
+                        menu::TextStyle { text: "Normal:".into(), color: eadkp::COLOR_BLACK, bg_color: BACKGROUND_COLOR, is_large: !is_large },
+                        menu::TextStyle { text: format!("Played: {}", _shared.score.normal.games_played).into(), color: eadkp::COLOR_BLACK, bg_color: BACKGROUND_COLOR, is_large },
+                        menu::TextStyle { text: format!("Wins: {}", _shared.score.normal.wins).into(), color: eadkp::COLOR_BLACK, bg_color: TITLE_BACKGROUND_COLOR_ENDGAME_WIN, is_large },
+                        menu::TextStyle { text: format!("Losses: {}", _shared.score.normal.losses).into(), color: eadkp::COLOR_BLACK, bg_color: TITLE_BACKGROUND_COLOR_ENDGAME_LOSE, is_large },
+                        menu::TextStyle { text: format!("Mean Playtime: {}", time_to_string(_shared.score.normal.avg_playtime())).into(), color: eadkp::COLOR_BLACK, bg_color: BACKGROUND_COLOR, is_large },
+                        menu::TextStyle { text: format!("Mean Win: {:.2}%", _shared.score.normal.win_rate() * 100.0).into(), color: eadkp::COLOR_BLACK, bg_color: BACKGROUND_COLOR, is_large },
+                    ];
+
+                    menu::draw_texts(&menu::TextLayout {
+                        lines: &score_normal,
+                        h_align: menu::HorizontalAlign::Left,
+                        v_align: menu::VerticalAlign::Top,
+                        spacing,
+                    }, eadkp::Point { x: marge_h, y: eadkp::LARGE_FONT.height + marge_v});
+
+
+                    let score_hard = [
+                        menu::TextStyle { text: "Hard:".into(), color: eadkp::COLOR_BLACK, bg_color: BACKGROUND_COLOR, is_large: !is_large },
+                        menu::TextStyle { text: format!("Played: {}", _shared.score.hard.games_played).into(), color: eadkp::COLOR_BLACK, bg_color: BACKGROUND_COLOR, is_large },
+                        menu::TextStyle { text: format!("Wins: {}", _shared.score.hard.wins).into(), color: eadkp::COLOR_BLACK, bg_color: TITLE_BACKGROUND_COLOR_ENDGAME_WIN, is_large },
+                        menu::TextStyle { text: format!("Losses: {}", _shared.score.hard.losses).into(), color: eadkp::COLOR_BLACK, bg_color: TITLE_BACKGROUND_COLOR_ENDGAME_LOSE, is_large },
+                        menu::TextStyle { text: format!("Mean Playtime: {}", time_to_string(_shared.score.hard.avg_playtime())).into(), color: eadkp::COLOR_BLACK, bg_color: BACKGROUND_COLOR, is_large },
+                        menu::TextStyle { text: format!("Mean Win: {:.2}%", _shared.score.hard.win_rate() * 100.0).into(), color: eadkp::COLOR_BLACK, bg_color: BACKGROUND_COLOR, is_large },
+                    ];
+
+                    menu::draw_texts(&menu::TextLayout {
+                        lines: &score_hard,
+                        h_align: menu::HorizontalAlign::Right,
+                        v_align: menu::VerticalAlign::Top,
+                        spacing,
+                    }, eadkp::Point { x: eadkp::SCREEN_RECT.width - marge_h, y: eadkp::LARGE_FONT.height + marge_v});
                 },
                 RenderCommand::TitleBackground { color } => {
                   eadkp::display::push_rect_uniform(TITLEBAR_RECT, color);  
