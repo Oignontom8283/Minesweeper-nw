@@ -67,7 +67,7 @@ impl StateRuntime for EndGame {
                 }
                 RenderCommand::TitleText { text, color, background } => {
                     menu::draw_texts(&menu::TextLayout {
-                        lines: &[menu::TextStyle { text: text.as_str(), color, bg_color: background, is_large:TITLE_FONT_IS_LARGE }],
+                        lines: &[menu::TextStyle { text: text.as_str().into(), color, bg_color: background, is_large:TITLE_FONT_IS_LARGE }],
                         h_align: menu::HorizontalAlign::Center,
                         v_align: menu::VerticalAlign::Center,
                         spacing: 0
@@ -75,7 +75,7 @@ impl StateRuntime for EndGame {
                 },
                 RenderCommand::SubTitleText { text, color, background} => {
                     let lines: Vec<menu::TextStyle> = text.iter().map(|t| {
-                        menu::TextStyle { text: t.as_str(), color, bg_color: background, is_large: SUBTITLE_ENDGAME_IS_LAGE }
+                        menu::TextStyle { text: t.as_str().into(), color, bg_color: background, is_large: SUBTITLE_ENDGAME_IS_LAGE }
                     }).collect();
 
                     menu::draw_texts(&menu::TextLayout {

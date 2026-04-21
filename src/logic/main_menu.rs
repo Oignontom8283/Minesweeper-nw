@@ -78,8 +78,8 @@ impl StateRuntime for MainMenu {
 
 
                     let menu_lines = [
-                        menu::TextStyle { text: "Press OK to normal game", color: eadkp::COLOR_BLACK, bg_color: BACKGROUND_COLOR, is_large: true },
-                        menu::TextStyle { text: "Press BACK to hard game", color: eadkp::COLOR_BLACK, bg_color: BACKGROUND_COLOR, is_large: true },
+                        menu::TextStyle { text: "Press OK to normal game".into(), color: eadkp::COLOR_BLACK, bg_color: BACKGROUND_COLOR, is_large: true },
+                        menu::TextStyle { text: "Press BACK to hard game".into(), color: eadkp::COLOR_BLACK, bg_color: BACKGROUND_COLOR, is_large: true },
                     ];
 
                     menu::draw_texts(&menu::TextLayout {
@@ -87,12 +87,12 @@ impl StateRuntime for MainMenu {
                         h_align: menu::HorizontalAlign::Center,
                         v_align: menu::VerticalAlign::Center,
                         spacing: 5
-                    }, eadkp::Point { x: width / 2, y: height - (height / 2) });
+                    }, eadkp::Point { x: width / 2, y: height - (height / 3) });
                     
 
                     let footer_lines = [
-                        menu::TextStyle { text: "Press DEL to exit; Don't use HOME !", color: eadkp::COLOR_BLACK, bg_color: BACKGROUND_COLOR, is_large: false },
-                        menu::TextStyle { text: "TOOL to back to menu", color: eadkp::COLOR_BLACK, bg_color: BACKGROUND_COLOR, is_large: false },
+                        menu::TextStyle { text: "Press DEL to exit; Don't use HOME !".into(), color: eadkp::COLOR_BLACK, bg_color: BACKGROUND_COLOR, is_large: false },
+                        menu::TextStyle { text: "TOOL to back to menu".into(), color: eadkp::COLOR_BLACK, bg_color: BACKGROUND_COLOR, is_large: false },
                     ];
 
                     menu::draw_texts(&menu::TextLayout {
@@ -101,13 +101,16 @@ impl StateRuntime for MainMenu {
                         v_align: menu::VerticalAlign::Bottom,
                         spacing: 1
                     }, eadkp::Point { x: width / 2, y: height - 1});
+
+                    // Scores
+
                 },
                 RenderCommand::TitleBackground { color } => {
                   eadkp::display::push_rect_uniform(TITLEBAR_RECT, color);  
                 },
                 RenderCommand::TitleText { text, color, background } => {
                     menu::draw_texts(&menu::TextLayout {
-                        lines: &[menu::TextStyle { text:text.as_str(), color: color, bg_color: background, is_large: TITLE_FONT_IS_LARGE }],
+                        lines: &[menu::TextStyle { text:text.as_str().into(), color: color, bg_color: background, is_large: TITLE_FONT_IS_LARGE }],
                         h_align: menu::HorizontalAlign::Center,
                         v_align: menu::VerticalAlign::Center,
                         spacing: 0

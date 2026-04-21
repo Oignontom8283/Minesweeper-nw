@@ -288,7 +288,7 @@ impl StateRuntime for Playing {
                 },
                 RenderCommand::TitleTime { time, color, background } => {
                     menu::draw_texts(&menu::TextLayout {
-                        lines: &[menu::TextStyle { text: time.as_str(), color, bg_color: background, is_large:TITLE_FONT_IS_LARGE }],
+                        lines: &[menu::TextStyle { text: time.as_str().into(), color, bg_color: background, is_large:TITLE_FONT_IS_LARGE }],
                         h_align: menu::HorizontalAlign::Center,
                         v_align: menu::VerticalAlign::Center,
                         spacing: 0
@@ -296,7 +296,7 @@ impl StateRuntime for Playing {
                 },
                 RenderCommand::TitleMines { mines, color, background } => {
                     menu::draw_texts(&menu::TextLayout {
-                        lines: &[menu::TextStyle { text: mines.as_str(), color, bg_color: background, is_large:TITLE_FONT_IS_LARGE }],
+                        lines: &[menu::TextStyle { text: mines.as_str().into(), color, bg_color: background, is_large:TITLE_FONT_IS_LARGE }],
                         h_align: menu::HorizontalAlign::Center,
                         v_align: menu::VerticalAlign::Center,
                         spacing: 0

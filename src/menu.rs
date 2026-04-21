@@ -1,3 +1,4 @@
+use alloc::{borrow::Cow};
 
 fn get_font_size(is_large: bool) -> eadkp::FontSize {
     if is_large { eadkp::LARGE_FONT } else { eadkp::SMALL_FONT }
@@ -9,7 +10,7 @@ pub enum HorizontalAlign { Left, Center, Right }
 pub enum VerticalAlign { Top, Center, Bottom }
 
 pub struct TextStyle<'a> {
-    pub text: &'a str,
+    pub text: Cow<'a, str>,
     pub color: eadkp::Color,
     pub bg_color: eadkp::Color,
     pub is_large: bool,
@@ -78,7 +79,7 @@ pub fn draw_texts(layout: &TextLayout, anchor: eadkp::Point) {
         let x = layout.get_line_x(line, anchor.x);
 
         eadkp::display::draw_string(
-            line.text, 
+            &line.text, 
             eadkp::Point { x, y: current_y}, 
             line.is_large, 
             line.color, 
