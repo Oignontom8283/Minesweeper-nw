@@ -58,6 +58,7 @@ pub fn main() -> isize {
         time_base: 0,
         time_started: 0,
         time_stoped: 0,
+        time_elapsed: 0,
         time_to_next_update: 0,
 
         wined: false,

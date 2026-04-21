@@ -82,6 +82,7 @@ pub struct SharedState {
     pub time_base: u64,
     pub time_started: u64, // Mment de chargement de l'instance, pas du start !
     pub time_stoped: u64,
+    pub time_elapsed: u64,
     pub time_to_next_update: u64,
 
     pub wined: bool, // true if the player has won, false if they lost (used for end game screen)
