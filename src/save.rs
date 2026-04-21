@@ -72,3 +72,51 @@ pub fn delete_game_save(filename: &str) {
         unsafe { eadkp::storage::file_erase(filename).unwrap() };
     }
 }
+
+
+pub fn save_score(filename: &str, score: &Score) {
+
+    // Si le fichier existe, le supprimer
+    if eadkp::storage::file_exists(filename).unwrap() {
+        unsafe { eadkp::storage::file_erase(filename).unwrap() };
+    }
+
+    // Sérialiser le score
+    let serialized = postcard::to_allocvec(score).unwrap_or_else(|e| {
+        panic!("Failed to serialize score: {:?}", e)
+    });
+
+    // Enregistrer le fichier
+    match eadkp::storage::file_write_raw(filename, &serialized) {
+        Ok(_) => (),
+        Err(eadkp::GlobalError::Software(eadkp::SoftwareError::SimulatorNotSupported)) => (),
+        Err(e) => panic!("Failed to write score to {} : {:?}", filename, e),
+    }
+}
+
+pub fn load_score(filename: &str) -> Score {
+    if !eadkp::storage::file_exists(filename).unwrap() { panic!("Score file not founds"); } // garde fou
+
+    // Lire le fichuer
+    let serialized = unsafe { eadkp::storage::file_read_raw(filename).unwrap_or_else(|e| {
+        panic!("Failed to read score file: {:?}", e)
+    }) };
+    
+    // Désérialiser le score
+    let score: Score = postcard::from_bytes(serialized).unwrap_or_else(|e| {
+        panic!("Failed to deserialize score: {:?}", e)
+    });
+
+    score
+}
+
+pub fn load_score_or_default(filename: &str) -> Score {
+    if eadkp::storage::file_exists(filename).unwrap() {
+        load_score(filename)
+    } else {
+        Score {
+            normal: GameScore { games_played: 0, wins: 0, losses: 0, playtime: 0 },
+            hard: GameScore { games_played: 0, wins: 0, losses: 0, playtime: 0 },
+        }
+    }
+}

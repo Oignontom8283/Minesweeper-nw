@@ -1,8 +1,11 @@
 use crate::{common::*, grid, logic::*, menu, render, save};
 use alloc::{format, string::ToString, vec::Vec};
 
-pub fn init_playing(shared: &mut SharedState, width: u8, height: u8, num_mines: usize, large_cells: bool) {
-    
+pub fn init_playing(shared: &mut SharedState, difficulty: &DifficultyEnum, large_cells: bool) {
+
+    shared.difficulty = *difficulty;
+    let (width, height) = size_by_difficulty(&difficulty);
+
     // Initialiser la grille
     shared.width = width;
     shared.height = height;
@@ -16,9 +19,12 @@ pub fn init_playing(shared: &mut SharedState, width: u8, height: u8, num_mines: 
     // Calculer la position de départ pour centrer la grille à l'écran
     grid::set_start_pos(shared);
 
-    shared.num_mines = num_mines;
-    shared.remaining_safe_cells = (width as usize) * (height as usize) - num_mines;
-    shared.theoretical_remaining_mines = num_mines as i32;
+    // calculer le nb de mines en fonction de la densité. +0.5 pour arrondir correctement a l'entier le plus proche
+    let density = match shared.difficulty { DifficultyEnum::Normale => MINES_DENSITY_NORMALE, DifficultyEnum::Hard => MINES_DENSITY_HARD };
+    shared.num_mines = (density * (width * height) as f32 + 0.5) as usize;
+
+    shared.remaining_safe_cells = (width as usize) * (height as usize) - shared.num_mines;
+    shared.theoretical_remaining_mines = shared.num_mines as i32;
     shared.first_action = true;
 
     shared.cursor_x = 0;
@@ -283,7 +289,7 @@ impl StateRuntime for Playing {
                 },
                 RenderCommand::TitleTime { time, color, background } => {
                     menu::draw_texts(&menu::TextLayout {
-                        lines: &[menu::TextStyle { text: time.as_str(), color, bg_color: background, is_large:TITLE_FONT_IS_LARGE }],
+                        lines: &[menu::TextStyle { text: time.as_str().into(), color, bg_color: background, is_large:TITLE_FONT_IS_LARGE }],
                         h_align: menu::HorizontalAlign::Center,
                         v_align: menu::VerticalAlign::Center,
                         spacing: 0
@@ -291,7 +297,7 @@ impl StateRuntime for Playing {
                 },
                 RenderCommand::TitleMines { mines, color, background } => {
                     menu::draw_texts(&menu::TextLayout {
-                        lines: &[menu::TextStyle { text: mines.as_str(), color, bg_color: background, is_large:TITLE_FONT_IS_LARGE }],
+                        lines: &[menu::TextStyle { text: mines.as_str().into(), color, bg_color: background, is_large:TITLE_FONT_IS_LARGE }],
                         h_align: menu::HorizontalAlign::Center,
                         v_align: menu::VerticalAlign::Center,
                         spacing: 0

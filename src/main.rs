@@ -34,6 +34,8 @@ pub fn main() -> isize {
 
     let mut shared = SharedState {
         running: true, // Le jeu court ? Hmm... interesting.
+        need_redraw: true,
+        difficulty: DifficultyEnum::Normale,
 
         state: StateEnum::MainMenu,
         grid: vec![0; 0], // Empty grid
@@ -43,16 +45,18 @@ pub fn main() -> isize {
         start_y: 0,
         cursor_x: 0,
         cursor_y: 0,
-        need_redraw: true,
         first_action: false,
         num_mines: 0,
         remaining_safe_cells: 0,
         theoretical_remaining_mines: 0,
         large_cells: true,
 
+        score: save::load_score_or_default(SAVE_SCORE_FILE_NAME),
+
         time_base: 0,
         time_started: 0,
         time_stoped: 0,
+        time_elapsed: 0,
         time_to_next_update: 0,
 
         wined: false,
@@ -60,8 +64,8 @@ pub fn main() -> isize {
         asset_dirt_large: eadkp::ImageLoader::from_flash(eadkp::include_image!("dirt_large.png")).expect("Failed to load dirt large image"),
         asset_dirt_small: eadkp::ImageLoader::from_flash(eadkp::include_image!("dirt_small.png")).expect("Failed to load dirt small image"),
 
-        asset_flag_large: eadkp::ImageLoader::from_flash(eadkp::include_image!("flag_large.png")).expect("Failed to load dirt large image"),
-        asset_flag_small: eadkp::ImageLoader::from_flash(eadkp::include_image!("flag_small.png")).expect("Failed to load dirt small image"),
+        asset_flag_large: eadkp::ImageLoader::from_flash(eadkp::include_image!("flag_large.png")).expect("Failed to load flag large image"),
+        asset_flag_small: eadkp::ImageLoader::from_flash(eadkp::include_image!("flag_small.png")).expect("Failed to load flag small image"),
 
         asset_mine_large: eadkp::ImageLoader::from_flash(eadkp::include_image!("mine_large.png")).expect("Failed to load mine large image"),
         asset_mine_small: eadkp::ImageLoader::from_flash(eadkp::include_image!("mine_small.png")).expect("Failed to load mine small image"),

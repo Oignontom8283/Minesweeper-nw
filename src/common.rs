@@ -51,11 +51,18 @@ pub enum StateEnum {
     EndGame,
 }
 
+#[derive(PartialEq, Clone, Copy)]
+pub enum DifficultyEnum {
+    Normale,
+    Hard,
+}
+
 pub struct SharedState {
     pub running: bool,
 
     pub state: StateEnum,
     pub need_redraw: bool,
+    pub difficulty: DifficultyEnum,
 
     pub grid: Vec<u8>,
     pub width: u8,
@@ -70,9 +77,12 @@ pub struct SharedState {
     pub theoretical_remaining_mines: i32,
     pub large_cells: bool,
 
+    pub score: Score,
+
     pub time_base: u64,
     pub time_started: u64, // Mment de chargement de l'instance, pas du start !
     pub time_stoped: u64,
+    pub time_elapsed: u64,
     pub time_to_next_update: u64,
 
     pub wined: bool, // true if the player has won, false if they lost (used for end game screen)
@@ -128,6 +138,34 @@ pub struct GameSave {
     pub time_base: u64,
 }
 
+#[derive(Serialize, Deserialize)]
+pub struct GameScore {
+    pub games_played: u32,
+    pub wins: u32,
+    pub losses: u32,
+    pub playtime: u64,
+}
+impl GameScore {
+    pub fn avg_playtime(&self) -> u64 {
+        if self.games_played == 0 { return 0 };
+
+        self.playtime / self.games_played as u64
+    }
+
+    // renvois le taux par le %
+    pub fn win_rate(&self) -> f32 {
+        if self.games_played == 0 { return 0.0 };
+
+        self.wins as f32 / self.games_played as f32
+    }
+}
+
+#[derive(Serialize, Deserialize)]
+pub struct Score {
+    pub normal: GameScore,
+    pub hard: GameScore,
+}
+
 
 pub fn title_point() -> eadkp::Point {
     eadkp::Point { x: eadkp::SCREEN_RECT.width / 2, y: eadkp::LARGE_FONT.height / 2 }
@@ -147,4 +185,30 @@ pub fn time_to_string(time: u64) -> String {
     } else {
         format!("{:02}:{:02}", minutes, seconds)
     }
+}
+
+pub fn size_by_difficulty(difficulty: &DifficultyEnum) -> (u8, u8) {
+    match difficulty {
+        DifficultyEnum::Normale => (10, 10),
+        DifficultyEnum::Hard => (17, 10)
+    }
+}
+
+/// Calcule et applique le socre
+pub fn calculate_score(shared: &mut SharedState) {
+
+    // Get le score du mode correspondent
+    let score = match shared.difficulty {
+        DifficultyEnum::Normale => &mut shared.score.normal,
+        DifficultyEnum::Hard => &mut shared.score.hard,
+    };
+    
+    if shared.wined {
+        score.wins += 1;
+    } else {
+        score.losses += 1;
+    }
+
+    score.games_played += 1;
+    score.playtime += shared.time_elapsed;
 }

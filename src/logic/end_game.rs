@@ -1,4 +1,4 @@
-use crate::menu;
+use crate::{menu, save::save_score};
 #[allow(unused_imports)]
 use crate::{common::*, logic::*};
 use alloc::{format, vec, vec::Vec, string::ToString};
@@ -7,6 +7,11 @@ pub fn init_end_game(shared: &mut SharedState, wined: bool) {
     shared.wined = wined;
     shared.need_redraw = true;
     shared.time_stoped = eadkp::timing::millis(); // moment de fin
+    shared.time_elapsed = (shared.time_stoped - shared.time_started) + shared.time_base; // temps écoulé total
+
+    calculate_score(shared); // calculer et appliquer le score
+    save_score(SAVE_SCORE_FILE_NAME, &shared.score); // sauvegarder le score
+
     shared.state = StateEnum::EndGame
 }
 
@@ -33,7 +38,7 @@ impl StateRuntime for EndGame {
                 RenderCommand::TitleBackground { color: background },
                 RenderCommand::TitleText { text: text.to_string(), color: TITLE_COLOR, background },
                 RenderCommand::SubTitleText { text: vec![
-                    format!("Time: {}", time_to_string((_shared.time_stoped - _shared.time_started) + _shared.time_base)),
+                    format!("Time: {}", time_to_string(_shared.time_elapsed)),
                     "Press OK or BACK to return to menu".to_string(),
                 ], color: TITLE_COLOR, background },
             ];
@@ -62,7 +67,7 @@ impl StateRuntime for EndGame {
                 }
                 RenderCommand::TitleText { text, color, background } => {
                     menu::draw_texts(&menu::TextLayout {
-                        lines: &[menu::TextStyle { text: text.as_str(), color, bg_color: background, is_large:TITLE_FONT_IS_LARGE }],
+                        lines: &[menu::TextStyle { text: text.as_str().into(), color, bg_color: background, is_large:TITLE_FONT_IS_LARGE }],
                         h_align: menu::HorizontalAlign::Center,
                         v_align: menu::VerticalAlign::Center,
                         spacing: 0
@@ -70,7 +75,7 @@ impl StateRuntime for EndGame {
                 },
                 RenderCommand::SubTitleText { text, color, background} => {
                     let lines: Vec<menu::TextStyle> = text.iter().map(|t| {
-                        menu::TextStyle { text: t.as_str(), color, bg_color: background, is_large: SUBTITLE_ENDGAME_IS_LAGE }
+                        menu::TextStyle { text: t.as_str().into(), color, bg_color: background, is_large: SUBTITLE_ENDGAME_IS_LAGE }
                     }).collect();
 
                     menu::draw_texts(&menu::TextLayout {
