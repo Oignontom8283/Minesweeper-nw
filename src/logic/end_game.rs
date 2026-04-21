@@ -7,6 +7,8 @@ pub fn init_end_game(shared: &mut SharedState, wined: bool) {
     shared.wined = wined;
     shared.need_redraw = true;
     shared.time_stoped = eadkp::timing::millis(); // moment de fin
+    shared.time_elapsed = (shared.time_stoped - shared.time_started) + shared.time_base; // temps écoulé total
+
     shared.state = StateEnum::EndGame
 }
 
@@ -33,7 +35,7 @@ impl StateRuntime for EndGame {
                 RenderCommand::TitleBackground { color: background },
                 RenderCommand::TitleText { text: text.to_string(), color: TITLE_COLOR, background },
                 RenderCommand::SubTitleText { text: vec![
-                    format!("Time: {}", time_to_string((_shared.time_stoped - _shared.time_started) + _shared.time_base)),
+                    format!("Time: {}", time_to_string(_shared.time_elapsed)),
                     "Press OK or BACK to return to menu".to_string(),
                 ], color: TITLE_COLOR, background },
             ];
