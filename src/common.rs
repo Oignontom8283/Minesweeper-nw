@@ -70,6 +70,8 @@ pub struct SharedState {
     pub theoretical_remaining_mines: i32,
     pub large_cells: bool,
 
+    pub score: Score,
+
     pub time_base: u64,
     pub time_started: u64, // Mment de chargement de l'instance, pas du start !
     pub time_stoped: u64,

@@ -21,6 +21,8 @@ use alloc::vec;
 use common::*;
 use logic::*;
 
+use crate::save::load_score;
+
 // Setup the NWA environment.
 eadk_setup!(name = "Minesweeper");
 
@@ -49,6 +51,8 @@ pub fn main() -> isize {
         remaining_safe_cells: 0,
         theoretical_remaining_mines: 0,
         large_cells: true,
+
+        score: load_score(SAVE_SCORE_FILE_NAME),
 
         time_base: 0,
         time_started: 0,
