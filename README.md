@@ -82,6 +82,17 @@ Contributions are welcome!
 To contribute, use the provided Docker environment and the `justfile` which do all the setup work for you (develop in the container via **Dev Containers** on VS Code).
 
 
+## Testing locally
+
+1. Ensure `git`, `docker`, and `xhost` are installed. If you are on Windows, perform everything within WSL.
+2. Clone the repository.
+3. Run `chmod +x ./docker.sh` and `./docker start` to start the docker container (recommended).
+4. Wait (this might take a while).
+5. Run `./docker shell` to enter the docker environment (recommended).
+6. Run `just sim` (`just sim [NB_THREAD]` to specify the number of threads to use, **HIGHLY RECOMMENDED**).
+7. Wait (this might take a while).
+8. A window representing the Numworks calculator should open.
+
 ## License
 
 This project is licensed under the [GPL-3.0 License](./LICENSE) (GNU General Public License version 3).
