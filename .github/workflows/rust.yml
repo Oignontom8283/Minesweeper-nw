@@ -2,6 +2,8 @@ name: Rust CI
 
 on:
   push:
+    branches: ["**"]
+    tags: ["**"]
   pull_request:
 
 jobs:
@@ -40,11 +42,10 @@ jobs:
           NAME=$(just --evaluate | awk '/^project_name/ { print $3 }' | tr -d '"')
           echo "name=$NAME" >> $GITHUB_OUTPUT
 
-      - name: Build and Export NWA and check Linux simulator compilation
+      - name: Build and Export
         run: |
           just export
           just build_simulator
-          ls -lah build/
 
       - name: Upload NWA Artifact
         uses: actions/upload-artifact@v4
@@ -54,7 +55,7 @@ jobs:
 
   release:
     needs: build
-    if: startsWith(github.ref, 'refs/tags/v')
+    if: github.event_raw_ref != null && contains(github.ref, 'refs/tags/')
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -71,17 +72,16 @@ jobs:
           NAME=$(just --evaluate | awk '/^project_name/ { print $3 }' | tr -d '"')
           echo "name=$NAME" >> $GITHUB_OUTPUT
 
-      - name: Download All Artifacts
+      - name: Download Artifact
         uses: actions/download-artifact@v4
         with:
+          name: ${{ steps.proj.outputs.name }}.nwa
           path: build/
-          merge-multiple: true
 
-      - name: Create Release
+      - name: Upload to GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          files: |
-            build/${{ steps.proj.outputs.name }}.nwa
+          files: build/${{ steps.proj.outputs.name }}.nwa
           generate_release_notes: true
           draft: false
           prerelease: false
