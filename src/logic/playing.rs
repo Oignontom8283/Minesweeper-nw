@@ -1,7 +1,7 @@
 use crate::{common::*, grid, logic::*, menu, render, save};
 use alloc::{format, string::ToString, vec::Vec};
 
-pub fn init_playing(shared: &mut SharedState, difficulty: DifficultyEnum, num_mines: usize, large_cells: bool) {
+pub fn init_playing(shared: &mut SharedState, difficulty: DifficultyEnum, large_cells: bool) {
     
     let (width, height) = size_by_difficulty(difficulty);
 
@@ -18,9 +18,11 @@ pub fn init_playing(shared: &mut SharedState, difficulty: DifficultyEnum, num_mi
     // Calculer la position de départ pour centrer la grille à l'écran
     grid::set_start_pos(shared);
 
-    shared.num_mines = num_mines;
-    shared.remaining_safe_cells = (width as usize) * (height as usize) - num_mines;
-    shared.theoretical_remaining_mines = num_mines as i32;
+    // calculer le nb de mines en fonction de la densité. +0.5 pour arrondir correctement a l'entier le plus proche
+    shared.num_mines = (MINES_DENSITY_HARD*(width*height) as f32 + 0.5) as usize;
+    
+    shared.remaining_safe_cells = (width as usize) * (height as usize) - shared.num_mines;
+    shared.theoretical_remaining_mines = shared.num_mines as i32;
     shared.first_action = true;
 
     shared.cursor_x = 0;
