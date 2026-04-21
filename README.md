@@ -28,19 +28,20 @@ It takes the form of an external application that must be injected into the calc
   &nbsp;&nbsp;&nbsp;&nbsp;
   <img src="./docs/images/lose.png" alt="lose screen" width="45%">
 </p>
-<table align="center">
+<table align="center" border="0" cellspacing="0">
   <tr>
     <td align="center">
-      <img src="./docs/images/animation.gif" alt="animation" width="100%">
+      <img src="./docs/images/animation.gif" alt="animation" width="45%">
     </td>
     <td align="center">
       <p>Compilation Demo Video</p>
       <a href="https://youtu.be/Im5sqfB5wsw?si=7NMjHolD1MnU9g4v" target="_blank" rel="noopener noreferrer">
-        <img src="./docs/images/Thumbnail_logo.png" alt="compilation demo video" width="100%">
+        <img src="./docs/images/Thumbnail_logo.png" alt="compilation demo video" width="45%">
       </a>
     </td>
   </tr>
 </table>
+
 
 ## Controls
 
