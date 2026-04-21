@@ -137,7 +137,7 @@ pub struct GameScore {
 }
 
 #[derive(Serialize, Deserialize)]
-pub struct ScoreSave {
+pub struct Score {
     pub normal: GameScore,
     pub hard: GameScore,
 }
