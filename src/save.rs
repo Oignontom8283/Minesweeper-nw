@@ -93,3 +93,19 @@ pub fn save_score(filename: &str, score: Score) {
         Err(e) => panic!("Failed to write score to {} : {:?}", filename, e),
     }
 }
+
+pub fn load_score(filename: &str) -> Score {
+    if !eadkp::storage::file_exists(filename).unwrap() { panic!("Score file not founds"); } // garde fou
+
+    // Lire le fichuer
+    let serialized = unsafe { eadkp::storage::file_read_raw(filename).unwrap_or_else(|e| {
+        panic!("Failed to read score file: {:?}", e)
+    }) };
+    
+    // Désérialiser le score
+    let score: Score = postcard::from_bytes(serialized).unwrap_or_else(|e| {
+        panic!("Failed to deserialize score: {:?}", e)
+    });
+
+    score
+}
