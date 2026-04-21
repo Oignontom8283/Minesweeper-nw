@@ -145,6 +145,20 @@ pub struct GameScore {
     pub losses: u32,
     pub playtime: u64,
 }
+impl GameScore {
+    pub fn avg_playtime(&self) -> u64 {
+        if self.games_played == 0 { return 0 };
+
+        self.playtime / self.games_played as u64
+    }
+
+    // renvois le taux par le %
+    pub fn win_rate(&self) -> f32 {
+        if self.games_played == 0 { return 0.0 };
+
+        self.wins as f32 / self.games_played as f32
+    }
+}
 
 #[derive(Serialize, Deserialize)]
 pub struct Score {
