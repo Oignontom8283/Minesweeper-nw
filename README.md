@@ -31,7 +31,7 @@ It takes the form of an external application that must be injected into the calc
 <table align="center" border="0" cellspacing="0">
   <tr>
     <td align="center">
-      <img src="./docs/images/animation.gif" alt="animation" width="75%">
+      <img src="./docs/images/animation.gif" alt="animation" width="100%">
     </td>
     <td align="center">
       <p>Compilation Demo Video</p>
