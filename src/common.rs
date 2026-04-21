@@ -51,7 +51,7 @@ pub enum StateEnum {
     EndGame,
 }
 
-#[derive(PartialEq)]
+#[derive(PartialEq, Clone, Copy)]
 pub enum DifficultyEnum {
     Normale,
     Hard,
@@ -187,7 +187,7 @@ pub fn time_to_string(time: u64) -> String {
     }
 }
 
-pub fn size_by_difficulty(difficulty: DifficultyEnum) -> (u8, u8) {
+pub fn size_by_difficulty(difficulty: &DifficultyEnum) -> (u8, u8) {
     match difficulty {
         DifficultyEnum::Normale => (10, 10),
         DifficultyEnum::Hard => (17, 10)

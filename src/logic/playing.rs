@@ -1,9 +1,10 @@
 use crate::{common::*, grid, logic::*, menu, render, save};
 use alloc::{format, string::ToString, vec::Vec};
 
-pub fn init_playing(shared: &mut SharedState, difficulty: DifficultyEnum, large_cells: bool) {
-    
-    let (width, height) = size_by_difficulty(difficulty);
+pub fn init_playing(shared: &mut SharedState, difficulty: &DifficultyEnum, large_cells: bool) {
+
+    shared.difficulty = *difficulty;
+    let (width, height) = size_by_difficulty(&difficulty);
 
     // Initialiser la grille
     shared.width = width;

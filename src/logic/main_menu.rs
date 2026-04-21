@@ -49,7 +49,7 @@ impl StateRuntime for MainMenu {
             #[cfg(not(target_os = "none"))]
             println!("Switching to Playing state with large cells");
             
-            init_playing(_shared, DifficultyEnum::Normale, true); // +0.5 pour arrondir correctement a l'entier le plus proche
+            init_playing(_shared, &DifficultyEnum::Normale, true); // +0.5 pour arrondir correctement a l'entier le plus proche
         }
 
         else if just_pressed.key_down(KEY_HARD_MODE) {
@@ -58,7 +58,7 @@ impl StateRuntime for MainMenu {
             #[cfg(not(target_os = "none"))]
             println!("Switching to Playing state with small cells");
 
-            init_playing(_shared, DifficultyEnum::Hard, false);
+            init_playing(_shared, &DifficultyEnum::Hard, false);
         }
 
         Vec::new()
