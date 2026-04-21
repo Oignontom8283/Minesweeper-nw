@@ -143,7 +143,7 @@ pub struct GameScore {
     pub games_played: u32,
     pub wins: u32,
     pub losses: u32,
-    pub playtime_secs: u32,
+    pub playtime: u64,
 }
 
 #[derive(Serialize, Deserialize)]
