@@ -78,8 +78,8 @@ impl StateRuntime for MainMenu {
 
 
                     let menu_lines = [
-                        menu::TextStyle { text: "Press OK to normal game".into(), color: eadkp::COLOR_BLACK, bg_color: BACKGROUND_COLOR, is_large: true },
-                        menu::TextStyle { text: "Press BACK to hard game".into(), color: eadkp::COLOR_BLACK, bg_color: BACKGROUND_COLOR, is_large: true },
+                        menu::TextStyle { text: "Press OK to normal game".into(), color: eadkp::COLOR_WHITE, bg_color:eadkp::COLOR_BLACK , is_large: true },
+                        menu::TextStyle { text: "Press BACK to hard game".into(), color: eadkp::COLOR_WHITE, bg_color:eadkp::COLOR_BLACK, is_large: true },
                     ];
 
                     menu::draw_texts(&menu::TextLayout {
