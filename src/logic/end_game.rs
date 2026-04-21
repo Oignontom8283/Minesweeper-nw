@@ -1,4 +1,4 @@
-use crate::menu;
+use crate::{menu, save::save_score};
 #[allow(unused_imports)]
 use crate::{common::*, logic::*};
 use alloc::{format, vec, vec::Vec, string::ToString};
@@ -8,6 +8,9 @@ pub fn init_end_game(shared: &mut SharedState, wined: bool) {
     shared.need_redraw = true;
     shared.time_stoped = eadkp::timing::millis(); // moment de fin
     shared.time_elapsed = (shared.time_stoped - shared.time_started) + shared.time_base; // temps écoulé total
+
+    calculate_score(shared); // calculer et appliquer le score
+    save_score(SAVE_SCORE_FILE_NAME, &shared.score); // sauvegarder le score
 
     shared.state = StateEnum::EndGame
 }
