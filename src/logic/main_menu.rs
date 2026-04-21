@@ -92,7 +92,7 @@ impl StateRuntime for MainMenu {
 
                     let footer_lines = [
                         menu::TextStyle { text: "Press DEL to exit; Don't use HOME !".into(), color: eadkp::COLOR_BLACK, bg_color: BACKGROUND_COLOR, is_large: false },
-                        menu::TextStyle { text: "TOOL to back to menu".into(), color: eadkp::COLOR_BLACK, bg_color: BACKGROUND_COLOR, is_large: false },
+                        menu::TextStyle { text: "TOOL to back to menu (abort)".into(), color: eadkp::COLOR_BLACK, bg_color: BACKGROUND_COLOR, is_large: false },
                     ];
 
                     menu::draw_texts(&menu::TextLayout {
