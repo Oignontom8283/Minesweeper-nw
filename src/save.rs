@@ -72,3 +72,6 @@ pub fn delete_game_save(filename: &str) {
         unsafe { eadkp::storage::file_erase(filename).unwrap() };
     }
 }
+
+
+pub fn save_score()

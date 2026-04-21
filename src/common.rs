@@ -128,6 +128,20 @@ pub struct GameSave {
     pub time_base: u64,
 }
 
+#[derive(Serialize, Deserialize)]
+pub struct GameScore {
+    pub games_played: u32,
+    pub wins: u32,
+    pub losses: u32,
+    pub playtime_secs: u32,
+}
+
+#[derive(Serialize, Deserialize)]
+pub struct ScoreSave {
+    pub normal: GameScore,
+    pub hard: GameScore,
+}
+
 
 pub fn title_point() -> eadkp::Point {
     eadkp::Point { x: eadkp::SCREEN_RECT.width / 2, y: eadkp::LARGE_FONT.height / 2 }
