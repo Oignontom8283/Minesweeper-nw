@@ -19,8 +19,9 @@ pub fn init_playing(shared: &mut SharedState, difficulty: DifficultyEnum, large_
     grid::set_start_pos(shared);
 
     // calculer le nb de mines en fonction de la densité. +0.5 pour arrondir correctement a l'entier le plus proche
-    shared.num_mines = (MINES_DENSITY_HARD*(width*height) as f32 + 0.5) as usize;
-    
+    let density = match shared.difficulty { DifficultyEnum::Normale => MINES_DENSITY_NORMALE, DifficultyEnum::Hard => MINES_DENSITY_HARD };
+    shared.num_mines = (density * (width * height) as f32 + 0.5) as usize;
+
     shared.remaining_safe_cells = (width as usize) * (height as usize) - shared.num_mines;
     shared.theoretical_remaining_mines = shared.num_mines as i32;
     shared.first_action = true;
