@@ -36,6 +36,8 @@ pub fn main() -> isize {
 
     let mut shared = SharedState {
         running: true, // Le jeu court ? Hmm... interesting.
+        need_redraw: true,
+        difficulty: DifficultyEnum::Normale,
 
         state: StateEnum::MainMenu,
         grid: vec![0; 0], // Empty grid
@@ -45,7 +47,6 @@ pub fn main() -> isize {
         start_y: 0,
         cursor_x: 0,
         cursor_y: 0,
-        need_redraw: true,
         first_action: false,
         num_mines: 0,
         remaining_safe_cells: 0,
