@@ -84,7 +84,9 @@ It takes the form of an external application that must be injected into the calc
 
 ## Optimization
 
-See [this documentation page](./docs/Optimization.md) for details on the optimizations that were used.
+See this documentation page for details on the optimizations that were used :
+- **FR :** [Optimizations FR](./docs/Optimization_FR.md)
+- **EN :** [Optimizations EN](./docs/Optimization_EN.md)
 
 
 ## Why this project?
