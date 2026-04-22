@@ -73,11 +73,19 @@ It takes the form of an external application that must be injected into the calc
 
 9. The **Minesweeper** app should now be visible at the very bottom of the application list (after the basic apps) on your calculator.
 
+
 ## Technologies
+
 - This project uses the [Eadkp](https://github.com/Oignontom8283/eadkp/wiki) framework!
 - Developed in Rust. C or C++ would have been easier, but I prefer Rust!
 - Uses the following crates: `heapless`, `serde`, `postcard`, `embedded-alloc`, and `eadkp`.
 - I'm using Blockbench to create assets (okay, they're ugly, but I'm no artist).
+
+
+## Optimization
+
+See [this documentation page](./docs/Optimization.md) for details on the optimizations that were used.
+
 
 ## Why this project?
 
