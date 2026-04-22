@@ -1,6 +1,8 @@
 # Optimizations
 
-The translation might be incorrect or have some weird phrasing; sorry, I'm not a native English speaker 😓.
+The translation might be incorrect or have some strange phrasing; sorry, I'm not a native English speaker 😓.
+
+The code comments are also in French, sorry about that as well.
 
 ## Memory
 
