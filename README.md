@@ -82,13 +82,6 @@ It takes the form of an external application that must be injected into the calc
 - I'm using Blockbench to create assets (okay, they're ugly, but I'm no artist).
 
 
-## Optimization
-
-See this documentation page for details on the optimizations that were used :
-- **FR :** [Optimizations FR](./docs/Optimization_FR.md)
-- **EN :** [Optimizations EN](./docs/Optimization_EN.md)
-
-
 ## Why this project?
 
 Because an external application in machine code is much more performant than a Python script,
