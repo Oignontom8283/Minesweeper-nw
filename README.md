@@ -30,38 +30,23 @@ It takes the form of an external application that must be injected into the calc
 
 ## Controls
 
-- Use the directional arrows to move the cursor on the grid.
-- Press the "OK" key to reveal a cell.
-- Press the "Back" key to flag/unflag a cell as a mine.
-- The rest of the controls will be indicated on the screen at the appropriate time (menus).
+| Key                 | Action                                      |
+| ------------------- | ------------------------------------------- |
+| `OK`                | Reveal a cell                               |
+| `Back`              | Place a flag                                |
+| Arrow keys          | Move the cursor                             |
+| `Clear` (`Del`)     | Quit (saves the game if one is in progress) |
+| `Paste` (`Toolbox`) | Forfeit the current game                    |
 
 
 ## Installation
 
-1. Download the `minesweeper.nwa` file from the [Releases](https://github.com/Oignontom8283/Minesweeper-nw/releases) section of this GitHub repository.
-
-2. Connect your Numworks calculator to your computer using a USB data cable (official or compatible cable).
-
-3. Open a Chromium-based web browser (Google Chrome, Microsoft Edge, Brave, etc.) on your computer or mobile device (yes, it works on mobile too!).
-
-4. Go to the official Numworks injection page: [https://my.numworks.com/apps](https://my.numworks.com/apps).
-
-5. Log in to your Numworks account (or create one if you don't have it).
-
-6. Click the "Connect" button and select your calculator.
-> [!NOTE]
-> If it is not detected and is properly turned on, turn it off and on again until it works. It may take a few tries.
-
-7. Once connected, click on "Select a NWA file or drop it here" and select the `minesweeper.nwa` file you downloaded.
-
-8. Click on "Install" and wait for the installation to finish (Do not disconnect the calculator during the installation).
-
-9. The **Minesweeper** app should now be visible at the very bottom of the application list (after the basic apps) on your calculator.
+To install the game, follow this guide: [How to install](../help/how-to-install.md).
 
 
 ## Technologies
 
-- This project uses the [Eadkp](https://github.com/Oignontom8283/eadkp/wiki) framework!
+- This project uses the [eadkp](https://github.com/Oignontom8283/eadkp) HAL !
 - Developed in Rust. C or C++ would have been easier, but I prefer Rust!
 - Uses the following crates: `heapless`, `serde`, `postcard`, `embedded-alloc`, and `eadkp`.
 - I'm using Blockbench to create assets (okay, they're ugly, but I'm no artist).
