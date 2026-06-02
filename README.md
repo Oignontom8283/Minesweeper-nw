@@ -18,27 +18,12 @@ Minesweeper-Nw (Minesweeper for Numworks) is a classic minesweeper game for the 
 
 It takes the form of an external application that must be injected into the calculator, making it available in the applications list alongside the default ones.
 
-<p align="center">
-  <img src="./docs/images/gameplay.png" alt="gameplay" width="45%">
-  &nbsp;&nbsp;&nbsp;&nbsp;
-  <img src="./docs/images/hard.png" alt="hard mode" width="45%">
-</p>
-<p align="center">
-  <img src="./docs/images/win.png" alt="win screen" width="45%">
-  &nbsp;&nbsp;&nbsp;&nbsp;
-  <img src="./docs/images/lose.png" alt="lose screen" width="45%">
-</p>
-<table align="center" border="0" cellspacing="0">
+<table width="100%">
   <tr>
-    <td align="center">
-      <img src="./docs/images/animation.gif" alt="animation" width="100%">
-    </td>
-    <td align="center">
-      <p>Compilation Demo Video</p>
-      <a href="https://youtu.be/Im5sqfB5wsw?si=7NMjHolD1MnU9g4v" target="_blank" rel="noopener noreferrer">
-        <img src="./docs/images/Thumbnail_logo.png" alt="compilation demo video" width="75%">
-      </a>
-    </td>
+    <td width="25%" align="center"><img src="./docs/images/gameplay.png" alt="gameplay" width="100%"></td>
+    <td width="25%" align="center"><img src="./docs/images/hard.png" alt="hard mode" width="100%"></td>
+    <td width="25%" align="center"><img src="./docs/images/win.png" alt="win screen" width="100%"></td>
+    <td width="25%" align="center"><img src="./docs/images/lose.png" alt="lose screen" width="100%"></td>
   </tr>
 </table>
 
