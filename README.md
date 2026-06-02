@@ -41,7 +41,7 @@ It takes the form of an external application that must be injected into the calc
 
 ## Installation
 
-To install the game, follow this guide: [How to install](../help/how-to-install.md).
+To install the game, follow this guide: [How to install](https://nwagyu.org/guide/help/how-to-install).
 
 
 ## Technologies
@@ -80,10 +80,11 @@ To contribute, use the provided Docker environment and the `justfile` which do a
 7. Wait (this might take a while).
 8. A window representing the Numworks calculator should open.
 
-<p>Compilation Demo Video</p>
+<p>Compilation and demo video :</p>
 <a href="https://youtu.be/Im5sqfB5wsw?si=7NMjHolD1MnU9g4v" target="_blank" rel="noopener noreferrer">
   <img src="./docs/images/Thumbnail_logo.png" alt="compilation demo video" width="45%">
 </a>
+
 
 ## License
 
