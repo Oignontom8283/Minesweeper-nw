@@ -38,6 +38,13 @@ require_running() {
     fi
 }
 
+
+# Check that the script is not executed inside the Docker container
+if [ -f /.dockerenv ] || grep -qi "docker" /proc/version 2>/dev/null; then
+    echo "[Error] This utility is intended to be run on the host, not inside a Docker container. Please run it from your local terminal."
+    exit 1
+fi
+
 case "$COMMAND" in
     start|up)
         # Check docker is installed
@@ -115,13 +122,33 @@ case "$COMMAND" in
                 WORKSPACE=${1:-/workspace/$PROJECT_NAME}
                 code --folder-uri "vscode-remote://attached-container+${CONTAINER_HEX}${WORKSPACE}"
                 ;;
+            explorer)
+                smart_open "$(pwd)"
+                ;;
             *)
                 echo "Usage: ./docker.sh open {code} [workspace_path]"
-                echo "  code  - Opens VS Code attached to the running container."
-                echo "          workspace_path defaults to /workspace/${PROJECT_NAME}"
+                echo "  code     - Opens VS Code attached to the running container."
+                echo "             workspace_path defaults to /workspace/${PROJECT_NAME}"
+                echo "  explorer - Opens the current directory (not in the container) in the host file explorer."
                 exit 1
                 ;;
         esac
+        ;;
+
+    status)
+        get_service_name
+        # Check if the container is running without triggering 'exit 1' as require_running does
+        IS_RUNNING=$(docker compose ps --status running -q "$SERVICE_NAME" 2>/dev/null | head -n 1)
+
+        if [ -z "$IS_RUNNING" ]; then
+            echo "[Status] 🔴 The container $SERVICE_NAME is currently STOPPED."
+        else
+            echo "[Status] 🟢 The container $SERVICE_NAME is RUNNING."
+            echo "--------------------------------------------------------"
+            get_container_id
+            # Use --no-stream to show an immediate snapshot without blocking the terminal
+            docker stats --no-stream "$CONTAINER_ID"
+        fi
         ;;
         
     *)
