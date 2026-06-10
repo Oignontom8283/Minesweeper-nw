@@ -266,6 +266,7 @@ impl StateRuntime for Playing {
 
                 if _shared.remaining_safe_cells <= 0 {
                     end_game::init_end_game(_shared, true);
+                    return cells_to_render;
                 }
     
                 // Toujours redessiner le curseur après l'interaction
