@@ -1,5 +1,5 @@
 [package]
-name = "minesweeper_nw"
+name = "minesweeper"
 version = "0.1.0" # Doesn't matter, the real version number is the one in the github release
 edition = "2024"
 
@@ -8,7 +8,7 @@ path = "src/main.rs"
 bench = false
 test = false
 crate-type = ["rlib", "cdylib"]
-name = "minesweeper_nw"
+name = "minesweeper"
 
 [[example]]
 name = "device"
