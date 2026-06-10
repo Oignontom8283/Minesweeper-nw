@@ -216,26 +216,26 @@ impl StateRuntime for Playing {
         if flag { // On priorise le flag en cas d'appui simultané pour éviter une catastrophe
             
             // Toggle du flag de la cellule
-            let flag_change = -grid::toggle_flag(_shared, before_cursor_x, before_cursor_y);
+            let flag_change = -grid::toggle_flag(_shared, _shared.cursor_x, _shared.cursor_y);
 
             // Actualiser le nombre de mines théorique restante
             _shared.theoretical_remaining_mines += flag_change as i32;
 
             // Redessiner la cellule pour afficher le changement de flag
-            cells_to_render.push(RenderCommand::Cell { x: before_cursor_x, y: before_cursor_y });
-            cells_to_render.push(RenderCommand::Cursor { x: before_cursor_x, y: before_cursor_y });
+            cells_to_render.push(RenderCommand::Cell { x: _shared.cursor_x, y: _shared.cursor_y });
+            cells_to_render.push(RenderCommand::Cursor { x: _shared.cursor_x, y: _shared.cursor_y });
             cells_to_render.push(RenderCommand::TitleMines { mines: format!(" {} ", _shared.theoretical_remaining_mines), color: TITLE_COLOR, background: TITLE_BACKGROUND_COLOR_PLAYING })
         }
-        else if interact && !grid::is_flagged(_shared, before_cursor_x, before_cursor_y) {
+        else if interact && !grid::is_flagged(_shared, _shared.cursor_x, _shared.cursor_y) {
             // Première interaction : génération des mines
             if _shared.first_action {
-                grid::generate_mines(_shared, before_cursor_x, before_cursor_y);
+                grid::generate_mines(_shared, _shared.cursor_x, _shared.cursor_y);
                 grid::calculate_adjacent_mines(_shared);
                 _shared.first_action = false;
             }
 
             // Si la cellule est une mine, GAME OVER
-            if grid::is_mine(_shared, before_cursor_x, before_cursor_y) {
+            if grid::is_mine(_shared, _shared.cursor_x, _shared.cursor_y) {
                 
                 // Faire afficher toutes les mines
                 for y in 0.._shared.height {
@@ -256,7 +256,7 @@ impl StateRuntime for Playing {
             else {
 
                 // Révéler les cellules par propagation et les redraw
-                let revealed = grid::reveal_infect(_shared, before_cursor_x, before_cursor_y);
+                let revealed = grid::reveal_infect(_shared, _shared.cursor_x, _shared.cursor_y);
                 for (rx, ry) in revealed.iter() {
                     cells_to_render.push(RenderCommand::Cell { x: *rx, y: *ry });
                 }
@@ -268,7 +268,7 @@ impl StateRuntime for Playing {
                 }
     
                 // Toujours redessiner le curseur après l'interaction
-                cells_to_render.push(RenderCommand::Cursor { x: before_cursor_x, y: before_cursor_y });
+                cells_to_render.push(RenderCommand::Cursor { x: _shared.cursor_x, y: _shared.cursor_y });
             }
             
         }
