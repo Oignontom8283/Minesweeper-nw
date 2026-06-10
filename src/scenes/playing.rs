@@ -261,7 +261,8 @@ impl StateRuntime for Playing {
                     cells_to_render.push(RenderCommand::Cell { x: *rx, y: *ry });
                 }
 
-                _shared.remaining_safe_cells -= revealed.len();
+                // _shared.remaining_safe_cells -= revealed.len();
+                _shared.remaining_safe_cells = _shared.remaining_safe_cells.saturating_sub(revealed.len());
 
                 if _shared.remaining_safe_cells <= 0 {
                     end_game::init_end_game(_shared, true);
