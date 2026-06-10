@@ -107,6 +107,7 @@ impl StateRuntime for Playing {
 
         // Générer les entrées clavier
         let just = _keyboard.get_just_pressed(_old_keyboard);
+        let now = eadkp::timing::millis();
 
         // Quitter le jeu
         if just.key_down(KEY_EXIT) {
@@ -123,31 +124,75 @@ impl StateRuntime for Playing {
             return cells_to_render;
         }
 
-        // Déplacement du curseur :
+        // Déplacement du curseur avec key repeat :
         let before_cursor_x = _shared.cursor_x;
         let before_cursor_y = _shared.cursor_y;
 
         let mut after_cursor_x = before_cursor_x;
         let mut after_cursor_y = before_cursor_y;
 
-        if just.key_down(KEY_UP) {
+        // Logique pour gérer le key repeat des flèches
+        // Vérifier si la touche mémorisée n'est plus appuyée
+        if let Some(key) = _shared.key_repeat_key {
+            if !_keyboard.key_down(key) {
+                _shared.key_repeat_key = None;
+            }
+        }
+
+        // Fonction helper pour vérifier si on doit bouger (first press ou repeat)
+        let should_move_up = (just.key_down(KEY_UP)) || 
+                             (_keyboard.key_down(KEY_UP) && _shared.key_repeat_key == Some(KEY_UP) && now >= _shared.key_repeat_next_trigger);
+        let should_move_down = (just.key_down(KEY_DOWN)) || 
+                              (_keyboard.key_down(KEY_DOWN) && _shared.key_repeat_key == Some(KEY_DOWN) && now >= _shared.key_repeat_next_trigger);
+        let should_move_left = (just.key_down(KEY_LEFT)) || 
+                              (_keyboard.key_down(KEY_LEFT) && _shared.key_repeat_key == Some(KEY_LEFT) && now >= _shared.key_repeat_next_trigger);
+        let should_move_right = (just.key_down(KEY_RIGHT)) || 
+                               (_keyboard.key_down(KEY_RIGHT) && _shared.key_repeat_key == Some(KEY_RIGHT) && now >= _shared.key_repeat_next_trigger);
+
+        if should_move_up {
             if before_cursor_y > 0 {
                 after_cursor_y -= 1;
             }
+            // Si c'était une first press (just pressed), mémoriser la touche
+            if just.key_down(KEY_UP) {
+                _shared.key_repeat_key = Some(KEY_UP);
+                _shared.key_repeat_next_trigger = now + KEY_REPEAT_DELAY;
+            } else {
+                // Sinon, c'est une répétition, mettre à jour le prochain trigger
+                _shared.key_repeat_next_trigger = now + KEY_REPEAT_INTERVAL;
+            }
         }
-        if just.key_down(KEY_DOWN) {
+        if should_move_down {
             if before_cursor_y < _shared.height - 1 {
                 after_cursor_y += 1;
             }
+            if just.key_down(KEY_DOWN) {
+                _shared.key_repeat_key = Some(KEY_DOWN);
+                _shared.key_repeat_next_trigger = now + KEY_REPEAT_DELAY;
+            } else {
+                _shared.key_repeat_next_trigger = now + KEY_REPEAT_INTERVAL;
+            }
         }
-        if just.key_down(KEY_LEFT) {
+        if should_move_left {
             if before_cursor_x > 0 {
                 after_cursor_x -= 1;
             }
+            if just.key_down(KEY_LEFT) {
+                _shared.key_repeat_key = Some(KEY_LEFT);
+                _shared.key_repeat_next_trigger = now + KEY_REPEAT_DELAY;
+            } else {
+                _shared.key_repeat_next_trigger = now + KEY_REPEAT_INTERVAL;
+            }
         }
-        if just.key_down(KEY_RIGHT) {
+        if should_move_right {
             if before_cursor_x < _shared.width - 1 {
                 after_cursor_x += 1;
+            }
+            if just.key_down(KEY_RIGHT) {
+                _shared.key_repeat_key = Some(KEY_RIGHT);
+                _shared.key_repeat_next_trigger = now + KEY_REPEAT_DELAY;
+            } else {
+                _shared.key_repeat_next_trigger = now + KEY_REPEAT_INTERVAL;
             }
         }
 
@@ -230,7 +275,6 @@ impl StateRuntime for Playing {
 
 
         // Gérer le timer
-        let now = eadkp::timing::millis(); // temps actuelle
         if now >= _shared.time_to_next_update {
             _shared.time_to_next_update = now + UPDATE_TIME_INTERVAL; // Planifier la prochaine update
 

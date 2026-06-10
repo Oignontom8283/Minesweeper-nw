@@ -12,6 +12,9 @@ pub const FRAME_COLOR: eadkp::Color = eadkp::Color::from_888(135, 135, 135); // 
 pub const FRAME_THICKNESS: u8 = 1;
 pub const UPDATE_TIME_INTERVAL: u64 = 1000; // en milliseconds
 
+pub const KEY_REPEAT_DELAY: u64 = 400; // ms avant que la répétition commence
+pub const KEY_REPEAT_INTERVAL: u64 = 80; // ms entre chaque répétition
+
 pub const BACKGROUND_COLOR: eadkp::Color = eadkp::COLOR_WHITE;
 
 pub const TITLE_FONT_IS_LARGE: bool = true;
@@ -93,6 +96,9 @@ pub struct SharedState {
     pub asset_flag_small: eadkp::Image,
     pub asset_mine_large: eadkp::Image,
     pub asset_mine_small: eadkp::Image,
+
+    pub key_repeat_key: Option<eadkp::input::Key>,
+    pub key_repeat_next_trigger: u64,
 }
 
 pub enum RenderCommand {
