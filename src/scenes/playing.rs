@@ -213,7 +213,7 @@ impl StateRuntime for Playing {
         let interact = just.key_down(KEY_REVEAL);
         let flag = just.key_down(KEY_FLAG);
 
-        if flag { // On priorise le flag en cas d'appui simultané pour éviter une catastrophe
+        if flag && !grid::is_revealed(_shared, _shared.cursor_x, _shared.cursor_y) { // On priorise le flag en cas d'appui simultané pour éviter une catastrophe
             
             // Toggle du flag de la cellule
             let flag_change = -grid::toggle_flag(_shared, _shared.cursor_x, _shared.cursor_y);
@@ -226,7 +226,7 @@ impl StateRuntime for Playing {
             cells_to_render.push(RenderCommand::Cursor { x: _shared.cursor_x, y: _shared.cursor_y });
             cells_to_render.push(RenderCommand::TitleMines { mines: format!(" {} ", _shared.theoretical_remaining_mines), color: TITLE_COLOR, background: TITLE_BACKGROUND_COLOR_PLAYING })
         }
-        else if interact && !grid::is_flagged(_shared, _shared.cursor_x, _shared.cursor_y) {
+        else if interact && !grid::is_flagged(_shared, _shared.cursor_x, _shared.cursor_y) && !grid::is_revealed(_shared, _shared.cursor_x, _shared.cursor_y) {
             // Première interaction : génération des mines
             if _shared.first_action {
                 grid::generate_mines(_shared, _shared.cursor_x, _shared.cursor_y);
