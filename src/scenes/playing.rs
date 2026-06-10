@@ -34,6 +34,8 @@ pub fn init_playing(shared: &mut SharedState, difficulty: &DifficultyEnum, large
     shared.time_started = 0;
     shared.time_to_next_update = eadkp::timing::millis();
     shared.timer_started = false;
+    shared.key_repeat_key = None;
+    shared.key_repeat_next_trigger = 0;
 
     // Changer le state
     shared.state = StateEnum::Playing;
@@ -55,6 +57,8 @@ pub fn resume_playing(shared: &mut SharedState) {
     shared.time_started = eadkp::timing::millis();
     shared.time_to_next_update = shared.time_started; // Déclencher une update imméditatement
     shared.timer_started = true;
+    shared.key_repeat_key = None;
+    shared.key_repeat_next_trigger = 0;
 
     // Changer le state
     shared.state = StateEnum::Playing;
@@ -64,9 +68,12 @@ pub fn resume_playing(shared: &mut SharedState) {
 }
 
 pub fn pause_playing(shared: &mut SharedState) {
-
-    // Sauvegarder la partie
-    save::save_game(shared, SAVE_GAME_FILE_NAME);
+    shared.key_repeat_key = None;
+    
+    // Sauvegarder la partie seulement si elle a commencé
+    if !shared.first_action {
+        save::save_game(shared, SAVE_GAME_FILE_NAME);
+    }
 
     // Exit game
     shared.running = false;
@@ -125,6 +132,7 @@ impl StateRuntime for Playing {
 
         // Retourner au menu / abandonner la partie en cours
         if just.key_down(KEY_MENU) {
+            _shared.key_repeat_key = None;
             init_main_menu(_shared);
             return cells_to_render;
         }

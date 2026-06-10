@@ -17,7 +17,11 @@ pub fn save_game(shared: &SharedState, filename: &str) {
         theoretical_remaining_mines: shared.theoretical_remaining_mines,
         large_cells: shared.large_cells,
 
-        time_base: shared.time_base + (eadkp::timing::millis() - shared.time_started), // temps écoule depuis l'init et temps de base cumulé
+        time_base: if shared.timer_started {
+            shared.time_base + (eadkp::timing::millis() - shared.time_started)
+        } else {
+            shared.time_base
+        },
     };
 
     // Sérialiser le GameSave en utilisant postcard

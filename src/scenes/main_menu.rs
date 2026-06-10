@@ -25,6 +25,7 @@ impl StateRuntime for MainMenu {
                 println!("Save file found, resuming game...");
 
                 resume_playing(_shared);
+                return Vec::new();
             }
 
             return vec![

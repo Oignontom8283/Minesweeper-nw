@@ -7,7 +7,11 @@ pub fn init_end_game(shared: &mut SharedState, wined: bool) {
     shared.wined = wined;
     shared.need_redraw = true;
     shared.time_stoped = eadkp::timing::millis(); // moment de fin
-    shared.time_elapsed = (shared.time_stoped - shared.time_started) + shared.time_base; // temps écoulé total
+    shared.time_elapsed = if shared.timer_started {
+        (shared.time_stoped - shared.time_started) + shared.time_base
+    } else {
+        shared.time_base
+    };
 
     calculate_score(shared); // calculer et appliquer le score
     save_score(SAVE_SCORE_FILE_NAME, &shared.score); // sauvegarder le score
