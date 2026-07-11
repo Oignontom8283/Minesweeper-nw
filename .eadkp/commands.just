@@ -15,7 +15,8 @@ send:
     cargo run --release --example device --target=thumbv7em-none-eabihf
 
 check:
-    cargo build --release --example device --target=thumbv7em-none-eabihf
+    cargo check --release --example device --target=thumbv7em-none-eabihf
+    cargo check --release --example simulator --target=thumbv7em-none-eabihf
 
 export:
     just build
